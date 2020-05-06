@@ -142,7 +142,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
 
   //)
-
+  console.log("Checking local ES query")
+  console.log(exomeVariants)
 
   const query = `{
     gene(gene_id: "${geneId}") {

@@ -39,8 +39,8 @@ export default () => (
     <DocumentTitle />
     <HeadingContainer>
       {/* <GnomadHeading width="60%" /> */}
-      <img src="http://www.leklab.org/wp-content/uploads/2019/07/b2b_logo.png" width="50%" height="50%"></img>
-      <SubHeading>Pediatric Cardiac Genomics Consortium (PCGC)</SubHeading>
+      <img src="http://www.leklab.org/wp-content/uploads/2020/04/SFARI.png" width="50%" height="50%"></img>
+      <SubHeading>Simons Foundation Autism Research Initiative</SubHeading>
       <Searchbox width="100%" />
       <p>
         Examples - Gene:{' '}
@@ -55,7 +55,7 @@ export default () => (
     </HeadingContainer>
 
     <p>
-    The Pediatric Cardiac Genomics Consortium (PCGC) is a group of clinical research teams, collaborating to identify genetic causes of human congenital heart disease and to relate genetic variants present in the congenital heart disease patient population to clinical outcomes.
+	Place holder text
     </p>
   </HomePage>
 )

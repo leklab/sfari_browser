@@ -197,7 +197,7 @@ class VariantsInGene extends Component {
         <ClinVarTrack variants={clinVarVariants} variantFilter={filter.includeCategories} />
 
         <VariantTrack
-          title={`PCGC Variants (${renderedVariants.length})`}
+          title={`SFARI Variants (${renderedVariants.length})`}
           variants={renderedVariants}
         />
         <NavigatorTrack

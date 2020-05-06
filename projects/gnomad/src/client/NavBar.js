@@ -116,7 +116,7 @@ class NavBar extends Component {
         <NavBarWrapper>
           <LogoWrapper>
             <Link to="/" onClick={this.closeMenu}>
-              <Logo>PCGC browser</Logo>
+              <Logo>SFARI browser</Logo>
             </Link>
             <ToggleMenuButton onClick={this.toggleMenu}>☰</ToggleMenuButton>
           </LogoWrapper>
