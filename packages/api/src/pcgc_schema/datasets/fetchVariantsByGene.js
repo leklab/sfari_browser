@@ -146,10 +146,10 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   console.log(exomeVariants)
 
   const query = `{
-    gene(gene_id: "${geneId}") {
+    gene(gene_id: "${geneId}" reference_genome: GRCh38) {
       gene_id
       gene_name
-      variants(dataset: gnomad_r2_1){
+      variants(dataset: gnomad_r3){
         pos
         variantId
         exome{
