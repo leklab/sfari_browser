@@ -105,12 +105,19 @@ const shapeGnomadVariantSummary = (context) => {
 //      [isExomeVariant ? 'genome' : 'exome']: null,
 //      [isExomeVariant ? 'exome' : 'genome']: {
       exome: {
+        /*
         ac: variantData.AC,
-        //ac_hemi: variantData.nonpar ? variantData[subsetKey].AC_adj.male : 0,
         ac_hom: variantData.nhomalt,
         an: variantData.AN,
-        //af: an ? ac / an : 0,
         af: variantData.AF,
+        */
+        //ac_hemi: variantData.nonpar ? variantData[subsetKey].AC_adj.male : 0,
+        //af: an ? ac / an : 0,
+        ac: variantData.AC_raw,
+        ac_hom: variantData.nhomalt_raw,
+        an: variantData.AN_raw,
+        af: variantData.AF_raw,        
+
         ac_proband: variantData.AC_proband,
         an_proband: variantData.AN_proband,
         af_proband: variantData.AF_proband,

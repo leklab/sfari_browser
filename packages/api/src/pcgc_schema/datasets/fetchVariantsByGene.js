@@ -120,6 +120,10 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'AN',
         'AF',
         'nhomalt',
+        'AC_raw',
+        'AN_raw',
+        'AF_raw',
+        'nhomalt_raw',
         'AC_proband',
         'AN_proband',
         'AF_proband'

@@ -193,7 +193,7 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
   minWidth: width < 600 ? 75 : 100,
   //render: renderExponentialNumberCell
   render: (variant, key) => (
-    <Link className="grid-cell-content" target="_blank" to={`https://gnomad.broadinstitute.org/variant/${variant.variant_id}`}>
+    <Link className="grid-cell-content" target="_blank" to={`https://gnomad.broadinstitute.org/variant/${variant.variant_id}?dataset=gnomad_r3`}>
     {truncateNum(variant.gnomad_freq)}
     </Link>
   ),
