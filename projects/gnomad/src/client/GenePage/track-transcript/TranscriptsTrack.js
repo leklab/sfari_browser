@@ -317,7 +317,6 @@ export class TranscriptsTrack extends Component {
       ? transcripts
       : transcripts.filter(transcript => transcript.exons.some(exon => exon.feature_type === 'CDS'))
 
-    console.log("In renderTranscripts")
     // Sort transcripts by isCanonical, mean expression, transcript ID
     const sortedTranscripts = renderedTranscripts.sort((t1, t2) => {
       if (t1.transcript_id === canonicalTranscript) {

@@ -231,7 +231,7 @@ class VariantsInGene extends Component {
             sortKey={sortKey}
             sortOrder={sortOrder}
             variants={renderedVariants}
-          /> 
+          />
         </TrackPageSection>
       </div>
     )
@@ -365,10 +365,18 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
 
   return (
     <Query query={query}>
-      {({ data, error, loading }) => {
+      {({ data, error, graphQLErrors, loading }) => {
+        console.log("In here - loading1")
+        console.log(error)
+        console.log(graphQLErrors)
+
         if (loading) {
+          console.log("In here - loading2")
           return <StatusMessage>Loading variants...</StatusMessage>
         }
+        console.log("In here - out of loading")
+        console.log(data)
+        console.log(error)
 
         if (error || !((data || {}).gene || {}).variants) {
           return <StatusMessage>Failed to load variants</StatusMessage>

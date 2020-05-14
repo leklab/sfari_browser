@@ -181,8 +181,11 @@ export const transcripts = createSelector(
   [geneData],
   geneData => geneData.get('transcripts').toJS().map((transcript) => {
     const { gtex_tissue_tpms_by_transcript, ...rest } = transcript
-    const tissueExpressionValues = Object.values(gtex_tissue_tpms_by_transcript)
-    console.log("In transcripts createSelector")
+
+    // check for gtex_tissue_tpms_by_transcript: null which happens when transcript has no expression data in GTEx
+    // set to [0] so that max and median will be zero
+    const tissueExpressionValues = gtex_tissue_tpms_by_transcript != null ? Object.values(gtex_tissue_tpms_by_transcript) : [0]
+
     return {
       ...rest,
       gtexTissueExpression: {
@@ -200,16 +203,20 @@ export const maxTissueExpressions = createSelector(
   [transcripts],
   (transcripts) => {
     const tissues = Object.keys(transcripts[0].gtexTissueExpression.individual)
-    console.log("In maxTissueExpressions createSelector")
+
+    // required to remove transcripts with gtex_tissue_tpms_by_transcript: null
+    // as gtexTissueExpression.individual[tissue] will produce error as it's a null array
+    const filteredTranscripts = transcripts.filter(transcript => transcript.gtexTissueExpression.individual != null)
+
     const maxExpressionByTissue = tissues.reduce((acc, tissue) => ({
       ...acc,
-      [tissue]: max(transcripts, t => t.gtexTissueExpression.individual[tissue]),
+      [tissue]: max(filteredTranscripts, t => t.gtexTissueExpression.individual[tissue]),
     }), {})
 
     return {
       aggregate: {
-        mean: max(transcripts, t => t.gtexTissueExpression.aggregate.mean),
-        median: max(transcripts, t => t.gtexTissueExpression.aggregate.median),
+        mean: max(filteredTranscripts, t => t.gtexTissueExpression.aggregate.mean),
+        median: max(filteredTranscripts, t => t.gtexTissueExpression.aggregate.median),
       },
       individual: maxExpressionByTissue,
     }

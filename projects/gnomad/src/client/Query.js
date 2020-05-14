@@ -73,6 +73,8 @@ export class Query extends Component {
   }
 
   loadData() {
+    // console.log("In query - loadData")
+
     this.setState({
       loading: true,
       error: null,
