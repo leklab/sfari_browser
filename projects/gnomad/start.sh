@@ -11,7 +11,7 @@ export PATH=$PATH:$PROJECT_DIR/../../node_modules/.bin
 export NODE_ENV="production"
 #export GA_TRACKING_ID="UA-149585832-1"
 #export GNOMAD_API_URL=${GNOMAD_API_URL:-"https://gnomad.broadinstitute.org/api"}
-export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://54.210.38.26:8007"}
+export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://54.87.154.101:8007"}
 
 WEBPACK_DEV_SERVER_ARGS=""
 #if [ "$LOGNAME" = "vagrant" ]; then

@@ -171,7 +171,7 @@ const HelpModal = ({
     <Modal
       footer={footer}
       size="large"
-      title="PCGC help"
+      title="SFARI Browser help"
       onRequestClose={() => {
         toggleHelpWindow()
       }}

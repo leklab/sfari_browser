@@ -1,3 +1,3 @@
 module.exports = {
-  directory: '../../pcgc-docs/docs',
+  directory: '../../sfari-docs/docs',
 }

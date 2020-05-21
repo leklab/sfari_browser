@@ -44,12 +44,12 @@ export default () => (
       <Searchbox width="100%" />
       <p>
         Examples - Gene:{' '}
-        <Link preserveSelectedDataset={false} to="/gene/SOX12">
-          SOX12
+        <Link preserveSelectedDataset={false} to="/gene/CHD8">
+          CHD8
         </Link>
         , Variant:{' '}
-        <Link preserveSelectedDataset={false} to="/variant/1-55529215-C-A">
-          1-55529215-C-A
+        <Link preserveSelectedDataset={false} to="/variant/14-21385928-C-T">
+          14-21385928-C-T
         </Link>
       </p>
     </HeadingContainer>
