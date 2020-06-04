@@ -73,6 +73,8 @@ const TranscriptConsequenceDetails = ({ consequence }) => {
     )
   }
 
+  // At the moment the code is entering here as !consequence.lof
+  // I don't think LOFTEE plugin is working correctly for hg38
   if (
     // gnomAD 2.1's loading pipeline added NC annotations.
     // See #364.
@@ -83,7 +85,7 @@ const TranscriptConsequenceDetails = ({ consequence }) => {
       <AttributeList>
         <Attribute name="HGVSp">{consequence.hgvs}</Attribute>
         <Attribute name="LoF">
-          <span style={{ color: colors.red }}>Low-confidence (Non-protein-coding transcript)</span>
+          {/*<span style={{ color: colors.red }}>Low-confidence (Non-protein-coding transcript)</span>*/}
         </Attribute>
       </AttributeList>
     )
