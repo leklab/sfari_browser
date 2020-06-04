@@ -180,20 +180,22 @@ const VariantDetailsType = new GraphQLObjectType({
       }),
     },
     
-    /*
-    flags: { type: new GraphQLList(GraphQLString) },
+    
+    //flags: { type: new GraphQLList(GraphQLString) },
     genome: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantDetailsGenomeData',
         fields: {
           ac: { type: GraphQLInt },
           an: { type: GraphQLInt },
-          ac_hemi: { type: GraphQLInt },
+          // ac_hemi: { type: GraphQLInt },
           ac_hom: { type: GraphQLInt },
-          faf95: { type: GnomadVariantFilteringAlleleFrequencyType },
-          faf99: { type: GnomadVariantFilteringAlleleFrequencyType },
-          filters: { type: new GraphQLList(GraphQLString) },
-          populations: { type: new GraphQLList(GnomadPopulationType) },
+          // faf95: { type: GnomadVariantFilteringAlleleFrequencyType },
+          // faf99: { type: GnomadVariantFilteringAlleleFrequencyType },
+          // filters: { type: new GraphQLList(GraphQLString) },
+          populations: { type: new GraphQLList(PopulationType) },
+          
+          /*
           qualityMetrics: { type: GnomadVariantQualityMetricsType },
           reads: {
             type: new GraphQLList(ReadDataType),
@@ -211,11 +213,11 @@ const VariantDetailsType = new GraphQLObjectType({
                 throw new UserVisibleError('Unable to load reads data')
               }
             },
-          },
+          },*/
         },
       }),
     },
-    */
+    
     //rsid: { type: GraphQLString },
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
   },

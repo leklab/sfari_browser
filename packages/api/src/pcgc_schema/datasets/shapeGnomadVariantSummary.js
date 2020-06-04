@@ -67,7 +67,7 @@ const shapeGnomadVariantSummary = (context) => {
   return esHit => {
     // eslint-disable-next-line no-underscore-dangle
     const variantData = esHit._source
-    console.log(variantData)
+    // console.log(variantData)
 
     /*
     // eslint-disable-next-line no-underscore-dangle

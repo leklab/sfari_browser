@@ -146,8 +146,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
 
   //)
-  console.log("Checking local ES query")
-  console.log(exomeVariants)
+  //console.log("Checking local ES query")
+  //console.log(exomeVariants)
 
   const query = `{
     gene(gene_id: "${geneId}" reference_genome: GRCh38) {
@@ -173,7 +173,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //const gnomad_data = request("http://gnomad.broadinstitute.org/api", query).then(console.log).catch(console.error)
 
   const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
-  console.log(gnomad_data.gene.variants)
+  //console.log(gnomad_data.gene.variants)
 
   const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
   //const combinedVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)

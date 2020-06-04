@@ -156,7 +156,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               <ScrollWrapper>
                 <PcgcPopulationsTable
                   exomePopulations={variant.exome ? variant.exome.populations : []}
-                  // genomePopulations={variant.genome ? variant.genome.populations : []}
+                  genomePopulations={variant.genome ? variant.genome.populations : []}
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>

@@ -19,6 +19,17 @@ query PcgcVariant($variantId: String!) {
           ac_hom
         }
       }
+     genome {
+        ac
+        an
+        ac_hom
+        populations {
+          id
+          ac
+          an
+          ac_hom
+        }
+      }      
       sortedTranscriptConsequences {
         canonical
         gene_id

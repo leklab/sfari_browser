@@ -220,10 +220,54 @@ const fetchVariantData = async (ctx, variantId) => {
   //  return esHit.hits.hits[0]
   //}
   //console.log("In here 3.1") 
-  console.log(exomeData.hits.hits[0]._source) 
+  const genomeData = await ctx.database.elastic.search({
+    index: 'sfari_genomes',
+    type: 'variant',
+    _source: [
+      'alt',
+      'chrom',
+      'filters',
+      'pos',
+      'ref',
+      'sortedTranscriptConsequences',
+      'variant_id',
+      'xpos',
+      'AC_adj',
+      'AN_adj',
+      'AF_adj',
+      'nhomalt_adj',
+      'AC',
+      'AF',
+      'AN',
+      'nhomalt',
+      'AC_raw',
+      'AN_raw',
+      'AF_raw',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant_id: variantId } },
+            //{ range: { [`${requestSubset}.AC_raw`]: { gt: 0 } } },
+          ],
+        },
+      },
+    },
+    size: 1,
+  })
 
+  //console.log(exomeData.hits.hits[0]._source) 
 
-  return exomeData.hits.hits[0]._source
+  //console.log("In here 3") 
+  //console.log(genomeData.hits.hits[0]) 
+
+  //console.log("In here 4") 
+
+  //return exomeData.hits.hits[0]._source
+
+  return { exomeData: exomeData.hits.hits[0] ? exomeData.hits.hits[0]._source : undefined , 
+           genomeData: genomeData.hits.hits[0] ? genomeData.hits.hits[0]._source : undefined }
 }
 
 /*
@@ -291,12 +335,17 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //const sharedData = exomeData || genomeData
 
   //console.log("In here 1")
-  const exomeData = await fetchVariantData(ctx, variantId)
+  //const exomeData = await fetchVariantData(ctx, variantId)
   //console.log("In here 4")
   //console.log(exomeData)
 
-  const sharedData = exomeData
 
+  const { exomeData, genomeData } = await fetchVariantData(ctx, variantId)
+
+  //console.log(genomeData) 
+
+  // const sharedData = exomeData
+  const sharedData = exomeData || genomeData
 
   const sharedVariantFields = {
     alt: sharedData.alt,
@@ -373,20 +422,29 @@ const fetchVariantDetails = async (ctx, variantId) => {
         }
       : null,
 
-    /*
-    flags: ['lcr', 'segdup', 'lc_lof', 'lof_flag'].filter(flag => sharedData.flags[flag]),
+    
+    //flags: ['lcr', 'segdup', 'lc_lof', 'lof_flag'].filter(flag => sharedData.flags[flag]),
     genome: genomeData
       ? {
           // Include variant fields so that the reads data resolver can access them.
           ...sharedVariantFields,
-          ac: genomeData.AC_adj.total,
-          an: genomeData.AN_adj.total,
-          ac_hemi: genomeData.nonpar ? genomeData.AC_adj.male : 0,
-          ac_hom: genomeData.nhomalt_adj.total,
-          faf95: formatFilteringAlleleFrequency(genomeData, 'faf95_adj'),
-          faf99: formatFilteringAlleleFrequency(genomeData, 'faf99_adj'),
-          filters: genomeData.filters,
+          //ac: genomeData.AC_adj.total,
+          //an: genomeData.AN_adj.total,
+          //ac_hemi: genomeData.nonpar ? genomeData.AC_adj.male : 0,
+          //ac_hom: genomeData.nhomalt_adj.total,
+          //faf95: formatFilteringAlleleFrequency(genomeData, 'faf95_adj'),
+          //faf99: formatFilteringAlleleFrequency(genomeData, 'faf99_adj'),
+          //filters: genomeData.filters,
+          
+          ac: genomeData.AC,
+          an: genomeData.AN,
+          //ac_hemi: exomeData.nonpar ? exomeData.AC_adj.male : 0,
+          ac_hom: genomeData.nhomalt,
+
+
           populations: formatPopulations(genomeData),
+          
+          /*
           qualityMetrics: {
             alleleBalance: {
               alt: formatHistogram(genomeData.ab_hist_alt),
@@ -405,9 +463,9 @@ const fetchVariantDetails = async (ctx, variantId) => {
               RF: genomeData.rf_tp_probability,
               SiteQuality: genomeData.qual,
             },
-          },
+          },*/
         }
-      : null,*/
+      : null,
 
     //rsid: sharedData.rsid,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],

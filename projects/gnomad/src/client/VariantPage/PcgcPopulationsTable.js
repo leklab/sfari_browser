@@ -94,22 +94,23 @@ export class PcgcPopulationsTable extends Component {
         ),*/
       })
     ).isRequired,
-    /*genomePopulations: PropTypes.arrayOf(
+    genomePopulations: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
         ac: PropTypes.number.isRequired,
         an: PropTypes.number.isRequired,
-        ac_hemi: PropTypes.number.isRequired,
+        // ac_hemi: PropTypes.number.isRequired,
         ac_hom: PropTypes.number.isRequired,
-        subpopulations: PropTypes.arrayOf(
+        
+        /*subpopulations: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
             ac: PropTypes.number.isRequired,
             an: PropTypes.number.isRequired,
           })
-        ),
+        ),*/
       })
-    ).isRequired,*/
+    ).isRequired,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
   }
@@ -125,24 +126,25 @@ export class PcgcPopulationsTable extends Component {
 
     this.state = {
       includeExomes: props.exomePopulations.length !== 0,
-      //includeGenomes: props.genomePopulations.length !== 0,
+      includeGenomes: props.genomePopulations.length !== 0,
     }
   }
 
   render() {
     let includedPopulations = []
 
-    /*
+    
     if (this.state.includeExomes) {
       includedPopulations = includedPopulations.concat(this.props.exomePopulations)
     }
     if (this.state.includeGenomes) {
       includedPopulations = includedPopulations.concat(this.props.genomePopulations)
     }
-    */
+    
 
-    // const combinedPopulations = combinePopulations(includedPopulations)
-    const combinedPopulations = combinePopulations(this.props.exomePopulations)
+    const combinedPopulations = combinePopulations(includedPopulations)
+   
+    // const combinedPopulations = combinePopulations(this.props.exomePopulations)
 
     return (
       <div>
@@ -151,7 +153,7 @@ export class PcgcPopulationsTable extends Component {
           showHemizygotes={this.props.showHemizygotes}
           showHomozygotes={this.props.showHomozygotes}
         />
-        {/*<ControlSection>
+        <ControlSection>
           Include:
           <Checkbox
             checked={this.state.includeExomes}
@@ -177,7 +179,7 @@ export class PcgcPopulationsTable extends Component {
               this.setState({ includeGenomes })
             }}
           />
-        </ControlSection>*/}
+        </ControlSection>
       </div>
     )
   }

@@ -75,6 +75,6 @@ export const VariantSummaryType = new GraphQLObjectType({
 
     // will keep with this name for future
     exome: { type: VariantSequencingDataType },
-    //genome: { type: VariantSequencingDataType },
+    genome: { type: VariantSequencingDataType },
   },
 })
