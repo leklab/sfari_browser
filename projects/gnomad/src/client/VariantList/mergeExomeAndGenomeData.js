@@ -4,8 +4,8 @@ const add = (n1, n2) => (n1 || 0) + (n2 || 0)
 
 const mergeExomeAndGenomeData = variants =>
   variants.map(variant => {
-    //const { exome, genome } = variant
-
+    const { exome, genome } = variant
+    // console.log("In mergeExomeAndGenomeData - 1")
     //const { exome } = variant
 
     /*        
@@ -37,6 +37,47 @@ const mergeExomeAndGenomeData = variants =>
     const totalAF = totalAN ? totalAC / totalAN : 0
     */
 
+    if(!exome){
+      return{
+        ...variant,
+        ...variant.genome,
+        allele_freq: variant.genome.af,
+        gnomad_freq: variant.an_gnomad ? variant.ac_gnomad/variant.an_gnomad : 0
+      }
+    }
+
+    if(!genome){
+      return{
+        ...variant,
+        ...variant.exome,
+        allele_freq: variant.exome.af,
+        gnomad_freq: variant.an_gnomad ? variant.ac_gnomad/variant.an_gnomad : 0
+      }
+    }
+
+    
+    const totalAC = add(exome.ac, genome.ac)
+    const totalAN = add(exome.an, genome.an)
+    const totalAF = totalAN ? totalAC / totalAN : 0
+
+    const totalProband = add(exome.ac_proband, genome.ac_proband)
+    const totalHom = add(exome.ac_hom, genome.ac_hom)
+    
+
+    return{
+      ...variant,
+      ac: totalAC,
+      an: totalAN,
+      af: totalAF,
+      ac_hom: totalHom,
+      ac_proband: totalProband,
+      allele_freq: totalAF, 
+      gnomad_freq: variant.an_gnomad ? variant.ac_gnomad/variant.an_gnomad : 0
+    }
+
+
+    /*
+    // working exome only code
     if(variant.exome){
       return{
         ...variant,
@@ -52,7 +93,7 @@ const mergeExomeAndGenomeData = variants =>
         allele_freq: variant.genome.af
       }      
     }
-
+    */
     /*
     return {
       ...variant,

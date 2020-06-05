@@ -69,10 +69,11 @@ const shapeGnomadVariantSummary = (context) => {
     const variantData = esHit._source
     // console.log(variantData)
 
-    /*
+    
     // eslint-disable-next-line no-underscore-dangle
-    const isExomeVariant = esHit._index === 'gnomad_exomes_2_1_1'
+    const isExomeVariant = esHit._index === 'pcgc_exomes'
 
+    /*
     const ac = variantData[subsetKey].AC_adj.total
     const an = variantData[subsetKey].AN_adj.total
     */
@@ -102,9 +103,9 @@ const shapeGnomadVariantSummary = (context) => {
       an_gnomad: 0,
       
       
-//      [isExomeVariant ? 'genome' : 'exome']: null,
-//      [isExomeVariant ? 'exome' : 'genome']: {
-      exome: {
+      [isExomeVariant ? 'genome' : 'exome']: null,
+      [isExomeVariant ? 'exome' : 'genome']: {
+      //exome: {
         /*
         ac: variantData.AC,
         ac_hom: variantData.nhomalt,

@@ -10,6 +10,7 @@ import {
 */
 
 import mergePcgcAndGnomadVariantSummaries from './mergePcgcAndGnomadVariants'
+import mergeExomeAndGenomeVariantSummaries from './mergeExomeAndGenomeVariants'
 import shapeGnomadVariantSummary from './shapeGnomadVariantSummary'
 
 const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) => {
@@ -163,6 +164,64 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
 
+
+  const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
+      index: 'sfari_genomes',
+      type: 'variant',
+      size: 10000,
+      _source: [
+        'AC_adj',
+        'AN_adj',
+        'nhomalt_adj',
+        'alt',
+        'chrom',
+        'filters',
+        'pos',
+        'ref',
+        'sortedTranscriptConsequences',
+        'variant_id',
+        'xpos',
+        'AC',
+        'AN',
+        'AF',
+        'nhomalt',
+        'AC_raw',
+        'AN_raw',
+        'AF_raw',
+        'nhomalt_raw',
+        'AC_proband',
+        'AN_proband',
+        'AF_proband'
+      ],
+      body: {
+        query: {
+          bool: {
+            filter: [
+              {
+                nested: {
+                  path: 'sortedTranscriptConsequences',
+                  query: {
+                    term: { 'sortedTranscriptConsequences.gene_id': geneId },
+                  },
+                },
+              },
+              { bool: { should: rangeQueries } },
+              { range: { ['AC_raw']: { gt: 0 } } },
+            ],
+          },
+        },
+        sort: [{ pos: { order: 'asc' } }],
+      },
+    })
+
+
+  const genomeVariants = ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
+  //console.log(genomeVariants)
+  const exomeAndGenomeVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
+
+  // console.log(exomeAndGenomeVariants)
+
+
   //)
   //console.log("Checking local ES query")
   //console.log(exomeVariants)
@@ -193,7 +252,10 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
   //console.log(gnomad_data.gene.variants)
 
-  const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
+  //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
+  const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.gene.variants)
+
+  console.log(combinedVariants)
   //const combinedVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
 
   // TODO: This can be fetched in parallel with exome/genome data
@@ -207,6 +269,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //console.log(exomeVariants.length)
 
   return combinedVariants
+  
   //return exomeVariants
   //const variantData = exomeVariants._source
 
