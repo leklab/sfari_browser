@@ -128,6 +128,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'AN_proband',
         'AF_proband'
       ],
+      /*
       body: {
         query : {
           nested: {
@@ -138,6 +139,23 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
               }
             }
           }
+        },*/
+      body: {
+        query: {
+          bool: {
+            filter: [
+              {
+                nested: {
+                  path: 'sortedTranscriptConsequences',
+                  query: {
+                    term: { 'sortedTranscriptConsequences.gene_id': geneId },
+                  },
+                },
+              },
+              { bool: { should: rangeQueries } },
+              { range: { ['AC_raw']: { gt: 0 } } },
+            ],
+          },
         },
         sort: [{ pos: { order: 'asc' } }],
       },
