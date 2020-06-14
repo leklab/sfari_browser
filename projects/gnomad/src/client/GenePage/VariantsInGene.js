@@ -92,7 +92,7 @@ class VariantsInGene extends Component {
   getColumns = memoizeOne((width, chrom) =>
     getColumns({
       width,
-      includeHomozygoteAC: true,
+      includeHomozygoteAC: false,
       includeHemizygoteAC: false,
     })
   )

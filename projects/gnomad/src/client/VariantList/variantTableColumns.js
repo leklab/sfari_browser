@@ -95,6 +95,28 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
             ),
     },*/
     {
+      key: 'datasets',
+      heading: 'Source',
+      grow: 0,
+      minWidth: 100,
+      render: variant => (
+              <React.Fragment>
+                {variant.exome && (
+                  <DatasetIcon
+                    dataset="gnomadExome"
+                    isFiltered={false}
+                  />
+                )}
+                {variant.genome && (
+                  <DatasetIcon
+                    dataset="gnomadGenome"
+                    isFiltered={false}
+                  />
+                )}
+              </React.Fragment>
+            ),
+    },
+    {
       key: 'hgvs',
       heading: 'Consequence',
       grow: 1,
