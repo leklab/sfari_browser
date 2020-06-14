@@ -126,7 +126,8 @@ export class PcgcPopulationsTable extends Component {
 
     this.state = {
       includeExomes: props.exomePopulations.length !== 0,
-      includeGenomes: props.genomePopulations.length !== 0,
+      //includeGenomes: props.genomePopulations.length !== 0,
+      includeGenomes: false,
     }
   }
 
@@ -169,10 +170,11 @@ export class PcgcPopulationsTable extends Component {
           />
           <Checkbox
             checked={this.state.includeGenomes}
-            disabled={
+            disabled={true
+            /*
               this.props.genomePopulations.length === 0 ||
               (!this.state.includeExomes && this.state.includeGenomes)
-            }
+            */}
             id="includeGenomePopulations"
             label="Genomes"
             onChange={includeGenomes => {
