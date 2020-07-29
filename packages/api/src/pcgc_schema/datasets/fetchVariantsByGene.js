@@ -193,6 +193,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'AN_proband',
         'AF_proband'
       ],
+      /*
       body: {
         query: {
           bool: {
@@ -211,12 +212,25 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
           },
         },
         sort: [{ pos: { order: 'asc' } }],
+      },*/
+      
+      body: {
+        query : {
+          nested: {
+            path: 'sortedTranscriptConsequences',
+            query:{
+              match: {
+                'sortedTranscriptConsequences.gene_id': geneId
+              }
+            }
+          }
+        },
       },
     })
 
-
+  console.log(ghits)
   const genomeVariants = ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
-  //console.log(genomeVariants)
+  console.log(genomeVariants)
   const exomeAndGenomeVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
 
   // console.log(exomeAndGenomeVariants)
@@ -255,7 +269,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
   const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.gene.variants)
 
-  console.log(combinedVariants)
+  //console.log(combinedVariants)
   //const combinedVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
 
   // TODO: This can be fetched in parallel with exome/genome data
