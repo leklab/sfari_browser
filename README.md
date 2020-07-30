@@ -103,14 +103,14 @@ For populating gene models in mongo refer to <a href="https://github.com/leklab/
 ## Build and Start
 
 GraphQL API Server
-```
+```shell
 cd sfari_browser/packages/api
 ./build.sh
 ./start.sh
 ```
 
-SFARI BROWSER
-```
+SFARI Browser
+```shell
 cd sfari_browser/packages/api
 ./build.sh
 ```
