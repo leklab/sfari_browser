@@ -225,6 +225,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
             }
           }
         },
+        sort: [{ pos: { order: 'asc' } }],
       },
     })
 
