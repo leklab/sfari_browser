@@ -99,22 +99,6 @@ python submit.py --run-locally hail_scripts/populate_clinvar.py \
 
 For populating gene models in mongo refer to <a href="https://github.com/leklab/exac_browser/blob/master/gnomad_browser.md">here</a>
 
-
-## Build and Start
-
-GraphQL API Server
-```shell
-cd sfari_browser/packages/api
-./build.sh
-./start.sh
-```
-
-SFARI Browser
-```shell
-cd sfari_browser/packages/api
-./build.sh
-```
-
 ## Server configuration
 GraphQL API
 ```
@@ -141,6 +125,21 @@ export GA_TRACKING_ID="UA-149585832-1"
 
 #build code is in 
 sfari_browser/projects/gnomad/dist/public
+```
+
+## Build and Start
+
+GraphQL API Server
+```shell
+cd sfari_browser/packages/api
+./build.sh
+./start.sh
+```
+
+SFARI Browser
+```shell
+cd sfari_browser/packages/api
+./build.sh
 ```
 
 
