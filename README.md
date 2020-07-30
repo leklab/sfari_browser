@@ -11,7 +11,10 @@ https://github.com/broadinstitute/gnomad-browser
 
 * [Node.js](https://nodejs.org)
 * [yarn](https://yarnpkg.com)
-
+* Elastic search
+* redis
+* mongo
+* nginx
 
 ## Installation
 
@@ -28,6 +31,12 @@ sudo apt-get install mongodb
 # nginx
 sudo apt install nginx
 
+# browser code
+git clone https://github.com/leklab/sfari_browser.git
+
+# Install node.js dependencies
+cd sfari_browser
+yarn
 ```
 
 
@@ -52,7 +61,13 @@ then restart
 sysctl -p
 
 Example script on starting elastic search
+https://github.com/leklab/sfari_browser/blob/master/misc/start_elasticsearch.sh
+```
 
+nginx
+```
+Example site configuration
+https://github.com/leklab/sfari_browser/blob/master/misc/sfari-browser
 
 ```
 
@@ -82,25 +97,61 @@ python submit.py --run-locally hail_scripts/populate_clinvar.py \
 --cpu-limit 4 --driver-memory 16G --executor-memory 8G
 ```
 
-For populating gene models in mongo refer to here
+For populating gene models in mongo refer to <a href="https://github.com/leklab/exac_browser/blob/master/gnomad_browser.md">here</a>
 
 
-## Getting started
+## Build and Start
 
-Clone repository and download dependencies:
-
-```shell
-git clone --recursive https://github.com/macarthur-lab/gnomadjs.git
-cd gnomadjs
-yarn
+GraphQL API Server
+```
+cd sfari_browser/packages/api
+./build.sh
+./start.sh
 ```
 
-To start a local instance of the gnomAD browser UI which fetches data
-from gnomad.broadinstitute.org:
-
-```shell
-cd gnomadjs/projects/gnomad
-yarn start
+SFARI BROWSER
+```
+cd sfari_browser/packages/api
+./build.sh
 ```
 
-Open http://localhost:8008 in a web browser.
+## Server configuration
+GraphQL API
+```
+#sfari_browser/packages/api/start.sh 
+
+#contains location of the databases
+DEFAULT_ELASTICSEARCH_URL="http://localhost:9200"
+DEFAULT_MONGO_URL="mongodb://localhost:27017/exac"
+DEFAULT_REDIS_HOST="localhost"
+export ELASTICSEARCH_URL=${ELASTICSEARCH_URL:-$DEFAULT_ELASTICSEARCH_URL}
+export GNOMAD_MONGO_URL=${MONGO_URL:-$DEFAULT_MONGO_URL}
+export REDIS_HOST=${REDIS_HOST:-$DEFAULT_REDIS_HOST}
+```
+
+SFARI Browser
+```
+#sfari_browser/projects/gnomad/build.sh
+
+#contains location of API server
+export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://18.212.207.114:8007"}
+
+#contains google analytics tracking id
+export GA_TRACKING_ID="UA-149585832-1"
+
+#build code is in 
+sfari_browser/projects/gnomad/dist/public
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

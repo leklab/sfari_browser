@@ -1,0 +1,14 @@
+server {
+  listen 80;
+
+  server_name 0.0.0.0;
+  root /home/ubuntu/sfari_browser/projects/gnomad/dist/public;
+  index index.html;
+
+  location / {
+    try_files $uri /index.html =404;
+  }
+}
+
+
+
