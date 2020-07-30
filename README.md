@@ -1,7 +1,9 @@
 # SFARI Browser
 
 JavaScript tools for exploring genomic data.  
+
 Forked from https://github.com/leklab/pcgc_browser  
+
 which was forked from the original gnomAD browser  
 https://github.com/broadinstitute/gnomad-browser
 
@@ -31,12 +33,35 @@ sudo apt install nginx
 
 ## Configuration
 
+Yarn
+```
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update
+sudo apt remove cmdtest
+sudo apt install yarn
+```
+
+Elastic search
+```
+edit /etc/sysctl.conf
+to include the configuration line
+vm.max_map_count=262144
+
+then restart
+sysctl -p
+
+Example script on starting elastic search
+
+
+```
+
 
 ## Data sets
 
 * GTEx data set
 * Constraint data
-* ClinVar data
+* ClinVar (GRCh38) data
 
 ## Populating data sets
 
@@ -56,6 +81,8 @@ python submit.py --run-locally hail_scripts/populate_clinvar.py \
 --spark-home /home/ubuntu/bin/spark-2.4.3-bin-hadoop2.7 \
 --cpu-limit 4 --driver-memory 16G --executor-memory 8G
 ```
+
+For populating gene models in mongo refer to here
 
 
 ## Getting started
