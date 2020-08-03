@@ -26,6 +26,8 @@ const comparators = {
   hgvs: makeStringComparator('hgvs'),
   ac_hom: makeNumericComparator('ac_hom'),
   ac_hemi: makeNumericComparator('ac_hemi'),
+  ac_proband: makeNumericComparator('ac_proband'),
+  gnomad_freq: makeNumericComparator('gnomad_freq'),
 }
 
 const sortVariants = (variants, { sortKey, sortOrder }) => {
