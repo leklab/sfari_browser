@@ -113,7 +113,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         //'nonpar',
         'pos',
         'ref',
-//        'rsid',
+        'rsid',
         'sortedTranscriptConsequences',
         'variant_id',
         'xpos',
@@ -178,6 +178,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'filters',
         'pos',
         'ref',
+        'rsid',        
         'sortedTranscriptConsequences',
         'variant_id',
         'xpos',
@@ -248,6 +249,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
       variants(dataset: gnomad_r3){
         pos
         variantId
+        rsid
         exome{
           ac
           an

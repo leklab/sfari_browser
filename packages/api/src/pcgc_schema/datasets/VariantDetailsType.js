@@ -218,7 +218,7 @@ const VariantDetailsType = new GraphQLObjectType({
       }),
     },
     
-    //rsid: { type: GraphQLString },
+    rsid: { type: GraphQLString },
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
   },
   isTypeOf: variantData => variantData.gqlType === 'VariantDetails',

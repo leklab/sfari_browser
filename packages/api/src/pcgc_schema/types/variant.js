@@ -68,7 +68,7 @@ export const VariantSummaryType = new GraphQLObjectType({
     hgvs: { type: GraphQLString },
     hgvsc: { type: GraphQLString },
     hgvsp: { type: GraphQLString },
-    //rsid: { type: GraphQLString },
+    rsid: { type: GraphQLString },
 
     ac_gnomad: { type: GraphQLInt },
     an_gnomad: { type: GraphQLInt },    

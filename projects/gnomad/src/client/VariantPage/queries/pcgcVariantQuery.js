@@ -5,9 +5,10 @@ query PcgcVariant($variantId: String!) {
     chrom
     pos
     ref
-    variantId
+    variantId 
     xpos
     ... on VariantDetails {
+      rsid
       exome {
         ac
         an

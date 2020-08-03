@@ -79,7 +79,10 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
             //console.log(tmp_push)
           }
 
-
+          // take rsid from gnomAD
+          if(tmp_gnomad.rsid){
+            tmp_push.rsid = tmp_gnomad.rsid
+          }
 
           mergedVariants.push(tmp_push)
 

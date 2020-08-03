@@ -1,5 +1,6 @@
 //import { UserVisibleError } from '../../errors'
 //import { fetchGnomadMNVSummariesByVariantId } from './gnomadMultiNucleotideVariants'
+import { request } from "graphql-request"
 
 /*
 const formatHistogram = histogramData => ({
@@ -345,6 +346,20 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(genomeData) 
 
   // const sharedData = exomeData
+
+  
+  const query = `{
+    variant(variantId: "${variantId}", dataset: gnomad_r3){
+      rsid
+      variantId    
+    }
+  }
+  ` 
+  
+
+  const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+  console.log(gnomad_data)
+
   const sharedData = exomeData || genomeData
 
   const sharedVariantFields = {
@@ -468,6 +483,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
       : null,
 
     //rsid: sharedData.rsid,
+    rsid: gnomad_data ? gnomad_data.variant.rsid : null, 
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
   }
 }
