@@ -27,7 +27,7 @@ export const ReferenceList = ({ variant }) => {
         <ExternalLink href={ucscURL}>UCSC</ExternalLink>
       </ListItem>
       <ListItem>
-        <ExternalLink href={clinvarURL}>ClinVar</ExternalLink>
+        <ExternalLink href={clinvarURL}>ClinVar search</ExternalLink>
       </ListItem>
     </List>
   )
