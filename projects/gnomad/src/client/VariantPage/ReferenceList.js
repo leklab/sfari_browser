@@ -5,9 +5,11 @@ import { ExternalLink, List, ListItem } from '@broad/ui'
 
 export const ReferenceList = ({ variant }) => {
   /* eslint-disable prettier/prettier */
-  const clinvarURL = variant.rsid && variant.rsid !== '.'
+  const clinvarSearch = variant.rsid && variant.rsid !== '.'
     ? `http://www.ncbi.nlm.nih.gov/clinvar?term=${variant.rsid}%5BVariant%20ID%5D`
     : `http://www.ncbi.nlm.nih.gov/clinvar?term=(${variant.chrom}%5BChromosome%5D)%20AND%20${variant.pos}%5BBase%20Position%20for%20Assembly%20GRCh38%5D`
+
+  const clinvarURL = `http://www.ncbi.nlm.nih.gov/clinvar?term=${variant.clinvarAlleleID}%5BAlleleID%5D`
 
   const dbsnpURL = `http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=${variant.rsid}`
 
@@ -27,7 +29,11 @@ export const ReferenceList = ({ variant }) => {
         <ExternalLink href={ucscURL}>UCSC</ExternalLink>
       </ListItem>
       <ListItem>
-        <ExternalLink href={clinvarURL}>ClinVar search</ExternalLink>
+        {variant.clinvarAlleleID ? (
+          <ExternalLink href={clinvarURL}>ClinVar ({variant.clinvarAlleleID})</ExternalLink>
+        ) : (
+        <ExternalLink href={clinvarSearch}>ClinVar search</ExternalLink>
+        )}
       </ListItem>
     </List>
   )

@@ -9,6 +9,7 @@ query PcgcVariant($variantId: String!) {
     xpos
     ... on VariantDetails {
       rsid
+      clinvarAlleleID
       exome {
         ac
         an

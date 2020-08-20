@@ -325,6 +325,26 @@ const fetchColocatedVariants = async (ctx, variantId, subset) => {
 */
 
 
+const fetchRSID = async (ctx, variantId) => {
+
+  const query = `{
+    variant(variantId: "${variantId}", dataset: gnomad_r3){
+      rsid
+      variantId    
+    }
+  }
+  ` 
+
+  try{
+    const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+    return gnomad_data
+  }catch(error){
+    return undefined
+  }
+
+
+}
+
 const fetchVariantDetails = async (ctx, variantId) => {
   //const { exomeData, genomeData } = await fetchGnomadVariantData(ctx, variantId, subset)
 
@@ -347,18 +367,61 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   // const sharedData = exomeData
 
+
+  const clinVarES = await ctx.database.elastic.search({
+    index: 'clinvar_grch38',
+    type: 'variant',
+    _source: [
+      'allele_id',
+      'alt',
+      'chrom',
+      'clinical_significance',
+      'gene_id_to_consequence_json',
+      'gold_stars',
+      'pos',
+      'ref',
+      'variant_id',
+      'xpos',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant_id: variantId } },
+          ],
+        },
+      }
+    },
+    size: 1,
+  })
+
   
+  const clinVarData = clinVarES.hits.hits[0] ? clinVarES.hits.hits[0]._source : undefined
+  console.log(clinVarData)
+  
+  /*
   const query = `{
     variant(variantId: "${variantId}", dataset: gnomad_r3){
       rsid
       variantId    
     }
   }
-  ` 
-  
+  `
+  const gnomad_data = undefined
+    
 
-  const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
-  console.log(gnomad_data)
+
+  try{
+    console.log("In here1")
+    gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+  //console.log(gnomad_data.data)
+
+  }catch(error){
+  }
+  */
+
+  const gnomad_data = await fetchRSID(ctx, variantId)
+  console.log(gnomad_data)  
 
   const sharedData = exomeData || genomeData
 
@@ -483,7 +546,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
       : null,
 
     //rsid: sharedData.rsid,
-    rsid: gnomad_data ? gnomad_data.variant.rsid : null, 
+    rsid: gnomad_data ? gnomad_data.variant.rsid : null,
+    clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
   }
 }
