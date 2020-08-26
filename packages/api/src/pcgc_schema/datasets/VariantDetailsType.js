@@ -220,6 +220,7 @@ const VariantDetailsType = new GraphQLObjectType({
     
     rsid: { type: GraphQLString },
     clinvarAlleleID: { type: GraphQLString },
+    denovoHC: { type: GraphQLString },
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
   },
   isTypeOf: variantData => variantData.gqlType === 'VariantDetails',

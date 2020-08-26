@@ -337,6 +337,7 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
       }      
       variants {
         consequence
+        flags
         hgvs
         hgvsp
         hgvsc

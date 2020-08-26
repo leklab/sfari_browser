@@ -157,6 +157,17 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
           .map(flag => <VariantFlag key={flag} type={flag} />),
     },*/
     {
+      key: 'flags',
+      heading: 'Flags',
+      grow: 0,
+      isSortable: true,
+      minWidth: 80,
+      render: (row, key) =>
+        row[key]
+          .filter(flag => flag !== 'nc_transcript')
+          .map(flag => <VariantFlag key={flag} type={flag} />),
+    },
+    {
       key: 'ac_proband',
       heading: width < 600 ? 'PC' : 'Affected Allele Count',
       grow: 0,

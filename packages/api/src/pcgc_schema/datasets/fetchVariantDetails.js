@@ -397,8 +397,35 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   
   const clinVarData = clinVarES.hits.hits[0] ? clinVarES.hits.hits[0]._source : undefined
-  console.log(clinVarData)
+  //console.log(clinVarData)
   
+
+  const denovoES = await ctx.database.elastic.search({
+    index: 'autism_dnms',
+    type: 'variant',
+    _source: [
+      'variant_id',
+      'high_confidence_dnm',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant_id: variantId } },
+          ],
+        },
+      }
+    },
+    size: 1,
+  })
+
+  
+  const denovoData = denovoES.hits.hits[0] ? denovoES.hits.hits[0]._source : undefined
+  console.log(denovoData)
+
+
+
+
   /*
   const query = `{
     variant(variantId: "${variantId}", dataset: gnomad_r3){
@@ -421,7 +448,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   */
 
   const gnomad_data = await fetchRSID(ctx, variantId)
-  console.log(gnomad_data)  
+  //console.log(gnomad_data)  
 
   const sharedData = exomeData || genomeData
 
@@ -548,6 +575,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     //rsid: sharedData.rsid,
     rsid: gnomad_data ? gnomad_data.variant.rsid : null,
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
+    denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
   }
 }

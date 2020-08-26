@@ -118,8 +118,14 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
   const exomeAlleleFrequency = exomeAlleleNumber === 0 ? 0 : exomeAlleleCount / exomeAlleleNumber
   const genomeAlleleFrequency = genomeAlleleNumber === 0 ? 0 : genomeAlleleCount / genomeAlleleNumber
 
+
+  const exomeHomCount = isPresentInExome ? variant.exome.ac_hom : 0
+  const genomeHomCount = isPresentInGenome ? variant.genome.ac_hom : 0
+
   const totalAlleleCount = exomeAlleleCount + genomeAlleleCount
   const totalAlleleNumber = exomeAlleleNumber + genomeAlleleNumber
+  const totalHomCount = exomeHomCount + genomeHomCount
+
   const totalAlleleFrequency = totalAlleleNumber === 0 ? 0 : totalAlleleCount / totalAlleleNumber
 
   return (
@@ -153,6 +159,12 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td>{isPresentInGenome && genomeAlleleFrequency.toPrecision(4)}</td>
           <td>{totalAlleleFrequency.toPrecision(4)}</td>
         </tr>
+        <tr>
+          <th scope="row">Number of homozygotes</th>
+          <td>{isPresentInExome && exomeHomCount}</td>
+          <td>{isPresentInGenome && genomeHomCount}</td>
+          <td>{totalHomCount}</td>
+        </tr>
       </tbody>
     </Table>
   )
@@ -163,6 +175,7 @@ GnomadVariantOccurrenceTable.propTypes = {
     exome: PropTypes.shape({
       ac: PropTypes.number.isRequired,
       an: PropTypes.number.isRequired,
+      ac_hom: PropTypes.number.isRequired,
       /*faf95: PropTypes.shape({
         popmax: PropTypes.number,
         popmax_population: PropTypes.string,
@@ -172,6 +185,7 @@ GnomadVariantOccurrenceTable.propTypes = {
     genome: PropTypes.shape({
       ac: PropTypes.number.isRequired,
       an: PropTypes.number.isRequired,
+      ac_hom: PropTypes.number.isRequired,
       /*faf95: PropTypes.shape({
         popmax: PropTypes.number,
         popmax_population: PropTypes.string,

@@ -9,6 +9,11 @@ const flagProps = {
     level: 'info',
     tooltip: 'Found in a low complexity region\nVariant annotation or quality dubious',
   },
+  denovo: {
+    children: 'De Novo',
+    level: 'info',
+    tooltip: 'De novo variant',
+  },
   lc_lof: {
     children: 'LC LoF',
     level: 'error',

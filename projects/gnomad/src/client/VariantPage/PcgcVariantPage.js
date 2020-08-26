@@ -49,6 +49,11 @@ const ScrollWrapper = styled.div`
   overflow-x: auto;
 `
 
+const DenovoSection = styled.div`
+  color:red;
+
+`
+
 const VariantType = ({ variantId }) => {
   const [chrom, pos, ref, alt] = variantId.split('-') // eslint-disable-line no-unused-vars
   if (!ref || !alt) {
@@ -98,6 +103,8 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
         const numTranscripts = variant.sortedTranscriptConsequences.length
         const geneIds = variant.sortedTranscriptConsequences.map(csq => csq.gene_id)
         const numGenes = new Set(geneIds).size
+        const dnm_confidence = variant.denovoHC && variant.denovoHC == 'Yes' ? 'HIGH' : 'LOW'
+
         console.log("Ih here 2")
         console.log(variant)
 
@@ -122,6 +129,14 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   </ul>
                 </div>
               )*/}
+
+              {variant.denovoHC && (
+                <DenovoSection>
+                  <p>
+                    <strong>This is a {dnm_confidence} confidence de novo variant</strong>
+                  </p>
+                </DenovoSection>
+              )}
 
               {/*variant.multiNucleotideVariants.length > 0 && (
                 <div>

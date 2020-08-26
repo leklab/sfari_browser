@@ -13,6 +13,46 @@ import mergePcgcAndGnomadVariantSummaries from './mergePcgcAndGnomadVariants'
 import mergeExomeAndGenomeVariantSummaries from './mergeExomeAndGenomeVariants'
 import shapeGnomadVariantSummary from './shapeGnomadVariantSummary'
 
+
+const annotateVariantsWithDenovoFlag = (variants, dnms) => {
+  const dnmsVariantIds = new Set(dnms.reduce((acc, dnms) => acc.concat(dnms.variant_id), []))
+
+  variants.forEach(variant => {
+    if (dnmsVariantIds.has(variant.variantId)) {
+      variant.flags.push('denovo')
+    }
+  })
+
+  return variants
+}
+
+
+const fetchDenovos = async (ctx, geneId) => {
+
+  const hits = await fetchAllSearchResults(ctx.database.elastic, {
+
+    index: 'autism_dnms',
+    type: 'variant',
+    size: 10000,
+    _source: [
+      'variant_id',
+      'high_confidence_dnm',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { ANN_GENEID: geneId } },
+          ],
+        },
+      },
+      sort: [{ POS: { order: 'asc' } }],
+    },
+  })
+
+  return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
+}
+
 const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) => {
   const geneExons = await lookupExonsByGeneId(ctx.database.gnomad, geneId)
   const filteredRegions = geneExons.filter(exon => exon.feature_type === 'CDS')
@@ -109,7 +149,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'alt',
         'chrom',
         'filters',
-//        'flags',
+        'flags',
         //'nonpar',
         'pos',
         'ref',
@@ -176,6 +216,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'alt',
         'chrom',
         'filters',
+        'flags',        
         'pos',
         'ref',
         'rsid',        
@@ -271,6 +312,11 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
   const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.gene.variants)
+
+
+  const dnms = await fetchDenovos(ctx,geneId)
+  //console.log(dnms)
+  annotateVariantsWithDenovoFlag(combinedVariants,dnms)
 
   //console.log(combinedVariants)
   //const combinedVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)

@@ -34,9 +34,12 @@ const getFlags = (variantData, transcriptConsequence) => {
     flags.push('lc_lof')
   }
 
+  // This flag isn't working properly
+  /*
   if (isLofOnNonCodingTranscript) {
     flags.push('nc_transcript')
   }
+  */
 
   return flags
 }
@@ -94,7 +97,8 @@ const shapeGnomadVariantSummary = (context) => {
       
       consequence: transcriptConsequence.major_consequence,
       consequence_in_canonical_transcript: !!transcriptConsequence.canonical,
-      //flags: getFlags(variantData, transcriptConsequence),
+      flags: getFlags(variantData, transcriptConsequence),
+      //flags: [],
       hgvs: transcriptConsequence.hgvs,
       hgvsc: transcriptConsequence.hgvsc ? transcriptConsequence.hgvsc.split(':')[1] : null,
       hgvsp: transcriptConsequence.hgvsp ? transcriptConsequence.hgvsp.split(':')[1] : null,
