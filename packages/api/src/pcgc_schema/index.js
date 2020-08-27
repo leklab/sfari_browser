@@ -31,7 +31,7 @@ import transcriptType, {
 } from './types/transcript'
 
 
-//import regionType from './types/region'
+import regionType from './types/region'
 
 import { SearchResultType, resolveSearchResults } from './types/search'
 import { VariantInterface } from './types/variant'
@@ -97,6 +97,8 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       },
       resolve: (obj, args, ctx) => fetchGnomadMNVDetails(ctx, args.variantId),
     },
+    */
+
     region: {
       description: 'Look up data by start/stop. Example: (start: 55505222, stop: 55505300, chrom: 1).',
       type: regionType,
@@ -114,7 +116,6 @@ The fields below allow for different ways to look up PCGC data. Click on the the
         regionSize: args.stop - args.start,
       }),
     },
-    */
 
     searchResults: {
       type: new GraphQLList(SearchResultType),

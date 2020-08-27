@@ -45,13 +45,13 @@ const RegionPage = ({ datasetId, history, region, regionId, screenSize }) => {
         rightPanelWidth={smallScreen ? 0 : 160}
         width={regionViewerWidth}
       >
-        <CoverageTrack
+      {/*  <CoverageTrack
           datasetId={datasetId}
           chrom={chrom}
           showExomeCoverage={datasetId !== 'gnomad_sv_r2'}
           start={start}
           stop={stop}
-        />
+        /> */}
 
         <GenesTrack
           genes={genes}
@@ -64,7 +64,8 @@ const RegionPage = ({ datasetId, history, region, regionId, screenSize }) => {
           <StructuralVariantsInRegion region={region} width={regionViewerWidth} />
         ) : (
           <VariantsInRegion datasetId={datasetId} region={region} width={regionViewerWidth} />
-        )}
+        )
+        }
       </RegionViewer>
     </TrackPage>
   )

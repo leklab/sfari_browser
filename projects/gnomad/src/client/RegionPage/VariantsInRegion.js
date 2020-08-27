@@ -51,6 +51,7 @@ class VariantsInRegion extends Component {
     const defaultSortKey = 'variant_id'
     const defaultSortOrder = 'ascending'
 
+    /* 
     const renderedVariants = sortVariants(
       mergeExomeAndGenomeData(filterVariants(props.variants, defaultFilter)),
       {
@@ -58,6 +59,9 @@ class VariantsInRegion extends Component {
         sortOrder: defaultSortOrder,
       }
     )
+    */
+    console.log("In here 1")
+    const renderedVariants = mergeExomeAndGenomeData(props.variants)
 
     this.state = {
       filter: defaultFilter,
@@ -70,12 +74,11 @@ class VariantsInRegion extends Component {
     }
   }
 
-  getColumns = memoizeOne((width, chrom, datasetId) =>
+  getColumns = memoizeOne((width, chrom) =>
     getColumns({
-      datasetId,
       width,
-      includeHomozygoteAC: chrom !== 'Y',
-      includeHemizygoteAC: chrom === 'X' || chrom === 'Y',
+      includeHomozygoteAC: false,
+      includeHemizygoteAC: false,
     })
   )
 
@@ -175,7 +178,7 @@ class VariantsInRegion extends Component {
     return (
       <div>
         <VariantTrack
-          title={`${datasetLabel}\n(${renderedVariants.length})`}
+          title={`SFARI Variants (${renderedVariants.length})`}
           variants={renderedVariants}
         />
         <NavigatorTrack
@@ -187,15 +190,15 @@ class VariantsInRegion extends Component {
         />
         <TrackPageSection style={{ fontSize: '14px', marginTop: '1em' }}>
           <VariantFilterControls onChange={this.onFilter} value={filter} />
-          <div>
+         {/* <div>
             <ExportVariantsButton
               datasetId={datasetId}
               exportFileName={`${datasetLabel}_${region.chrom}-${region.start}-${region.stop}`}
               variants={renderedVariants}
             />
-          </div>
+          </div> */}
           <VariantTable
-            columns={this.getColumns(width, region.chrom, datasetId)}
+            columns={this.getColumns(width, region.chrom)}
             highlightText={filter.searchText}
             onHoverVariant={this.onHoverVariant}
             onRequestSort={this.onSort}
@@ -213,7 +216,7 @@ class VariantsInRegion extends Component {
 
 const ConnectedVariantsInRegion = ({ datasetId, region, width }) => {
   const { chrom, start, stop } = region
-
+  /*
   const query = `{
     region(start: ${start}, stop: ${stop}, chrom: "${chrom}") {
       variants(dataset: ${datasetId}) {
@@ -259,6 +262,43 @@ const ConnectedVariantsInRegion = ({ datasetId, region, width }) => {
       }
     }
   }`
+  */
+  const query = `{
+    region(start: ${start}, stop: ${stop}, chrom: "${chrom}") {
+      variants {
+        consequence
+        flags
+        hgvs
+        hgvsp
+        hgvsc
+        pos
+        variant_id: variantId
+        xpos
+        ac_gnomad
+        an_gnomad
+        exome {
+          ac
+          an
+          af
+          ac_hom
+          ac_proband
+          an_proband
+          af_proband
+        }
+        genome {
+          ac
+          an
+          af
+          ac_hom
+          ac_proband
+          an_proband
+          af_proband
+        }        
+      }
+    }
+  }`
+  console.log("In here 4")
+  console.log(query)
 
   return (
     <Query query={query}>
