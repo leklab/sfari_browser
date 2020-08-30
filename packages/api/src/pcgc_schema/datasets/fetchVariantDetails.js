@@ -271,12 +271,13 @@ const fetchVariantData = async (ctx, variantId) => {
            genomeData: genomeData.hits.hits[0] ? genomeData.hits.hits[0]._source : undefined }
 }
 
-/*
-const fetchColocatedVariants = async (ctx, variantId, subset) => {
+
+const fetchColocatedVariants = async (ctx, variantId) => {
   const parts = variantId.split('-')
   const chrom = parts[0]
   const pos = Number(parts[1])
 
+  /*
   const requests = [
     { index: 'gnomad_exomes_2_1_1', subset },
     // All genome samples are non_cancer, so separate non-cancer numbers are not stored
@@ -303,17 +304,64 @@ const fetchColocatedVariants = async (ctx, variantId, subset) => {
       })
     )
   )
+  */
 
-*/
+  const exomeResponse = await ctx.database.elastic.search({
+  //await ctx.database.elastic.search({
+    index: 'pcgc_exomes',
+    type: 'variant',
+    _source: ['variant_id'],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { chrom } },
+            { term: { pos } },
+            { range: { ['AC_raw']: { gt: 0 } } },
+          ],
+        },
+      },
+    },
+  })
 
-/*
+  const genomeResponse = await ctx.database.elastic.search({
+  //await ctx.database.elastic.search({
+    index: 'sfari_genomes',
+    type: 'variant',
+    _source: ['variant_id'],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { chrom } },
+            { term: { pos } },
+          ],
+        },
+      },
+    },
+  })
+
+
+  //console.log(exomeResponse)
+  //console.log(genomeResponse)
+
+
+
+  
+
   // eslint-disable no-underscore-dangle
   const exomeVariants = exomeResponse.hits.hits.map(doc => doc._source.variant_id)
   const genomeVariants = genomeResponse.hits.hits.map(doc => doc._source.variant_id)
   // eslint-enable no-underscore-dangle 
 
+  //console.log(exomeVariants)
+  //console.log(genomeVariants)
+
   const combinedVariants = exomeVariants.concat(genomeVariants)
 
+  //return combinedVariants
+
+  
   return combinedVariants
     .filter(otherVariantId => otherVariantId !== variantId)
     .sort()
@@ -321,8 +369,12 @@ const fetchColocatedVariants = async (ctx, variantId, subset) => {
       (otherVariantId, index, allOtherVariantIds) =>
         otherVariantId !== allOtherVariantIds[index + 1]
     )
+
+  
+
+
 }
-*/
+
 
 
 const fetchRSID = async (ctx, variantId) => {
@@ -468,6 +520,9 @@ const fetchVariantDetails = async (ctx, variantId) => {
   ])
   */
 
+  const colocatedVariants = await fetchColocatedVariants(ctx, variantId)
+  console.log(colocatedVariants)
+
   return {
     gqlType: 'VariantDetails',
     // variant interface fields
@@ -482,6 +537,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     colocatedVariants,
     multiNucleotideVariants,
     */
+
+    colocatedVariants,
     
     exome: exomeData
       ? {

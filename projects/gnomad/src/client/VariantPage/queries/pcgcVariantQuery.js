@@ -11,6 +11,7 @@ query PcgcVariant($variantId: String!) {
       rsid
       clinvarAlleleID
       denovoHC
+      colocatedVariants
       exome {
         ac
         an

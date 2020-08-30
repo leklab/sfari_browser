@@ -115,7 +115,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 <GnomadVariantOccurrenceTable variant={variant} />
               </ScrollWrapper>
 
-              {/*variant.colocatedVariants.length > 0 && (
+              {variant.colocatedVariants.length > 0 && (
                 <div>
                   <p>
                     <strong>This variant is multiallelic. Other alt alleles are:</strong>
@@ -128,7 +128,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                     ))}
                   </ul>
                 </div>
-              )*/}
+              )}
 
               {variant.denovoHC && (
                 <DenovoSection>

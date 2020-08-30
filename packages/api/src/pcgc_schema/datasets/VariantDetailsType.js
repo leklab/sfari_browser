@@ -137,10 +137,11 @@ const VariantDetailsType = new GraphQLObjectType({
         },
       }),
     },
-    colocatedVariants: { type: new GraphQLList(GraphQLString) },
+    
     multiNucleotideVariants: { type: new GraphQLList(MultiNucleotideVariantSummaryType) },
     */
 
+    colocatedVariants: { type: new GraphQLList(GraphQLString) },
     
     exome: {
       type: new GraphQLObjectType({
