@@ -172,6 +172,8 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 <PcgcPopulationsTable
                   exomePopulations={variant.exome ? variant.exome.populations : []}
                   genomePopulations={variant.genome ? variant.genome.populations : []}
+                  gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
+                  gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}                  
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>

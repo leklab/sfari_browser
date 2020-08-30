@@ -12,6 +12,7 @@ query PcgcVariant($variantId: String!) {
       clinvarAlleleID
       denovoHC
       colocatedVariants
+      gnomadAF
       exome {
         ac
         an
@@ -33,6 +34,12 @@ query PcgcVariant($variantId: String!) {
           an
           ac_hom
         }
+      }
+      gnomadPopFreq {
+        id
+        ac
+        an
+        ac_hom
       }      
       sortedTranscriptConsequences {
         canonical

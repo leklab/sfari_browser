@@ -389,13 +389,49 @@ const fetchRSID = async (ctx, variantId) => {
 
   try{
     const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+
     return gnomad_data
   }catch(error){
     return undefined
   }
 
+}
+
+const fetchGnomadPopFreq = async (ctx, variantId) => {
+
+  const query = `{
+    variant(variantId: "${variantId}", dataset: gnomad_r3){
+      ... on GnomadVariantDetails{
+        genome{
+          ac
+          an
+          populations{
+            id
+            ac
+            an
+            ac_hemi
+            ac_hom
+          }
+        }
+      }
+    }
+  }
+  ` 
+
+  try{
+    const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)    
+    //console.log(gnomad_data.variant.genome.populations)
+
+    return gnomad_data.variant.genome
+    //return gnomad_data
+  }catch(error){
+    return undefined
+  }
 
 }
+
+
+
 
 const fetchVariantDetails = async (ctx, variantId) => {
   //const { exomeData, genomeData } = await fetchGnomadVariantData(ctx, variantId, subset)
@@ -473,7 +509,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   
   const denovoData = denovoES.hits.hits[0] ? denovoES.hits.hits[0]._source : undefined
-  console.log(denovoData)
+  //console.log(denovoData)
 
 
 
@@ -502,6 +538,9 @@ const fetchVariantDetails = async (ctx, variantId) => {
   const gnomad_data = await fetchRSID(ctx, variantId)
   //console.log(gnomad_data)  
 
+  const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
+  console.log(gnomad_pop_data)
+
   const sharedData = exomeData || genomeData
 
   const sharedVariantFields = {
@@ -521,7 +560,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   */
 
   const colocatedVariants = await fetchColocatedVariants(ctx, variantId)
-  console.log(colocatedVariants)
+  // console.log(colocatedVariants)
 
   return {
     gqlType: 'VariantDetails',
@@ -539,7 +578,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     */
 
     colocatedVariants,
-    
+    gnomadPopFreq: gnomad_pop_data ? gnomad_pop_data.populations : null,
+    gnomadAF: gnomad_pop_data ? gnomad_pop_data.ac/gnomad_pop_data.an : null,
     exome: exomeData
       ? {
           // Include variant fields so that the reads data resolver can access them.

@@ -51,12 +51,15 @@ export class PopulationsTable extends Component {
     ).isRequired,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
+    showGnomad: PropTypes.bool,
+    gnomadAF: PropTypes.number,
   }
 
   static defaultProps = {
     columnLabels: {},
     showHemizygotes: true,
     showHomozygotes: true,
+    showGnomad: true,    
   }
 
   state = {
@@ -161,7 +164,10 @@ export class PopulationsTable extends Component {
     const totalHemizygotes = populations.map(pop => pop.ac_hemi).reduce((acc, n) => acc + n)
     const totalHomozygotes = populations.map(pop => pop.ac_hom).reduce((acc, n) => acc + n)
 
-    const { showHemizygotes, showHomozygotes } = this.props
+    const { showHemizygotes, showHomozygotes, showGnomad, gnomadAF } = this.props
+
+    console.log(showGnomad)
+    console.log(populations)
 
     return (
       <Table>
@@ -173,6 +179,8 @@ export class PopulationsTable extends Component {
             {showHomozygotes && this.renderColumnHeader('ac_hom', 'Number of Homozygotes')}
             {showHemizygotes && this.renderColumnHeader('ac_hemi', 'Number of Hemizygotes')}
             {this.renderColumnHeader('af', columnLabels.af || 'Allele Frequency')}
+            {showGnomad && this.renderColumnHeader('gnomad_af', 'gnomAD AF')}
+
           </tr>
         </thead>
         {populations.map(pop => (
@@ -186,8 +194,10 @@ export class PopulationsTable extends Component {
               <td>{pop.ac}</td>
               <td>{pop.an}</td>
               {showHomozygotes && <td>{pop.ac_hom}</td>}
-              {showHemizygotes && <td>{pop.ac_hemi}</td>}
+              {showHemizygotes && <td>{pop.ac_hemi}</td>}              
               <td>{pop.af.toPrecision(4)}</td>
+              {showGnomad && <td>{pop.gnomad_af.toPrecision(4)}</td>}              
+
             </tr>
             {pop.subpopulations &&
               this.state.expandedPopulations[pop.name] &&
@@ -216,6 +226,7 @@ export class PopulationsTable extends Component {
             {showHomozygotes && <td>{totalHomozygotes}</td>}
             {showHemizygotes && <td>{totalHemizygotes}</td>}
             <td>{totalAlleleFrequency.toPrecision(4)}</td>
+            {showGnomad && <td>{gnomadAF.toPrecision(4)}</td>}              
           </tr>
         </tfoot>
       </Table>

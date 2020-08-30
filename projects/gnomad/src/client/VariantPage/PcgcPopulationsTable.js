@@ -54,6 +54,7 @@ const combinePopulations = populations => {
           an: 0,
           //ac_hemi: 0,
           ac_hom: 0,
+          gnomad_af: null,
           //subpopulations: [],
         }
       }
@@ -111,6 +112,17 @@ export class PcgcPopulationsTable extends Component {
         ),*/
       })
     ).isRequired,
+    gnomadPopulations: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        ac: PropTypes.number.isRequired,
+        an: PropTypes.number.isRequired,
+        // ac_hemi: PropTypes.number.isRequired,
+        ac_hom: PropTypes.number.isRequired,
+        
+      })
+    ).isRequired,
+    gnomadAF : PropTypes.number,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
   }
@@ -141,8 +153,31 @@ export class PcgcPopulationsTable extends Component {
       includedPopulations = includedPopulations.concat(this.props.genomePopulations)
     }
     
+    //console.log(this.props.gnomadPopulations)
+
+    let gnomad_af_lookup = []
+    for (var i = 0; i < this.props.gnomadPopulations.length; i++){
+
+      if(this.props.gnomadPopulations[i].id.localeCompare("NFE") == 0){
+        gnomad_af_lookup["EUR"] = this.props.gnomadPopulations[i].ac / this.props.gnomadPopulations[i].an
+      //console.log(this.props.gnomadPopulations[i].id)
+      //console.log("In here - loop")
+      }
+      else{
+        gnomad_af_lookup[this.props.gnomadPopulations[i].id] = this.props.gnomadPopulations[i].ac / this.props.gnomadPopulations[i].an
+      }
+    }
+
+    //console.log(gnomad_af_lookup)
 
     const combinedPopulations = combinePopulations(includedPopulations)
+
+    combinedPopulations.map(x => x.gnomad_af = gnomad_af_lookup[x.id])
+
+
+
+    console.log(combinedPopulations)
+    console.log(this.props.gnomadAF)
    
     // const combinedPopulations = combinePopulations(this.props.exomePopulations)
 
@@ -152,6 +187,8 @@ export class PcgcPopulationsTable extends Component {
           populations={combinedPopulations}
           showHemizygotes={this.props.showHemizygotes}
           showHomozygotes={this.props.showHomozygotes}
+          showGnomad={this.props.gnomadPopulations.length > 0}
+          gnomadAF={this.props.gnomadAF}
         />
         <ControlSection>
           Include:

@@ -142,7 +142,9 @@ const VariantDetailsType = new GraphQLObjectType({
     */
 
     colocatedVariants: { type: new GraphQLList(GraphQLString) },
-    
+    gnomadPopFreq: { type: new GraphQLList(PopulationType) },
+    gnomadAF: {type: GraphQLFloat},
+
     exome: {
       type: new GraphQLObjectType({
         name: 'VariantDetailsExomeData',
