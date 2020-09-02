@@ -135,6 +135,7 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td />
           <th scope="col">Exomes</th>
           <th scope="col">Genomes</th>
+          <th scope="col">SPARK</th>
           <th scope="col">Total</th>
         </tr>
         {/*<tr>
@@ -146,23 +147,27 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td>{isPresentInExome && exomeAlleleCount}</td>
           <td>{isPresentInGenome && genomeAlleleCount}</td>
           <td>{totalAlleleCount}</td>
+          <td>{totalAlleleCount}</td>
         </tr>
         <tr>
           <th scope="row">Allele Number</th>
           <td>{isPresentInExome && exomeAlleleNumber}</td>
           <td>{isPresentInGenome && genomeAlleleNumber}</td>
           <td>{totalAlleleNumber}</td>
+          <td>{totalAlleleCount}</td>          
         </tr>
         <tr>
           <th scope="row">Allele Frequency</th>
           <td>{isPresentInExome && exomeAlleleFrequency.toPrecision(4)}</td>
           <td>{isPresentInGenome && genomeAlleleFrequency.toPrecision(4)}</td>
           <td>{totalAlleleFrequency.toPrecision(4)}</td>
+          <td>{totalAlleleFrequency.toPrecision(4)}</td>          
         </tr>
         <tr>
           <th scope="row">Number of homozygotes</th>
           <td>{isPresentInExome && exomeHomCount}</td>
           <td>{isPresentInGenome && genomeHomCount}</td>
+          <td>{totalHomCount}</td>
           <td>{totalHomCount}</td>
         </tr>
       </tbody>

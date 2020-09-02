@@ -98,7 +98,7 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       key: 'datasets',
       heading: 'Source',
       grow: 0,
-      minWidth: 100,
+      minWidth: 80,
       render: variant => (
               <React.Fragment>
                 {variant.exome && (
@@ -113,6 +113,21 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
                     isFiltered={false}
                   />
                 )}
+              </React.Fragment>
+            ),
+    },
+    {
+      key: 'cohorts',
+      heading: 'Cohort',
+      grow: 0,
+      isSortable: false,
+      minWidth: 80,
+      render: variant => (
+              <React.Fragment>                
+                  <DatasetIcon
+                    dataset="spark"
+                    isFiltered={false}
+                  />
               </React.Fragment>
             ),
     },
@@ -172,28 +187,28 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       heading: width < 600 ? 'PC' : 'Affected Allele Count',
       grow: 0,
       isSortable: true,
-      minWidth: width < 600 ? 75 : 110,
+      minWidth: width < 600 ? 75 : 80,
     },
     {
       key: 'ac',
       heading: width < 600 ? 'AC' : 'Total Allele Count',
       grow: 0,
       isSortable: true,
-      minWidth: width < 600 ? 75 : 110,
+      minWidth: width < 600 ? 75 : 80,
     },
     {
       key: 'an',
       heading: width < 600 ? 'AN' : 'Total Allele Number',
       grow: 0,
       isSortable: true,
-      minWidth: width < 600 ? 75 : 110,
+      minWidth: width < 600 ? 75 : 80,
     },
     {
       key: 'af',
       heading: width < 600 ? 'AF' : 'Allele Frequency',
       grow: 0,
       isSortable: true,
-      minWidth: width < 600 ? 75 : 110,
+      minWidth: width < 600 ? 75 : 80,
       render: renderExponentialNumberCell,
     },
   ]
