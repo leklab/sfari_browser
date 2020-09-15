@@ -8,6 +8,10 @@ const Table = styled(BaseTable)`
   tr.border td {
     border-bottom: 2px solid #aaa;
   }
+  td {
+    text-align: center;
+  }
+
 `
 
 const TogglePopulationButton = styled(TextButton)`
