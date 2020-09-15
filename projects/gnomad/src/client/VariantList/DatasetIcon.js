@@ -9,14 +9,14 @@ const datasetConfig = {
   gnomadGenomeFiltered: { color: 'rgba(115, 171, 61, 0.4)', abbreviation: 'G' },
   exac: { color: 'rgba(70, 130, 180, 1)', abbreviation: 'ExAC' },
   exacFiltered: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'ExAC' },
-  spark: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'Sp' },
+  spark: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'SPARK' },
 }
 
 const Icon = styled.span`
   padding: 1px 4px;
   border: 1px ${props => (props.isFiltered ? 'dashed' : 'solid')} #000;
   border-radius: 3px;
-  margin-left: 10px;
+  margin-left: 2px;
   background-color: ${props => props.color};
   color: white;
 `

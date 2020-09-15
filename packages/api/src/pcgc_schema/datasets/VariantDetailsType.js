@@ -221,6 +221,8 @@ const VariantDetailsType = new GraphQLObjectType({
       }),
     },
     
+    gnomad_faf95_popmax: {type: GraphQLFloat},
+    gnomad_faf95_population: { type: GraphQLString },
     rsid: { type: GraphQLString },
     clinvarAlleleID: { type: GraphQLString },
     denovoHC: { type: GraphQLString },

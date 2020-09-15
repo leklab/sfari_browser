@@ -405,6 +405,11 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
         genome{
           ac
           an
+          faf95 {
+            popmax
+            popmax_population
+          }
+
           populations{
             id
             ac
@@ -670,6 +675,10 @@ const fetchVariantDetails = async (ctx, variantId) => {
       : null,
 
     //rsid: sharedData.rsid,
+    //faf95: { popmax: 0.00000514, popmax_population: 'NFE' }
+    gnomad_faf95_popmax: gnomad_pop_data ? gnomad_pop_data.faf95.popmax : null,
+    gnomad_faf95_population: gnomad_pop_data ? gnomad_pop_data.faf95.popmax_population : null,
+
     rsid: gnomad_data ? gnomad_data.variant.rsid : null,
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,

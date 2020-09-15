@@ -75,7 +75,8 @@ const FilteringAlleleFrequencyPopulation = styled.div`
   }
 `
 
-const FilteringAlleleFrequency = ({ popmax, popmax_population: popmaxPopulation }) => {
+//const FilteringAlleleFrequency = ({ popmax, popmax_population: popmaxPopulation }) => {
+const FilteringAlleleFrequency = (popmax, popmaxPopulation ) => {  
   if (popmax === null) {
     return <span>—</span>
   }
@@ -128,6 +129,10 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
 
   const totalAlleleFrequency = totalAlleleNumber === 0 ? 0 : totalAlleleCount / totalAlleleNumber
 
+  const gnomad_faf95_popmax = variant.gnomad_faf95_popmax
+  const gnomad_faf95_population = variant.gnomad_faf95_population
+
+
   return (
     <Table>
       <tbody>
@@ -170,6 +175,13 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td>{totalHomCount}</td>
           <td>{totalHomCount}</td>
         </tr>
+        <tr>
+          <th scope="row">Popmax Filtering AF</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{FilteringAlleleFrequency(gnomad_faf95_popmax,gnomad_faf95_population)}</td>
+        </tr>        
       </tbody>
     </Table>
   )

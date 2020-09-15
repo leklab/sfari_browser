@@ -13,6 +13,8 @@ query PcgcVariant($variantId: String!) {
       denovoHC
       colocatedVariants
       gnomadAF
+      gnomad_faf95_population
+      gnomad_faf95_popmax
       exome {
         ac
         an
