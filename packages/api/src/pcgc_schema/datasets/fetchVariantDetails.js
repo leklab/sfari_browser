@@ -190,7 +190,12 @@ const fetchVariantData = async (ctx, variantId) => {
       'AC_raw',
       'AN_raw',
       'AF_raw',
-
+      'AC_male',
+      'AN_male',
+      'nhomalt_male',
+      'AC_female',
+      'AN_female',
+      'nhomalt_female',
     ],
     body: {
       query: {
@@ -456,7 +461,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const { exomeData, genomeData } = await fetchVariantData(ctx, variantId)
 
-  //console.log(genomeData) 
+  // console.log(exomeData) 
 
   // const sharedData = exomeData
 
@@ -544,7 +549,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(gnomad_data)  
 
   const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
-  console.log(gnomad_pop_data)
+  //console.log(gnomad_pop_data)
 
   const sharedData = exomeData || genomeData
 
@@ -599,6 +604,14 @@ const fetchVariantDetails = async (ctx, variantId) => {
           //ac_hemi: exomeData.nonpar ? exomeData.AC_adj.male : 0,
           ac_hom: exomeData.nhomalt,
 
+          ac_male: exomeData.AC_male,
+          an_male: exomeData.AN_male,
+          ac_male_hom: exomeData.nhomalt_male,
+
+
+          ac_female: exomeData.AC_female,
+          an_female: exomeData.AN_female,
+          ac_female_hom: exomeData.nhomalt_female,
           
           //faf95: formatFilteringAlleleFrequency(exomeData, 'faf95_adj'),
           //faf99: formatFilteringAlleleFrequency(exomeData, 'faf99_adj'),

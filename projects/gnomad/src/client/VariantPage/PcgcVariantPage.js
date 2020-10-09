@@ -173,7 +173,13 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   exomePopulations={variant.exome ? variant.exome.populations : []}
                   genomePopulations={variant.genome ? variant.genome.populations : []}
                   gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
-                  gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}                  
+                  gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}
+                  exome_male_ac={variant.exome ? variant.exome.ac_male : 0}
+                  exome_male_ac_hom={variant.exome ? variant.exome.ac_male_hom : 0}
+                  exome_male_an={variant.exome ? variant.exome.an_male : 0}
+                  exome_female_ac={variant.exome ? variant.exome.ac_female : 0}
+                  exome_female_ac_hom={variant.exome ? variant.exome.ac_female_hom : 0}
+                  exome_female_an={variant.exome ? variant.exome.an_female : 0}
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>

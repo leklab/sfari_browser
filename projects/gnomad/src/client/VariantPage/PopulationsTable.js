@@ -57,6 +57,13 @@ export class PopulationsTable extends Component {
     showHomozygotes: PropTypes.bool,
     showGnomad: PropTypes.bool,
     gnomadAF: PropTypes.number,
+    gnomad_male_af: PropTypes.number,
+    gnomad_female_af: PropTypes.number,
+    male_ac: PropTypes.number,
+    male_an: PropTypes.number,
+    female_ac: PropTypes.number,
+    female_an: PropTypes.number,
+
   }
 
   static defaultProps = {
@@ -168,10 +175,17 @@ export class PopulationsTable extends Component {
     const totalHemizygotes = populations.map(pop => pop.ac_hemi).reduce((acc, n) => acc + n)
     const totalHomozygotes = populations.map(pop => pop.ac_hom).reduce((acc, n) => acc + n)
 
-    const { showHemizygotes, showHomozygotes, showGnomad, gnomadAF } = this.props
+    const { showHemizygotes, showHomozygotes, showGnomad, gnomadAF, gnomad_male_af, gnomad_female_af, male_ac, male_an, female_ac, female_an } = this.props
+
+
+    const maleAlleleFrequency = male_an != 0 ? male_ac / male_an : 0
+    const femaleAlleleFrequency = female_an != 0 ? female_ac / female_an : 0
+
 
     console.log(showGnomad)
-    console.log(populations)
+    //console.log(populations)
+    console.log(gnomad_male_af)
+    console.log(gnomad_female_af)
 
     return (
       <Table>
@@ -220,6 +234,26 @@ export class PopulationsTable extends Component {
               ))}
           </tbody>
         ))}
+        <tr>
+          <th colSpan={2} scope="row">
+              Male
+          </th>
+          <td>{this.props.male_ac}</td>
+          <td>{this.props.male_an}</td>
+          <td>{this.props.male_ac_hom}</td>
+          <td>{maleAlleleFrequency.toPrecision(4)}</td>
+          {showGnomad && <td>{gnomad_male_af.toPrecision(4)}</td>}
+        </tr>                
+        <tr>
+          <th colSpan={2} scope="row">
+              Female
+          </th>
+          <td>{this.props.female_ac}</td>
+          <td>{this.props.female_an}</td>
+          <td>{this.props.female_ac_hom}</td>
+          <td>{femaleAlleleFrequency.toPrecision(4)}</td>
+          {showGnomad && <td>{gnomad_female_af.toPrecision(4)}</td>}
+        </tr>                
         <tfoot>
           <tr>
             <th colSpan={2} scope="row">

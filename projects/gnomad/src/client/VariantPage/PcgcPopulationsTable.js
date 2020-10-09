@@ -123,6 +123,12 @@ export class PcgcPopulationsTable extends Component {
       })
     ).isRequired,
     gnomadAF : PropTypes.number,
+    exome_male_ac: PropTypes.number,
+    exome_male_ac_hom: PropTypes.number,
+    exome_male_an: PropTypes.number,
+    exome_female_ac: PropTypes.number,
+    exome_female_ac_hom: PropTypes.number,
+    exome_female_an: PropTypes.number,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
   }
@@ -168,12 +174,20 @@ export class PcgcPopulationsTable extends Component {
       }
     }
 
-    //console.log(gnomad_af_lookup)
+
+    console.log(gnomad_af_lookup)
+
+    const gnomad_male_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["MALE"] : 0
+    const gnomad_female_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["FEMALE"] : 0
+
 
     const combinedPopulations = combinePopulations(includedPopulations)
 
     combinedPopulations.map(x => x.gnomad_af = gnomad_af_lookup[x.id])
 
+
+    //console.log(gnomad_male_af)
+    //console.log(gnomad_female_af)
 
 
     console.log(combinedPopulations)
@@ -189,6 +203,14 @@ export class PcgcPopulationsTable extends Component {
           showHomozygotes={this.props.showHomozygotes}
           showGnomad={this.props.gnomadPopulations.length > 0}
           gnomadAF={this.props.gnomadAF}
+          gnomad_male_af={gnomad_male_af}
+          gnomad_female_af={gnomad_female_af}
+          male_ac={this.props.exome_male_ac}
+          male_ac_hom={this.props.exome_male_ac_hom}
+          male_an={this.props.exome_male_an}          
+          female_ac={this.props.exome_female_ac}
+          female_ac_hom={this.props.exome_female_ac_hom}
+          female_an={this.props.exome_female_an}
         />
         <ControlSection>
           Include:
