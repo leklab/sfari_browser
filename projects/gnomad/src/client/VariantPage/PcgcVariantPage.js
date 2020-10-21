@@ -180,6 +180,12 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   exome_female_ac={variant.exome ? variant.exome.ac_female : 0}
                   exome_female_ac_hom={variant.exome ? variant.exome.ac_female_hom : 0}
                   exome_female_an={variant.exome ? variant.exome.an_female : 0}
+                  genome_male_ac={variant.genome ? variant.genome.ac_male : 0}
+                  genome_male_ac_hom={variant.genome ? variant.genome.ac_male_hom : 0}
+                  genome_male_an={variant.genome ? variant.genome.an_male : 0}
+                  genome_female_ac={variant.genome ? variant.genome.ac_female : 0}
+                  genome_female_ac_hom={variant.genome ? variant.genome.ac_female_hom : 0}
+                  genome_female_an={variant.genome ? variant.genome.an_female : 0}
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>

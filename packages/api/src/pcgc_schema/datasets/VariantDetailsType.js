@@ -204,6 +204,16 @@ const VariantDetailsType = new GraphQLObjectType({
           // faf95: { type: GnomadVariantFilteringAlleleFrequencyType },
           // faf99: { type: GnomadVariantFilteringAlleleFrequencyType },
           // filters: { type: new GraphQLList(GraphQLString) },
+
+
+          ac_male: { type: GraphQLInt },
+          an_male: { type: GraphQLInt },
+          ac_male_hom: { type: GraphQLInt },
+
+          ac_female: { type: GraphQLInt },
+          an_female: { type: GraphQLInt },
+          ac_female_hom: { type: GraphQLInt },
+
           populations: { type: new GraphQLList(PopulationType) },
           
           /*

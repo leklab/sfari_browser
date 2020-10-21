@@ -129,6 +129,12 @@ export class PcgcPopulationsTable extends Component {
     exome_female_ac: PropTypes.number,
     exome_female_ac_hom: PropTypes.number,
     exome_female_an: PropTypes.number,
+    genome_male_ac: PropTypes.number,
+    genome_male_ac_hom: PropTypes.number,
+    genome_male_an: PropTypes.number,
+    genome_female_ac: PropTypes.number,
+    genome_female_ac_hom: PropTypes.number,
+    genome_female_an: PropTypes.number,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
   }
@@ -151,11 +157,34 @@ export class PcgcPopulationsTable extends Component {
   render() {
     let includedPopulations = []
 
-    
+    var male_ac = 0
+    var male_ac_hom = 0
+    var male_an = 0
+
+    var female_ac = 0
+    var female_ac_hom = 0
+    var female_an = 0
+
     if (this.state.includeExomes) {
+      male_ac = male_ac + this.props.exome_male_ac
+      male_ac_hom = male_ac_hom + this.props.exome_male_ac_hom
+      male_an = male_an + this.props.exome_male_an
+
+      female_ac = female_ac + this.props.exome_female_ac
+      female_ac_hom = female_ac_hom + this.props.exome_female_ac_hom
+      female_an = female_an + this.props.exome_female_an
+
       includedPopulations = includedPopulations.concat(this.props.exomePopulations)
     }
     if (this.state.includeGenomes) {
+      male_ac = male_ac + this.props.genome_male_ac
+      male_ac_hom = male_ac_hom + this.props.genome_male_ac_hom
+      male_an = male_an + this.props.genome_male_an
+
+      female_ac = female_ac + this.props.genome_female_ac
+      female_ac_hom = female_ac_hom + this.props.genome_female_ac_hom
+      female_an = female_an + this.props.genome_female_an
+
       includedPopulations = includedPopulations.concat(this.props.genomePopulations)
     }
     
@@ -205,12 +234,12 @@ export class PcgcPopulationsTable extends Component {
           gnomadAF={this.props.gnomadAF}
           gnomad_male_af={gnomad_male_af}
           gnomad_female_af={gnomad_female_af}
-          male_ac={this.props.exome_male_ac}
-          male_ac_hom={this.props.exome_male_ac_hom}
-          male_an={this.props.exome_male_an}          
-          female_ac={this.props.exome_female_ac}
-          female_ac_hom={this.props.exome_female_ac_hom}
-          female_an={this.props.exome_female_an}
+          male_ac={male_ac}
+          male_ac_hom={male_ac_hom}
+          male_an={male_an}          
+          female_ac={female_ac}
+          female_ac_hom={female_ac_hom}
+          female_an={female_an}
         />
         <ControlSection>
           Include:

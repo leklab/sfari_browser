@@ -249,6 +249,12 @@ const fetchVariantData = async (ctx, variantId) => {
       'AC_raw',
       'AN_raw',
       'AF_raw',
+      'AC_male',
+      'AN_male',
+      'nhomalt_male',
+      'AC_female',
+      'AN_female',
+      'nhomalt_female',
     ],
     body: {
       query: {
@@ -660,6 +666,15 @@ const fetchVariantDetails = async (ctx, variantId) => {
           an: genomeData.AN,
           //ac_hemi: exomeData.nonpar ? exomeData.AC_adj.male : 0,
           ac_hom: genomeData.nhomalt,
+
+          ac_male: genomeData.AC_male,
+          an_male: genomeData.AN_male,
+          ac_male_hom: genomeData.nhomalt_male,
+
+
+          ac_female: genomeData.AC_female,
+          an_female: genomeData.AN_female,
+          ac_female_hom: genomeData.nhomalt_female,
 
 
           populations: formatPopulations(genomeData),
