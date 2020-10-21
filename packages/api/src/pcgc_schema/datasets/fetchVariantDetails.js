@@ -227,7 +227,7 @@ const fetchVariantData = async (ctx, variantId) => {
   //}
   //console.log("In here 3.1") 
   const genomeData = await ctx.database.elastic.search({
-    index: 'sfari_genomes',
+    index: 'spark_genomes',
     type: 'variant',
     _source: [
       'alt',
@@ -331,7 +331,7 @@ const fetchColocatedVariants = async (ctx, variantId) => {
 
   const genomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'sfari_genomes',
+    index: 'spark_genomes',
     type: 'variant',
     _source: ['variant_id'],
     body: {

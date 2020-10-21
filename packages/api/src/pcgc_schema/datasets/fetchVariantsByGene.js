@@ -206,7 +206,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
-      index: 'sfari_genomes',
+      index: 'spark_genomes',
       type: 'variant',
       size: 10000,
       _source: [

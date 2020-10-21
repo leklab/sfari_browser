@@ -94,7 +94,7 @@ const fetchVariantsByRegion = async (ctx, { chrom, start, stop }, subset) => {
   //console.log(exomeVariants)
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
-    index: 'sfari_genomes',
+    index: 'spark_genomes',
     type: 'variant',
     size: 10000,
     _source: [

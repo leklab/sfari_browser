@@ -4,7 +4,7 @@
 // https://www.elastic.co/guide/en/elasticsearch/guide/current/cardinality.html
 const countVariantsInRegion = async (ctx, { chrom, start, stop }, subset) => {
   const response = await ctx.database.elastic.search({
-    index: 'pcgc_exomes,sfari_genomes',
+    index: 'pcgc_exomes,spark_genomes',
     type: 'variant',
     body: {
       query: {
