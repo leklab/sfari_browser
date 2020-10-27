@@ -650,7 +650,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
     
     //flags: ['lcr', 'segdup', 'lc_lof', 'lof_flag'].filter(flag => sharedData.flags[flag]),
-    genome: genomeData
+    spark_genome: genomeData
       ? {
           // Include variant fields so that the reads data resolver can access them.
           ...sharedVariantFields,

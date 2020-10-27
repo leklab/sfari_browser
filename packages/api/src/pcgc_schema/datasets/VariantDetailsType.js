@@ -193,7 +193,7 @@ const VariantDetailsType = new GraphQLObjectType({
     
     
     //flags: { type: new GraphQLList(GraphQLString) },
-    genome: {
+    spark_genome: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantDetailsGenomeData',
         fields: {

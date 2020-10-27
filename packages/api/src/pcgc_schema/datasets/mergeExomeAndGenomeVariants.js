@@ -52,7 +52,9 @@ const mergeExomeAndGenomeVariantSummaries = (exomeVariants, genomeVariants) => {
         } else {
           mergedVariants.push({
             ...exomeVariantsAtThisPosition.shift(),
-            genome: genomeVariantsAtThisPosition.shift().genome,
+            //genome: genomeVariantsAtThisPosition.shift().genome,
+            spark_genome: genomeVariantsAtThisPosition.shift().spark_genome,
+
           })
         }
       }
