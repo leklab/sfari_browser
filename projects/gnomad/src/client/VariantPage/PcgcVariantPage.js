@@ -170,16 +170,16 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               <h2>Population Frequencies</h2>
               <ScrollWrapper>
                 <PcgcPopulationsTable
-                  exomePopulations={variant.exome ? variant.exome.populations : []}
+                  exomePopulations={variant.spark_exome ? variant.spark_exome.populations : []}
                   genomePopulations={variant.spark_genome ? variant.spark_genome.populations : []}
                   gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
                   gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}
-                  exome_male_ac={variant.exome ? variant.exome.ac_male : 0}
-                  exome_male_ac_hom={variant.exome ? variant.exome.ac_male_hom : 0}
-                  exome_male_an={variant.exome ? variant.exome.an_male : 0}
-                  exome_female_ac={variant.exome ? variant.exome.ac_female : 0}
-                  exome_female_ac_hom={variant.exome ? variant.exome.ac_female_hom : 0}
-                  exome_female_an={variant.exome ? variant.exome.an_female : 0}
+                  exome_male_ac={variant.spark_exome ? variant.spark_exome.ac_male : 0}
+                  exome_male_ac_hom={variant.spark_exome ? variant.spark_exome.ac_male_hom : 0}
+                  exome_male_an={variant.spark_exome ? variant.spark_exome.an_male : 0}
+                  exome_female_ac={variant.spark_exome ? variant.spark_exome.ac_female : 0}
+                  exome_female_ac_hom={variant.spark_exome ? variant.spark_exome.ac_female_hom : 0}
+                  exome_female_an={variant.spark_exome ? variant.spark_exome.an_female : 0}
                   genome_male_ac={variant.spark_genome ? variant.spark_genome.ac_male : 0}
                   genome_male_ac_hom={variant.spark_genome ? variant.spark_genome.ac_male_hom : 0}
                   genome_male_an={variant.spark_genome ? variant.spark_genome.an_male : 0}
