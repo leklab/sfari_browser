@@ -85,10 +85,10 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
                     isFiltered={variant.exome.filters.length > 0}
                   />
                 )}
-                {variant.genome && (
+                {variant.spark_genome && (
                   <DatasetIcon
                     dataset="gnomadGenome"
-                    isFiltered={variant.genome.filters.length > 0}
+                    isFiltered={variant.spark_genome.filters.length > 0}
                   />
                 )}
               </React.Fragment>
@@ -98,25 +98,25 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       key: 'datasets',
       heading: 'Source',
       grow: 0,
-      minWidth: 80,
+      minWidth: 120,
       render: variant => (
               <React.Fragment>
                 {variant.exome && (
                   <DatasetIcon
-                    dataset="gnomadExome"
+                    dataset="sparkE"
                     isFiltered={false}
                   />
                 )}
-                {variant.genome && (
+                {variant.spark_genome && (
                   <DatasetIcon
-                    dataset="gnomadGenome"
+                    dataset="sparkG"
                     isFiltered={false}
                   />
                 )}
               </React.Fragment>
             ),
     },
-    {
+    /*{
       key: 'cohorts',
       heading: 'Cohort',
       grow: 0,
@@ -130,7 +130,7 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
                   />
               </React.Fragment>
             ),
-    },
+    },*/
     {
       key: 'hgvs',
       heading: 'Consequence',

@@ -356,7 +356,7 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
           an_proband
           af_proband
         }
-        genome {
+        spark_genome {
           ac
           an
           af

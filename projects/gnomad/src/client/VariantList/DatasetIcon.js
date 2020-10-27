@@ -9,7 +9,8 @@ const datasetConfig = {
   gnomadGenomeFiltered: { color: 'rgba(115, 171, 61, 0.4)', abbreviation: 'G' },
   exac: { color: 'rgba(70, 130, 180, 1)', abbreviation: 'ExAC' },
   exacFiltered: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'ExAC' },
-  spark: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'SPARK' },
+  sparkG: { color: 'rgba(115, 171, 61, 1)', abbreviation: 'SPKG' },
+  sparkE: { color: 'rgba(70, 130, 180, 0.8)', abbreviation: 'SPKE' },
 }
 
 const Icon = styled.span`
