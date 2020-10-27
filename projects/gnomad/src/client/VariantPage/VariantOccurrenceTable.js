@@ -109,19 +109,19 @@ FilteringAlleleFrequency.defaultProps = {
 
 export const GnomadVariantOccurrenceTable = ({ variant }) => {
   const isPresentInExome = Boolean(variant.exome)
- const isPresentInGenome = Boolean(variant.genome)
+ const isPresentInGenome = Boolean(variant.spark_genome)
 
   const exomeAlleleCount = isPresentInExome ? variant.exome.ac : 0
   const exomeAlleleNumber = isPresentInExome ? variant.exome.an : 0
-  const genomeAlleleCount = isPresentInGenome ? variant.genome.ac : 0
-  const genomeAlleleNumber = isPresentInGenome ? variant.genome.an : 0
+  const genomeAlleleCount = isPresentInGenome ? variant.spark_genome.ac : 0
+  const genomeAlleleNumber = isPresentInGenome ? variant.spark_genome.an : 0
 
   const exomeAlleleFrequency = exomeAlleleNumber === 0 ? 0 : exomeAlleleCount / exomeAlleleNumber
   const genomeAlleleFrequency = genomeAlleleNumber === 0 ? 0 : genomeAlleleCount / genomeAlleleNumber
 
 
   const exomeHomCount = isPresentInExome ? variant.exome.ac_hom : 0
-  const genomeHomCount = isPresentInGenome ? variant.genome.ac_hom : 0
+  const genomeHomCount = isPresentInGenome ? variant.spark_genome.ac_hom : 0
 
   const totalAlleleCount = exomeAlleleCount + genomeAlleleCount
   const totalAlleleNumber = exomeAlleleNumber + genomeAlleleNumber

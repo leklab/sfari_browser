@@ -171,7 +171,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               <ScrollWrapper>
                 <PcgcPopulationsTable
                   exomePopulations={variant.exome ? variant.exome.populations : []}
-                  genomePopulations={variant.genome ? variant.genome.populations : []}
+                  genomePopulations={variant.spark_genome ? variant.spark_genome.populations : []}
                   gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
                   gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}
                   exome_male_ac={variant.exome ? variant.exome.ac_male : 0}
@@ -180,12 +180,12 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   exome_female_ac={variant.exome ? variant.exome.ac_female : 0}
                   exome_female_ac_hom={variant.exome ? variant.exome.ac_female_hom : 0}
                   exome_female_an={variant.exome ? variant.exome.an_female : 0}
-                  genome_male_ac={variant.genome ? variant.genome.ac_male : 0}
-                  genome_male_ac_hom={variant.genome ? variant.genome.ac_male_hom : 0}
-                  genome_male_an={variant.genome ? variant.genome.an_male : 0}
-                  genome_female_ac={variant.genome ? variant.genome.ac_female : 0}
-                  genome_female_ac_hom={variant.genome ? variant.genome.ac_female_hom : 0}
-                  genome_female_an={variant.genome ? variant.genome.an_female : 0}
+                  genome_male_ac={variant.spark_genome ? variant.spark_genome.ac_male : 0}
+                  genome_male_ac_hom={variant.spark_genome ? variant.spark_genome.ac_male_hom : 0}
+                  genome_male_an={variant.spark_genome ? variant.spark_genome.an_male : 0}
+                  genome_female_ac={variant.spark_genome ? variant.spark_genome.ac_female : 0}
+                  genome_female_ac_hom={variant.spark_genome ? variant.spark_genome.ac_female_hom : 0}
+                  genome_female_an={variant.spark_genome ? variant.spark_genome.an_female : 0}
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>

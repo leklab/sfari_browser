@@ -32,7 +32,7 @@ query PcgcVariant($variantId: String!) {
           ac_hom
         }
       }
-     genome {
+     spark_genome {
         ac
         an
         ac_hom
