@@ -101,7 +101,7 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       minWidth: 120,
       render: variant => (
               <React.Fragment>
-                {variant.exome && (
+                {variant.spark_exome && (
                   <DatasetIcon
                     dataset="sparkE"
                     isFiltered={false}

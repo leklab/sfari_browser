@@ -4,7 +4,7 @@ const add = (n1, n2) => (n1 || 0) + (n2 || 0)
 
 const mergeExomeAndGenomeData = variants =>
   variants.map(variant => {
-    const { exome, spark_genome } = variant
+    const { spark_exome, spark_genome } = variant
     // console.log("In mergeExomeAndGenomeData - 1")
     //const { exome } = variant
 
@@ -37,7 +37,7 @@ const mergeExomeAndGenomeData = variants =>
     const totalAF = totalAN ? totalAC / totalAN : 0
     */
 
-    if(!exome){
+    if(!spark_exome){
       return{
         ...variant,
         ...variant.spark_genome,
@@ -49,19 +49,19 @@ const mergeExomeAndGenomeData = variants =>
     if(!spark_genome){
       return{
         ...variant,
-        ...variant.exome,
-        allele_freq: variant.exome.af,
+        ...variant.spark_exome,
+        allele_freq: variant.spark_exome.af,
         gnomad_freq: variant.an_gnomad ? variant.ac_gnomad/variant.an_gnomad : 0
       }
     }
 
     
-    const totalAC = add(exome.ac, spark_genome.ac)
-    const totalAN = add(exome.an, spark_genome.an)
+    const totalAC = add(spark_exome.ac, spark_genome.ac)
+    const totalAN = add(spark_exome.an, spark_genome.an)
     const totalAF = totalAN ? totalAC / totalAN : 0
 
-    const totalProband = add(exome.ac_proband, spark_genome.ac_proband)
-    const totalHom = add(exome.ac_hom, spark_genome.ac_hom)
+    const totalProband = add(spark_exome.ac_proband, spark_genome.ac_proband)
+    const totalHom = add(spark_exome.ac_hom, spark_genome.ac_hom)
     
 
     return{

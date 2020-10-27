@@ -347,7 +347,7 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
         xpos
         ac_gnomad
         an_gnomad
-        exome {
+        spark_exome {
           ac
           an
           af
