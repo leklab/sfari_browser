@@ -61,9 +61,9 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
           const tmp_push = pcgcVariantsAtThisPosition.shift()
           
 
-          if(tmp_gnomad.exome){
-            tmp_push.ac_gnomad += tmp_gnomad.exome.ac
-            tmp_push.an_gnomad += tmp_gnomad.exome.an
+          if(tmp_gnomad.spark_exome){
+            tmp_push.ac_gnomad += tmp_gnomad.spark_exome.ac
+            tmp_push.an_gnomad += tmp_gnomad.spark_exome.an
             //console.log(tmp_push.variantId)
             //console.log(tmp_gnomad.exome.ac)
             //console.log(tmp_push.exome.ac_gnomad)

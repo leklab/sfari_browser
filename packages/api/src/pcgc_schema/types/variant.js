@@ -74,7 +74,7 @@ export const VariantSummaryType = new GraphQLObjectType({
     an_gnomad: { type: GraphQLInt },    
 
     // will keep with this name for future
-    exome: { type: VariantSequencingDataType },
+    spark_exome: { type: VariantSequencingDataType },
     spark_genome: { type: VariantSequencingDataType },
     // genome: { type: VariantSequencingDataType },
   },

@@ -145,7 +145,7 @@ const VariantDetailsType = new GraphQLObjectType({
     gnomadPopFreq: { type: new GraphQLList(PopulationType) },
     gnomadAF: {type: GraphQLFloat},
 
-    exome: {
+    spark_exome: {
       type: new GraphQLObjectType({
         name: 'VariantDetailsExomeData',
         fields: {

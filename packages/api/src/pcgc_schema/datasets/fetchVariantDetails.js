@@ -596,7 +596,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     colocatedVariants,
     gnomadPopFreq: gnomad_pop_data ? gnomad_pop_data.populations : null,
     gnomadAF: gnomad_pop_data ? gnomad_pop_data.ac/gnomad_pop_data.an : null,
-    exome: exomeData
+    spark_exome: exomeData
       ? {
           // Include variant fields so that the reads data resolver can access them.
           ...sharedVariantFields,

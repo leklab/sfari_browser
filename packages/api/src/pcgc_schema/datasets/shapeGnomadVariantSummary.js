@@ -107,8 +107,8 @@ const shapeGnomadVariantSummary = (context) => {
       an_gnomad: 0,
       
       
-      [isExomeVariant ? 'spark_genome' : 'exome']: null,
-      [isExomeVariant ? 'exome' : 'spark_genome']: {
+      [isExomeVariant ? 'spark_genome' : 'spark_exome']: null,
+      [isExomeVariant ? 'spark_exome' : 'spark_genome']: {
       //exome: {
         /*
         ac: variantData.AC,
