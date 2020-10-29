@@ -98,7 +98,7 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       key: 'datasets',
       heading: 'Source',
       grow: 0,
-      minWidth: 120,
+      minWidth: 160,
       render: variant => (
               <React.Fragment>
                 {variant.spark_exome && (
@@ -113,6 +113,12 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
                     isFiltered={false}
                   />
                 )}
+                {variant.ssc_genome && (
+                  <DatasetIcon
+                    dataset="sscG"
+                    isFiltered={false}
+                  />
+                )}                
               </React.Fragment>
             ),
     },

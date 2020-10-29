@@ -1,11 +1,11 @@
 // safe math on possibly null values
-const add = (n1, n2) => (n1 || 0) + (n2 || 0)
+const add = (n1, n2, n3) => (n1 || 0) + (n2 || 0) + (n3 || 0)
 
 
 const mergeExomeAndGenomeData = variants =>
   variants.map(variant => {
-    const { spark_exome, spark_genome } = variant
-    // console.log("In mergeExomeAndGenomeData - 1")
+    const { spark_exome, spark_genome, ssc_genome } = variant
+    //console.log("In mergeExomeAndGenomeData - 1")
     //const { exome } = variant
 
     /*        
@@ -37,6 +37,7 @@ const mergeExomeAndGenomeData = variants =>
     const totalAF = totalAN ? totalAC / totalAN : 0
     */
 
+    /*
     if(!spark_exome){
       return{
         ...variant,
@@ -54,15 +55,45 @@ const mergeExomeAndGenomeData = variants =>
         gnomad_freq: variant.an_gnomad ? variant.ac_gnomad/variant.an_gnomad : 0
       }
     }
+    */
 
+    var totalAC = 0
+    var totalAN = 0
+
+    var totalProband = 0
+    var totalHom = 0
+
+
+    if(spark_exome){
+      totalAC += spark_exome.ac
+      totalAN += spark_exome.an
+      totalProband += spark_exome.ac_proband
+      totalHom += spark_exome.ac_hom
+    }
+    if(spark_genome){
+      totalAC += spark_genome.ac
+      totalAN += spark_genome.an
+      totalProband += spark_genome.ac_proband
+      totalHom += spark_genome.ac_hom
+
+    }
+    if(ssc_genome){
+      totalAC += ssc_genome.ac
+      totalAN += ssc_genome.an
+      totalProband += ssc_genome.ac_proband
+      totalHom += ssc_genome.ac_hom
+    }
+        
+    //const totalAC = add(spark_exome.ac,spark_genome.ac,ssc_genome.ac)
+    //const totalAN = add(spark_exome.an,spark_genome.an,ssc_genome.an)
     
-    const totalAC = add(spark_exome.ac, spark_genome.ac)
-    const totalAN = add(spark_exome.an, spark_genome.an)
     const totalAF = totalAN ? totalAC / totalAN : 0
-
-    const totalProband = add(spark_exome.ac_proband, spark_genome.ac_proband)
-    const totalHom = add(spark_exome.ac_hom, spark_genome.ac_hom)
     
+
+
+    //const totalProband = add(spark_exome.ac_proband, spark_genome.ac_proband,ssc_genome.ac_proband)
+    //const totalHom = add(spark_exome.ac_hom, spark_genome.ac_hom,ssc_genome.ac_hom)
+    //console.log("Done adding data")
 
     return{
       ...variant,

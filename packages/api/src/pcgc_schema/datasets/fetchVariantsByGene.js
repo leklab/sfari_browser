@@ -366,7 +366,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
   const combinedVariants = mergePcgcAndGnomadVariantSummaries(allVariants,gnomad_data.gene.variants)
-
+  console.log(combinedVariants)
 
   const dnms = await fetchDenovos(ctx,geneId)
   //console.log(dnms)

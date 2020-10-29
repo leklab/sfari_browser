@@ -11,6 +11,7 @@ const datasetConfig = {
   exacFiltered: { color: 'rgba(70, 130, 180, 0.6)', abbreviation: 'ExAC' },
   sparkG: { color: 'rgba(115, 171, 61, 1)', abbreviation: 'SPKG' },
   sparkE: { color: 'rgba(70, 130, 180, 0.8)', abbreviation: 'SPKE' },
+  sscG: { color: 'rgba(115, 171, 61, 1)', abbreviation: 'SSCG' },
 }
 
 const Icon = styled.span`
