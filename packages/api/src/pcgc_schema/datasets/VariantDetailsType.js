@@ -238,6 +238,29 @@ const VariantDetailsType = new GraphQLObjectType({
         },
       }),
     },
+
+    
+    ssc_genome: {
+      type: new GraphQLObjectType({
+        name: 'GnomadVariantDetailsGenomeDataX',
+        fields: {
+          ac: { type: GraphQLInt },
+          an: { type: GraphQLInt },
+          ac_hom: { type: GraphQLInt },
+          ac_male: { type: GraphQLInt },
+          an_male: { type: GraphQLInt },
+          ac_male_hom: { type: GraphQLInt },
+
+          ac_female: { type: GraphQLInt },
+          an_female: { type: GraphQLInt },
+          ac_female_hom: { type: GraphQLInt },
+
+          populations: { type: new GraphQLList(PopulationType) },
+          
+        },
+      }),
+    },
+    
     
     gnomad_faf95_popmax: {type: GraphQLFloat},
     gnomad_faf95_population: { type: GraphQLString },

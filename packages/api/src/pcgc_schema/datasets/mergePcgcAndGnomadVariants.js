@@ -61,18 +61,18 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
           const tmp_push = pcgcVariantsAtThisPosition.shift()
           
 
-          if(tmp_gnomad.spark_exome){
-            tmp_push.ac_gnomad += tmp_gnomad.spark_exome.ac
-            tmp_push.an_gnomad += tmp_gnomad.spark_exome.an
+          if(tmp_gnomad.exome){
+            tmp_push.ac_gnomad += tmp_gnomad.exome.ac
+            tmp_push.an_gnomad += tmp_gnomad.exome.an
             //console.log(tmp_push.variantId)
             //console.log(tmp_gnomad.exome.ac)
             //console.log(tmp_push.exome.ac_gnomad)
             //console.log(tmp_push)
           }
 
-          if(tmp_gnomad.spark_genome){
-            tmp_push.ac_gnomad += tmp_gnomad.spark_genome.ac
-            tmp_push.an_gnomad += tmp_gnomad.spark_genome.an
+          if(tmp_gnomad.genome){
+            tmp_push.ac_gnomad += tmp_gnomad.genome.ac
+            tmp_push.an_gnomad += tmp_gnomad.genome.an
             //console.log(tmp_push.variantId)
             //console.log(tmp_gnomad.exome.ac)
             //console.log(tmp_push.exome.ac_gnomad)

@@ -269,6 +269,49 @@ const fetchVariantData = async (ctx, variantId) => {
     size: 1,
   })
 
+ const sscGenomeData = await ctx.database.elastic.search({
+    index: 'ssc_genomes',
+    type: 'variant',
+    _source: [
+      'alt',
+      'chrom',
+      'filters',
+      'pos',
+      'ref',
+      'sortedTranscriptConsequences',
+      'variant_id',
+      'xpos',
+      'AC_adj',
+      'AN_adj',
+      'AF_adj',
+      'nhomalt_adj',
+      'AC',
+      'AF',
+      'AN',
+      'nhomalt',
+      'AC_raw',
+      'AN_raw',
+      'AF_raw',
+      'AC_male',
+      'AN_male',
+      'nhomalt_male',
+      'AC_female',
+      'AN_female',
+      'nhomalt_female',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant_id: variantId } },
+            //{ range: { [`${requestSubset}.AC_raw`]: { gt: 0 } } },
+          ],
+        },
+      },
+    },
+    size: 1,
+  })
+
   //console.log(exomeData.hits.hits[0]._source) 
 
   //console.log("In here 3") 
@@ -279,7 +322,8 @@ const fetchVariantData = async (ctx, variantId) => {
   //return exomeData.hits.hits[0]._source
 
   return { exomeData: exomeData.hits.hits[0] ? exomeData.hits.hits[0]._source : undefined , 
-           genomeData: genomeData.hits.hits[0] ? genomeData.hits.hits[0]._source : undefined }
+           genomeData: genomeData.hits.hits[0] ? genomeData.hits.hits[0]._source : undefined,
+           sscGenomeData: sscGenomeData.hits.hits[0] ? sscGenomeData.hits.hits[0]._source : undefined }
 }
 
 
@@ -465,7 +509,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(exomeData)
 
 
-  const { exomeData, genomeData } = await fetchVariantData(ctx, variantId)
+  const { exomeData, genomeData, sscGenomeData } = await fetchVariantData(ctx, variantId)
 
   // console.log(exomeData) 
 
@@ -701,6 +745,39 @@ const fetchVariantDetails = async (ctx, variantId) => {
           },*/
         }
       : null,
+
+    ssc_genome: sscGenomeData
+      ? {
+          // Include variant fields so that the reads data resolver can access them.
+          ...sharedVariantFields,
+          //ac: genomeData.AC_adj.total,
+          //an: genomeData.AN_adj.total,
+          //ac_hemi: genomeData.nonpar ? genomeData.AC_adj.male : 0,
+          //ac_hom: genomeData.nhomalt_adj.total,
+          //faf95: formatFilteringAlleleFrequency(genomeData, 'faf95_adj'),
+          //faf99: formatFilteringAlleleFrequency(genomeData, 'faf99_adj'),
+          //filters: genomeData.filters,
+          
+          ac: sscGenomeData.AC,
+          an: sscGenomeData.AN,
+          //ac_hemi: exomeData.nonpar ? exomeData.AC_adj.male : 0,
+          ac_hom: sscGenomeData.nhomalt,
+
+          ac_male: sscGenomeData.AC_male,
+          an_male: sscGenomeData.AN_male,
+          ac_male_hom: sscGenomeData.nhomalt_male,
+
+
+          ac_female: sscGenomeData.AC_female,
+          an_female: sscGenomeData.AN_female,
+          ac_female_hom: sscGenomeData.nhomalt_female,
+
+
+          populations: formatPopulations(sscGenomeData),
+          
+        }
+      : null,
+
 
     //rsid: sharedData.rsid,
     //faf95: { popmax: 0.00000514, popmax_population: 'NFE' }

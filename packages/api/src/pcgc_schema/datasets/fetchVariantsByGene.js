@@ -11,6 +11,7 @@ import {
 
 import mergePcgcAndGnomadVariantSummaries from './mergePcgcAndGnomadVariants'
 import mergeExomeAndGenomeVariantSummaries from './mergeExomeAndGenomeVariants'
+import mergeSSCVariants from './mergeSSCVariants'
 import shapeGnomadVariantSummary from './shapeGnomadVariantSummary'
 
 
@@ -271,10 +272,63 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
       },
     })
 
-  console.log(ghits)
+  //console.log(ghits)
   const genomeVariants = ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
-  console.log(genomeVariants)
-  const exomeAndGenomeVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
+  //console.log(genomeVariants)
+  const sparkVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
+
+  const ssc_ghits = await fetchAllSearchResults(ctx.database.elastic, { 
+      index: 'ssc_genomes',
+      type: 'variant',
+      size: 10000,
+      _source: [
+        'AC_adj',
+        'AN_adj',
+        'nhomalt_adj',
+        'alt',
+        'chrom',
+        'filters',
+        'flags',        
+        'pos',
+        'ref',
+        'rsid',        
+        'sortedTranscriptConsequences',
+        'variant_id',
+        'xpos',
+        'AC',
+        'AN',
+        'AF',
+        'nhomalt',
+        'AC_raw',
+        'AN_raw',
+        'AF_raw',
+        'nhomalt_raw',
+        'AC_proband',
+        'AN_proband',
+        'AF_proband'
+      ],
+      body: {
+        query : {
+          nested: {
+            path: 'sortedTranscriptConsequences',
+            query:{
+              match: {
+                'sortedTranscriptConsequences.gene_id': geneId
+              }
+            }
+          }
+        },
+        sort: [{ pos: { order: 'asc' } }],
+      },
+    })
+
+
+  //console.log(ssc_ghits)
+  
+  const ssc_genomeVariants = ssc_ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
+  
+  //console.log(ssc_genomeVariants)
+  const allVariants = mergeSSCVariants(sparkVariants, ssc_genomeVariants)
 
   // console.log(exomeAndGenomeVariants)
 
@@ -311,7 +365,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //console.log(gnomad_data.gene.variants)
 
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
-  const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.gene.variants)
+  const combinedVariants = mergePcgcAndGnomadVariantSummaries(allVariants,gnomad_data.gene.variants)
 
 
   const dnms = await fetchDenovos(ctx,geneId)
