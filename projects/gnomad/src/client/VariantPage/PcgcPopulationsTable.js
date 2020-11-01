@@ -235,21 +235,21 @@ export class PcgcPopulationsTable extends Component {
     let gnomad_af_lookup = []
     for (var i = 0; i < this.props.gnomadPopulations.length; i++){
 
-      if(this.props.gnomadPopulations[i].id.localeCompare("NFE") == 0){
+      if(this.props.gnomadPopulations[i].id.localeCompare("nfe") == 0){
         gnomad_af_lookup["EUR"] = this.props.gnomadPopulations[i].ac / this.props.gnomadPopulations[i].an
       //console.log(this.props.gnomadPopulations[i].id)
       //console.log("In here - loop")
       }
       else{
-        gnomad_af_lookup[this.props.gnomadPopulations[i].id] = this.props.gnomadPopulations[i].ac / this.props.gnomadPopulations[i].an
+        gnomad_af_lookup[this.props.gnomadPopulations[i].id.toUpperCase()] = this.props.gnomadPopulations[i].ac / this.props.gnomadPopulations[i].an
       }
     }
 
 
     console.log(gnomad_af_lookup)
 
-    const gnomad_male_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["MALE"] : 0
-    const gnomad_female_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["FEMALE"] : 0
+    const gnomad_male_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["XY"] : 0
+    const gnomad_female_af = this.props.gnomadPopulations.length > 0 ? gnomad_af_lookup["XX"] : 0
 
 
     const combinedPopulations = combinePopulations(includedPopulations)
@@ -292,7 +292,7 @@ export class PcgcPopulationsTable extends Component {
               (this.state.includeExomes && !this.state.includeSSCGenomes && !this.state.includeGenomes)
             }
             id="includeExomePopulations"
-            label="Spark Exomes"
+            label="SPARK Exomes"
             onChange={includeExomes => {
               this.setState({ includeExomes })
             }}
@@ -304,7 +304,7 @@ export class PcgcPopulationsTable extends Component {
               (!this.state.includeExomes && !this.state.includeSSCGenomes && this.state.includeGenomes)
             }
             id="includeGenomePopulations"
-            label="Spark Genomes"
+            label="SPARK Genomes"
             onChange={includeGenomes => {
               this.setState({ includeGenomes })
             }}
