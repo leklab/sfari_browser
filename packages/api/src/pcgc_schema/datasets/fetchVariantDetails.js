@@ -456,7 +456,7 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
 
   const query = `{
     variant(variantId: "${variantId}", dataset: gnomad_r3){
-      ... on GnomadVariantDetails{
+      ... on VariantDetails{
         genome{
           ac
           an
@@ -511,7 +511,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const { exomeData, genomeData, sscGenomeData } = await fetchVariantData(ctx, variantId)
 
-  // console.log(exomeData) 
+  //console.log(sscGenomeData) 
 
   // const sharedData = exomeData
 
@@ -571,7 +571,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   const denovoData = denovoES.hits.hits[0] ? denovoES.hits.hits[0]._source : undefined
   //console.log(denovoData)
 
-
+  //console.log("In here")
 
 
   /*
@@ -599,9 +599,9 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(gnomad_data)  
 
   const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
-  //console.log(gnomad_pop_data)
+  console.log(gnomad_pop_data)
 
-  const sharedData = exomeData || genomeData
+  const sharedData = exomeData || genomeData || sscGenomeData
 
   const sharedVariantFields = {
     alt: sharedData.alt,

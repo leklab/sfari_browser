@@ -112,6 +112,23 @@ export class PcgcPopulationsTable extends Component {
         ),*/
       })
     ).isRequired,
+    sscGenomePopulations: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        ac: PropTypes.number.isRequired,
+        an: PropTypes.number.isRequired,
+        // ac_hemi: PropTypes.number.isRequired,
+        ac_hom: PropTypes.number.isRequired,
+        
+        /*subpopulations: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            ac: PropTypes.number.isRequired,
+            an: PropTypes.number.isRequired,
+          })
+        ),*/
+      })
+    ).isRequired,    
     gnomadPopulations: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
@@ -135,6 +152,12 @@ export class PcgcPopulationsTable extends Component {
     genome_female_ac: PropTypes.number,
     genome_female_ac_hom: PropTypes.number,
     genome_female_an: PropTypes.number,
+    ssc_genome_male_ac: PropTypes.number,
+    ssc_genome_male_ac_hom: PropTypes.number,
+    ssc_genome_male_an: PropTypes.number,
+    ssc_genome_female_ac: PropTypes.number,
+    ssc_genome_female_ac_hom: PropTypes.number,
+    ssc_genome_female_an: PropTypes.number,
     showHemizygotes: PropTypes.bool,
     showHomozygotes: PropTypes.bool,
   }
@@ -151,6 +174,7 @@ export class PcgcPopulationsTable extends Component {
     this.state = {
       includeExomes: props.exomePopulations.length !== 0,
       includeGenomes: props.genomePopulations.length !== 0,
+      includeSSCGenomes: props.sscGenomePopulations.length !== 0,
     }
   }
 
@@ -186,6 +210,24 @@ export class PcgcPopulationsTable extends Component {
       female_an = female_an + this.props.genome_female_an
 
       includedPopulations = includedPopulations.concat(this.props.genomePopulations)
+    }
+
+    //console.log("Debug 1")
+    //console.log(this.props.sscGenomePopulations)
+
+    if (this.state.includeSSCGenomes){
+      
+      male_ac = male_ac + this.props.ssc_genome_male_ac
+      male_ac_hom = male_ac_hom + this.props.ssc_genome_male_ac_hom
+      male_an = male_an + this.props.ssc_genome_male_an
+
+      female_ac = female_ac + this.props.ssc_genome_female_ac
+      female_ac_hom = female_ac_hom + this.props.ssc_genome_female_ac_hom
+      female_an = female_an + this.props.ssc_genome_female_an
+      
+      //console.log("Including SSC Genomes")
+      includedPopulations = includedPopulations.concat(this.props.sscGenomePopulations)
+
     }
     
     //console.log(this.props.gnomadPopulations)
@@ -247,10 +289,10 @@ export class PcgcPopulationsTable extends Component {
             checked={this.state.includeExomes}
             disabled={
               this.props.exomePopulations.length === 0 ||
-              (this.state.includeExomes && !this.state.includeGenomes)
+              (this.state.includeExomes && !this.state.includeSSCGenomes && !this.state.includeGenomes)
             }
             id="includeExomePopulations"
-            label="Exomes"
+            label="Spark Exomes"
             onChange={includeExomes => {
               this.setState({ includeExomes })
             }}
@@ -259,12 +301,24 @@ export class PcgcPopulationsTable extends Component {
             checked={this.state.includeGenomes}
             disabled={
               this.props.genomePopulations.length === 0 ||
-              (!this.state.includeExomes && this.state.includeGenomes)
+              (!this.state.includeExomes && !this.state.includeSSCGenomes && this.state.includeGenomes)
             }
             id="includeGenomePopulations"
-            label="Genomes"
+            label="Spark Genomes"
             onChange={includeGenomes => {
               this.setState({ includeGenomes })
+            }}
+          />
+          <Checkbox
+            checked={this.state.includeSSCGenomes}
+            disabled={
+              this.props.sscGenomePopulations.length === 0 ||
+              (!this.state.includeExomes && !this.state.includeGenomes && this.state.includeSSCGenomes)
+            }
+            id="includeSSCGenomePopulations"
+            label="SSC Genomes"
+            onChange={includeSSCGenomes => {
+              this.setState({ includeSSCGenomes })
             }}
           />
         </ControlSection>

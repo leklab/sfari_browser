@@ -49,6 +49,23 @@ query PcgcVariant($variantId: String!) {
           ac_hom
         }
       }
+     ssc_genome {
+        ac
+        an
+        ac_hom
+        ac_male
+        an_male
+        ac_male_hom
+        ac_female
+        an_female
+        ac_female_hom
+        populations {
+          id
+          ac
+          an
+          ac_hom
+        }
+      }
       gnomadPopFreq {
         id
         ac

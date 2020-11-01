@@ -110,22 +110,28 @@ FilteringAlleleFrequency.defaultProps = {
 export const GnomadVariantOccurrenceTable = ({ variant }) => {
   const isPresentInExome = Boolean(variant.spark_exome)
  const isPresentInGenome = Boolean(variant.spark_genome)
+ const isPresentInSSCGenome = Boolean(variant.ssc_genome)
 
   const exomeAlleleCount = isPresentInExome ? variant.spark_exome.ac : 0
   const exomeAlleleNumber = isPresentInExome ? variant.spark_exome.an : 0
   const genomeAlleleCount = isPresentInGenome ? variant.spark_genome.ac : 0
   const genomeAlleleNumber = isPresentInGenome ? variant.spark_genome.an : 0
 
+  const sscGenomeAlleleCount = isPresentInSSCGenome ? variant.ssc_genome.ac : 0
+  const sscGenomeAlleleNumber = isPresentInSSCGenome ? variant.ssc_genome.an : 0
+
   const exomeAlleleFrequency = exomeAlleleNumber === 0 ? 0 : exomeAlleleCount / exomeAlleleNumber
   const genomeAlleleFrequency = genomeAlleleNumber === 0 ? 0 : genomeAlleleCount / genomeAlleleNumber
+  const sscGenomeAlleleFrequency = sscGenomeAlleleNumber === 0 ? 0 : sscGenomeAlleleCount / sscGenomeAlleleNumber
 
 
   const exomeHomCount = isPresentInExome ? variant.spark_exome.ac_hom : 0
   const genomeHomCount = isPresentInGenome ? variant.spark_genome.ac_hom : 0
+  const sscGenomeHomCount = isPresentInSSCGenome ? variant.ssc_genome.ac_hom : 0
 
-  const totalAlleleCount = exomeAlleleCount + genomeAlleleCount
-  const totalAlleleNumber = exomeAlleleNumber + genomeAlleleNumber
-  const totalHomCount = exomeHomCount + genomeHomCount
+  const totalAlleleCount = exomeAlleleCount + genomeAlleleCount + sscGenomeAlleleCount
+  const totalAlleleNumber = exomeAlleleNumber + genomeAlleleNumber + sscGenomeAlleleNumber
+  const totalHomCount = exomeHomCount + genomeHomCount + sscGenomeHomCount
 
   const totalAlleleFrequency = totalAlleleNumber === 0 ? 0 : totalAlleleCount / totalAlleleNumber
 
@@ -138,9 +144,9 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
       <tbody>
         <tr>
           <td />
-          <th scope="col">Exomes</th>
-          <th scope="col">Genomes</th>
-          <th scope="col">SPARK</th>
+          <th scope="col">SPARK Exomes</th>
+          <th scope="col">SPARK Genomes</th>
+          <th scope="col">SSC Genomes</th>
           <th scope="col">Total</th>
         </tr>
         {/*<tr>
@@ -151,28 +157,28 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <th scope="row">Allele Count</th>
           <td>{isPresentInExome && exomeAlleleCount}</td>
           <td>{isPresentInGenome && genomeAlleleCount}</td>
-          <td>{totalAlleleCount}</td>
+          <td>{isPresentInSSCGenome && sscGenomeAlleleCount}</td>
           <td>{totalAlleleCount}</td>
         </tr>
         <tr>
           <th scope="row">Allele Number</th>
           <td>{isPresentInExome && exomeAlleleNumber}</td>
           <td>{isPresentInGenome && genomeAlleleNumber}</td>
-          <td>{totalAlleleNumber}</td>
-          <td>{totalAlleleCount}</td>          
+          <td>{isPresentInSSCGenome && sscGenomeAlleleNumber}</td>
+          <td>{totalAlleleNumber}</td>          
         </tr>
         <tr>
           <th scope="row">Allele Frequency</th>
           <td>{isPresentInExome && exomeAlleleFrequency.toPrecision(4)}</td>
           <td>{isPresentInGenome && genomeAlleleFrequency.toPrecision(4)}</td>
-          <td>{totalAlleleFrequency.toPrecision(4)}</td>
+          <td>{isPresentInSSCGenome && sscGenomeAlleleFrequency.toPrecision(4)}</td>
           <td>{totalAlleleFrequency.toPrecision(4)}</td>          
         </tr>
         <tr>
           <th scope="row">Number of homozygotes</th>
           <td>{isPresentInExome && exomeHomCount}</td>
           <td>{isPresentInGenome && genomeHomCount}</td>
-          <td>{totalHomCount}</td>
+          <td>{isPresentInSSCGenome && sscGenomeHomCount}</td>
           <td>{totalHomCount}</td>
         </tr>
         <tr>
@@ -189,7 +195,7 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
 
 GnomadVariantOccurrenceTable.propTypes = {
   variant: PropTypes.shape({
-    exome: PropTypes.shape({
+    spark_exome: PropTypes.shape({
       ac: PropTypes.number.isRequired,
       an: PropTypes.number.isRequired,
       ac_hom: PropTypes.number.isRequired,
@@ -199,7 +205,7 @@ GnomadVariantOccurrenceTable.propTypes = {
       }).isRequired,*/
     }),
     
-    genome: PropTypes.shape({
+    spark_genome: PropTypes.shape({
       ac: PropTypes.number.isRequired,
       an: PropTypes.number.isRequired,
       ac_hom: PropTypes.number.isRequired,
@@ -208,6 +214,17 @@ GnomadVariantOccurrenceTable.propTypes = {
         popmax_population: PropTypes.string,
       }).isRequired,*/
     }),
+
+    ssc_genome: PropTypes.shape({
+      ac: PropTypes.number.isRequired,
+      an: PropTypes.number.isRequired,
+      ac_hom: PropTypes.number.isRequired,
+      /*faf95: PropTypes.shape({
+        popmax: PropTypes.number,
+        popmax_population: PropTypes.string,
+      }).isRequired,*/
+    }),
+
   }).isRequired,
 }
 

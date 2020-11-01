@@ -172,6 +172,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 <PcgcPopulationsTable
                   exomePopulations={variant.spark_exome ? variant.spark_exome.populations : []}
                   genomePopulations={variant.spark_genome ? variant.spark_genome.populations : []}
+                  sscGenomePopulations={variant.ssc_genome ? variant.ssc_genome.populations : []}
                   gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
                   gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}
                   exome_male_ac={variant.spark_exome ? variant.spark_exome.ac_male : 0}
@@ -186,6 +187,12 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   genome_female_ac={variant.spark_genome ? variant.spark_genome.ac_female : 0}
                   genome_female_ac_hom={variant.spark_genome ? variant.spark_genome.ac_female_hom : 0}
                   genome_female_an={variant.spark_genome ? variant.spark_genome.an_female : 0}
+                  ssc_genome_male_ac={variant.ssc_genome ? variant.ssc_genome.ac_male : 0}
+                  ssc_genome_male_ac_hom={variant.ssc_genome ? variant.ssc_genome.ac_male_hom : 0}
+                  ssc_genome_male_an={variant.ssc_genome ? variant.ssc_genome.an_male : 0}
+                  ssc_genome_female_ac={variant.ssc_genome ? variant.ssc_genome.ac_female : 0}
+                  ssc_genome_female_ac_hom={variant.ssc_genome ? variant.ssc_genome.ac_female_hom : 0}
+                  ssc_genome_female_an={variant.ssc_genome ? variant.ssc_genome.an_female : 0}
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>
