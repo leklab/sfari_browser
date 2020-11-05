@@ -186,7 +186,7 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td></td>
           <td></td>
           <td></td>
-          <td>{FilteringAlleleFrequency(gnomad_faf95_popmax,gnomad_faf95_population)}</td>
+          <td>{FilteringAlleleFrequency(gnomad_faf95_popmax,gnomad_faf95_population.toUpperCase())}</td>
         </tr>        
       </tbody>
     </Table>

@@ -53,9 +53,5 @@ export default () => (
         </Link>
       </p>
     </HeadingContainer>
-
-    <p>
-	Place holder text
-    </p>
   </HomePage>
 )
