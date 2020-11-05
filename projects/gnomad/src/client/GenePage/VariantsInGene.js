@@ -221,6 +221,20 @@ class VariantsInGene extends Component {
               † denotes a consequence that is for a non-canonical transcript
             </p>
           )}
+          <p style={{ marginBottom: 0 }}>
+            <b>Cohort Key:</b>&nbsp; <img
+                    src={require('../VariantList/SPARK_icon.png')}
+                    height={20}
+                    width={20}
+                    alt={"SPARK"}
+                  />&nbsp; SPARK &nbsp; &nbsp; &nbsp; 
+                  <img
+                    src={require('../VariantList/SSC_icon.png')}
+                    height={20}
+                    width={20}
+                    alt={"SSC"}
+                  />&nbsp; SSC
+          </p>
            <VariantTable
             columns={this.getColumns(width, gene.chrom)}
             highlightText={filter.searchText}

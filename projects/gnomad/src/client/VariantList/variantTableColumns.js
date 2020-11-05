@@ -96,27 +96,31 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
     },*/
     {
       key: 'datasets',
-      heading: 'Source',
+      heading: 'Cohort',
       grow: 0,
-      minWidth: 160,
+      minWidth: 60,
       render: variant => (
               <React.Fragment>
-                {variant.spark_exome && (
+                {/*variant.spark_exome && (
                   <DatasetIcon
                     dataset="sparkE"
                     isFiltered={false}
                   />
-                )}
-                {variant.spark_genome && (
-                  <DatasetIcon
-                    dataset="sparkG"
-                    isFiltered={false}
+                )*/}
+                {(variant.spark_exome || variant.spark_genome) && (
+                  <img
+                    src={require('./SPARK_icon.png')}
+                    height={20}
+                    width={20}
+                    alt={"SPARK"}
                   />
                 )}
                 {variant.ssc_genome && (
-                  <DatasetIcon
-                    dataset="sscG"
-                    isFiltered={false}
+                  <img
+                    src={require('./SSC_icon.png')}
+                    height={20}
+                    width={20}
+                    alt={"SSC"}
                   />
                 )}                
               </React.Fragment>
