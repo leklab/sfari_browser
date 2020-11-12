@@ -91,7 +91,7 @@ const FilteringAlleleFrequency = (popmax, popmaxPopulation ) => {
         <FilteringAlleleFrequencyValue>{popmax.toPrecision(4)}</FilteringAlleleFrequencyValue>
       </TooltipAnchor>
       <FilteringAlleleFrequencyPopulation>
-        {POPULATION_NAMES[popmaxPopulation]}
+        {POPULATION_NAMES[popmaxPopulation.toUpperCase()]}
       </FilteringAlleleFrequencyPopulation>
     </span>
   )
@@ -186,7 +186,7 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
           <td></td>
           <td></td>
           <td></td>
-          <td>{FilteringAlleleFrequency(gnomad_faf95_popmax,gnomad_faf95_population.toUpperCase())}</td>
+          <td>{FilteringAlleleFrequency(gnomad_faf95_popmax,gnomad_faf95_population)}</td>
         </tr>        
       </tbody>
     </Table>

@@ -183,7 +183,7 @@ export class PopulationsTable extends Component {
 
 
     console.log(showGnomad)
-    //console.log(populations)
+    console.log(populations)
     console.log(gnomad_male_af)
     console.log(gnomad_female_af)
 
