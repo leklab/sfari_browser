@@ -15,6 +15,9 @@ import datasetsConfig from '../datasets/datasetsConfig'
 import fetchGnomadStructuralVariantsByGene from '../datasets/gnomad_sv_r2/fetchGnomadStructuralVariantsByGene'
 */
 
+import fetchGnomadStructuralVariantsByGene from '../datasets/fetchGnomadStructuralVariantsByGene'
+import { StructuralVariantSummaryType } from './structuralVariant'
+
 import {
   ClinvarVariantType,
   fetchClinvarVariantsInGene,
@@ -40,7 +43,7 @@ import {
   RegionalMissenseConstraintRegionType,
   fetchExacRegionalMissenseConstraintRegions,
 } from './regionalConstraint'
-import { StructuralVariantSummaryType } from './structuralVariant'
+
 */
 
 import { VariantSummaryType } from './variant'
@@ -110,11 +113,11 @@ const geneType = new GraphQLObjectType({
       type: new GraphQLList(RegionalMissenseConstraintRegionType),
       resolve: (obj, args, ctx) => fetchExacRegionalMissenseConstraintRegions(ctx, obj.gene_name),
     },
+    */
     structural_variants: {
       type: new GraphQLList(StructuralVariantSummaryType),
       resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByGene(ctx, obj),
     },
-    */
     
     variants: {
       type: new GraphQLList(VariantSummaryType),

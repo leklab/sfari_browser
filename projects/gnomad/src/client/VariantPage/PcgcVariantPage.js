@@ -103,7 +103,20 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
         const numTranscripts = variant.sortedTranscriptConsequences.length
         const geneIds = variant.sortedTranscriptConsequences.map(csq => csq.gene_id)
         const numGenes = new Set(geneIds).size
-        const dnm_confidence = variant.denovoHC && variant.denovoHC == 'Yes' ? 'HIGH' : 'LOW'
+
+        let dnm_confidence
+
+        if(variant.denovoHC && variant.denovoHC == 'Yes'){
+          dnm_confidence = 'HIGH'
+        }
+        else if(variant.denovoHC && variant.denovoHC == 'No'){
+          dnm_confidence = 'LOW'                    
+        }
+        else if(variant.denovoHC && variant.denovoHC == 'Unclassified'){
+          dnm_confidence = 'UNKNOWN'                                        
+        }
+
+        // const dnm_confidence = variant.denovoHC && variant.denovoHC == 'Yes' ? 'HIGH' : 'LOW'
 
         console.log("Ih here 2")
         console.log(variant)

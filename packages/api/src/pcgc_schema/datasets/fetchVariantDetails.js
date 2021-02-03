@@ -569,9 +569,10 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   
   const denovoData = denovoES.hits.hits[0] ? denovoES.hits.hits[0]._source : undefined
-  //console.log(denovoData)
+  console.log("In here")
+  console.log(denovoData)
 
-  //console.log("In here")
+  
 
 
   /*
@@ -599,7 +600,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(gnomad_data)  
 
   const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
-  console.log(gnomad_pop_data)
+  //console.log(gnomad_pop_data)
 
   const sharedData = exomeData || genomeData || sscGenomeData
 

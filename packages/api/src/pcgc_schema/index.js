@@ -21,6 +21,10 @@ import fetchGnomadStructuralVariantDetails from './datasets/gnomad_sv_r2/fetchGn
 import GnomadStructuralVariantDetailsType from './datasets/gnomad_sv_r2/GnomadStructuralVariantDetailsType'
 
 */
+import fetchGnomadStructuralVariantDetails from './datasets/fetchGnomadStructuralVariantDetails'
+import GnomadStructuralVariantDetailsType from './datasets/GnomadStructuralVariantDetailsType'
+
+
 import geneType, {
   lookupGeneByGeneId,
   lookupGeneByName,
@@ -125,7 +129,7 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       resolve: (obj, args, ctx) => resolveSearchResults(ctx, args.query),
     },
 
-    /*
+    
     structural_variant: {
       type: GnomadStructuralVariantDetailsType,
       args: {
@@ -133,7 +137,7 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       },
       resolve: (obj, args, ctx) => fetchGnomadStructuralVariantDetails(ctx, args.variantId),
     },
-    */
+    
     
     variant: {
       description: 'Look up a single variant or rsid. Example: 1-55516888-G-GA.',

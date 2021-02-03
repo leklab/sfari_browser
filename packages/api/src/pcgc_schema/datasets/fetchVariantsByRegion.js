@@ -94,7 +94,7 @@ const fetchVariantsByRegion = async (ctx, { chrom, start, stop }, subset) => {
   //console.log(exomeVariants)
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
-    index: 'spark_genomes',
+    index: 'ssc_genomes',
     type: 'variant',
     size: 10000,
     _source: [
@@ -187,15 +187,16 @@ const fetchVariantsByRegion = async (ctx, { chrom, start, stop }, subset) => {
   //console.log("In here 33")
   //const gnomad_data = request("http://gnomad.broadinstitute.org/api", query).then(console.log).catch(console.error)
 
-  const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+  //const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
   //console.log(gnomad_data.region.variants)
 
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
-  const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.region.variants)
-  console.log(combinedVariants)
+  
+  //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeAndGenomeVariants,gnomad_data.region.variants)
+  //console.log(combinedVariants)
+  //return combinedVariants
 
-  return combinedVariants
-
+  return exomeAndGenomeVariants
 
   /*
   const requests = [
