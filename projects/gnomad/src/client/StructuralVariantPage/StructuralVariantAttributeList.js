@@ -55,7 +55,7 @@ const VariantPosition = ({ variant }) => {
       </Link>
     )
   }
-
+  /*
   if (variant.type === 'BND' || variant.type === 'CTX' || variant.chrom !== variant.end_chrom) {
     return (
       <span>
@@ -69,7 +69,7 @@ const VariantPosition = ({ variant }) => {
       </span>
     )
   }
-
+  */
   return (
     <Link to={`/region/${variant.chrom}:${variant.pos}-${variant.end_pos}`}>
       {variant.chrom}:{variant.pos}-{variant.end_pos}

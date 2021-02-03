@@ -14,7 +14,7 @@ const SVUCSCLink = ({ chrom, pos, endPos }) => {
     stop = start + 5000
   }
 
-  const url = `http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr${chrom}%3A${start}-${stop}`
+  const url = `http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position=chr${chrom}%3A${start}-${stop}`
 
   return (
     <ExternalLink href={url}>
@@ -38,6 +38,7 @@ const SVUCSCLinks = ({ variant }) => {
     return <SVUCSCLink chrom={variant.chrom} pos={variant.pos} />
   }
 
+  /*
   if (variant.type === 'BND' || variant.type === 'CTX' || variant.chrom !== variant.end_chrom) {
     return (
       <React.Fragment>
@@ -46,7 +47,7 @@ const SVUCSCLinks = ({ variant }) => {
       </React.Fragment>
     )
   }
-
+  */
   return <SVUCSCLink chrom={variant.chrom} pos={variant.pos} endPos={variant.end_pos} />
 }
 

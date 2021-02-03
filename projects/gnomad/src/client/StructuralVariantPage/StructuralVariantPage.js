@@ -43,18 +43,18 @@ const StructuralVariantPage = ({ datasetId, variant }) => (
       <ResponsiveSection>
         <h2>References</h2>
         <SVReferenceList variant={variant} />
-        <h2>Report</h2>
-        <VariantFeedback datasetId={datasetId} variantId={variant.variant_id} />
+        {/*<h2>Report</h2>
+        <VariantFeedback datasetId={datasetId} variantId={variant.variant_id} />*/}
       </ResponsiveSection>
     </Wrapper>
-    {variant.type === 'MCNV' && (
+    {/*variant.type === 'MCNV' && (
       <Wrapper>
         <ResponsiveSection>
           <h2>Copy Number Distribution</h2>
           <MultiallelicCopyNumberVariantPlot variant={variant} />
         </ResponsiveSection>
       </Wrapper>
-    )}
+    )*/}
     <Wrapper>
       <ResponsiveSection>
         <h2>Consequences</h2>
@@ -66,7 +66,7 @@ const StructuralVariantPage = ({ datasetId, variant }) => (
       </ResponsiveSection>
       <ResponsiveSection>
         <h2>Population Frequencies</h2>
-        <StructuralVariantPopulationsTable variant={variant} />
+        {/*<StructuralVariantPopulationsTable variant={variant} />*/}
       </ResponsiveSection>
     </Wrapper>
   </Page>
@@ -96,7 +96,6 @@ const ConnectedStructuralVariantPage = ({ variantId, ...rest }) => {
         }
         cpx_intervals
         cpx_type
-        end_chrom
         end_pos
         evidence
         filters
