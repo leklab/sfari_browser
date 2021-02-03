@@ -173,9 +173,10 @@ class GenePage extends Component {
     
     console.log(gene)
     console.log(compositeExons)
+    console.log(datasetId)
 
     const regionViewerRegions =
-      datasetId === 'gnomad_sv_r2'
+      datasetId === 'sfari_sv'
         ? [
             {
               feature_type: 'region',
@@ -186,8 +187,8 @@ class GenePage extends Component {
           ]
         : compositeExons
 
-    if (datasetId === 'gnomad_sv_r2' && transcriptId) {
-      return <Redirect to={`/gene/${geneId}?dataset=gnomad_sv_r2`} />
+    if (datasetId === 'sfari_sv' && transcriptId) {
+      return <Redirect to={`/gene/${geneId}?dataset=sfari_sv`} />
     }
 
     return (
@@ -305,7 +306,7 @@ class GenePage extends Component {
               compositeExons={compositeExons}
               filenameForExport={`${geneId}_transcripts`}
               renderTranscriptId={
-                datasetId === 'gnomad_sv_r2'
+                datasetId === 'sfari_sv'
                   ? txId => txId
                   : (txId, { isCanonical, isSelected }) => (
                       <TranscriptLink
@@ -337,7 +338,7 @@ class GenePage extends Component {
             />
           ) */}
 
-          {datasetId === 'gnomad_sv_r2' ? (
+          {datasetId === 'sfari_sv' ? (
             <StructuralVariantsInGene gene={gene} width={regionViewerWidth} />
           ) : (
             <VariantsInGene

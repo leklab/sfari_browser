@@ -69,6 +69,7 @@ export const getColumns = ({ includeHomozygoteAC, width }) => {
         </Link>
       ),
     },
+    /*
     {
       key: 'datasets',
       heading: 'Source',
@@ -78,6 +79,7 @@ export const getColumns = ({ includeHomozygoteAC, width }) => {
         <DatasetIcon dataset="gnomadGenome" isFiltered={variant.filters.length > 0} />
       ),
     },
+    */
     {
       key: 'consequence',
       heading: 'Consequence',
@@ -92,6 +94,7 @@ export const getColumns = ({ includeHomozygoteAC, width }) => {
       minWidth: 130,
       render: renderType,
     },
+    
     {
       key: 'pos',
       heading: 'Position',
@@ -101,19 +104,23 @@ export const getColumns = ({ includeHomozygoteAC, width }) => {
         let position
         if (variant.type === 'INS') {
           position = `${variant.pos}`
-        } else if (
+        } 
+        /*else if (
           variant.type === 'BND' ||
           variant.type === 'CTX' ||
           variant.chrom !== variant.end_chrom
         ) {
-          position = `${variant.chrom}:${variant.pos} | ${variant.end_chrom}:${variant.end_pos}`
-        } else {
+           position = `${variant.chrom}:${variant.pos} | ${variant.end_chrom}:${variant.end_pos}`
+        } 
+        */
+        else {
           position = `${variant.pos} - ${variant.end_pos}`
         }
 
         return <span className="grid-cell-content">{position}</span>
       },
     },
+    
     {
       key: 'length',
       heading: 'Size',

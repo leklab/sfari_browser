@@ -176,6 +176,7 @@ class StructuralVariants extends Component {
       colorKey,
     } = this.state
 
+    console.log("In StructuralVariants")
     const numRowsRendered = Math.min(renderedVariants.length, NUM_ROWS_RENDERED)
 
     // pos and end_pos coordinates are based on the chromosome which they are located on.
@@ -188,12 +189,15 @@ class StructuralVariants extends Component {
 
       // If chrom === end_chrom, then both points are on the same chromosome
       // as the current gene/region
-      if (variant.chrom !== variant.end_chrom) {
+
+      //if (variant.chrom !== variant.end_chrom) {
         const chromIndex = HUMAN_CHROMOSOMES.indexOf(variant.chrom)
-        const endChromIndex = HUMAN_CHROMOSOMES.indexOf(variant.end_chrom)
+        //const endChromIndex = HUMAN_CHROMOSOMES.indexOf(variant.end_chrom)
+        const endChromIndex = HUMAN_CHROMOSOMES.indexOf(variant.chrom)
+
         copy.pos += (chromIndex - currentChromIndex) * 1e9
         copy.end_pos += (endChromIndex - currentChromIndex) * 1e9
-      }
+      //}
 
       return copy
     })

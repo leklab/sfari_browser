@@ -15,7 +15,6 @@ const StructuralVariantsInGene = ({ gene, ...rest }) => {
           an
           af
           chrom
-          end_chrom
           end_pos
           consequence
           filters
@@ -27,7 +26,8 @@ const StructuralVariantsInGene = ({ gene, ...rest }) => {
       }
     }
   `
-
+  console.log("In StructuralVariantsInGene")
+  console.log(query)
   return (
     <Query query={query} variables={{ geneId: gene.gene_id }}>
       {({ data, error, loading }) => {
@@ -39,6 +39,8 @@ const StructuralVariantsInGene = ({ gene, ...rest }) => {
           return <StatusMessage>Failed to load variants</StatusMessage>
         }
 
+        console.log("requesting data")
+        console.log(data)
         return (
           <StructuralVariants
             {...rest}
