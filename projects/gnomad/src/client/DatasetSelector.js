@@ -408,6 +408,7 @@ const DatasetSelector = withRouter(({ datasetOptions, history, selectedDataset }
 
   let datasets = []
 
+  /*
   if (includeShortVariants) {
     const shortVariantDatasets = [
       {
@@ -455,6 +456,7 @@ const DatasetSelector = withRouter(({ datasetOptions, history, selectedDataset }
       },
     ]
 
+    
     if (includeExac) {
       shortVariantDatasets[1].children.push({
         id: 'exac',
@@ -475,6 +477,56 @@ const DatasetSelector = withRouter(({ datasetOptions, history, selectedDataset }
       url: datasetLink('gnomad_sv_r2'),
     })
   }
+  */
+
+
+  if (includeShortVariants) {
+    const shortVariantDatasets = [
+      {
+        id: 'current_short_variant',
+        isActive: selectedDataset !== 'gnomad_sv',
+        label: datasetLabels[topLevelShortVariantDataset],
+        url: datasetLink(topLevelShortVariantDataset),
+      },
+      {
+        id: 'sfari_subsets',
+        isActive: selectedDataset !== 'sfari_sv',
+        label: 'gnomAD subsets',
+        children: [
+          {
+            id: 'sfari_all',
+            label: datasetLabels.sfari_all,
+            url: datasetLink('sfari_all'),
+            description: `placeholder`,
+          },
+          {
+            id: 'sfari_spark',
+            label: datasetLabels.sfari_spark,
+            url: datasetLink('sfari_spark'),
+            description: `placeholder`,
+          },
+          {
+            id: 'sfari_ssc',
+            label: datasetLabels.sfari_ssc,
+            url: datasetLink('sfari_ssc'),
+            description: `placeholder`,
+          },
+        ],
+      },
+    ]
+
+    datasets = datasets.concat(shortVariantDatasets)
+  }
+
+  if (includeStructuralVariants) {
+    datasets.push({
+      id: 'sfari_sv',
+      isActive: selectedDataset === 'sfari_sv',
+      label: datasetLabels.sfari_sv,
+      url: datasetLink('sfari_sv'),
+    })
+  }
+
 
   return <NavigationMenu items={datasets} />
 })

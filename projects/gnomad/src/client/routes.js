@@ -26,7 +26,8 @@ const MainPanel = styled.div`
   width: 100%;
 `
 
-const defaultDataset = 'gnomad_r2_1'
+// const defaultDataset = 'gnomad_r2_1'
+const defaultDataset = 'sfari_all'
 
 const App = () => (
   <div>
