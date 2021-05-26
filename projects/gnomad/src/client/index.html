@@ -28,21 +28,16 @@
   <body>
     <div id="root"></div>
 
-    <%
-      if (htmlWebpackPlugin.options.gaTrackingId) {
-    %>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= htmlWebpackPlugin.options.gaTrackingId %>"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-8526335-35"></script>
     <script>
-      window.gaTrackingId = '<%= htmlWebpackPlugin.options.gaTrackingId %>';
+      window.gaTrackingId = 'UA-8526335-35';
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', '<%= htmlWebpackPlugin.options.gaTrackingId %>', { send_page_view: false });
+      gtag('config', 'UA-8526335-35', { send_page_view: false });
       window.gtag = gtag;
     </script>
-    <%
-      }
-    %>
+
   </body>
 </html>
