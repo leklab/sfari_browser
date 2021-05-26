@@ -15,7 +15,6 @@ const StructuralVariantsInRegion = ({ region, ...rest }) => {
           an
           af
           chrom
-          end_chrom
           end_pos
           consequence
           filters

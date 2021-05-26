@@ -146,9 +146,9 @@ const StructuralVariantAttributeList = ({ variant }) => (
       {(variant.an === 0 ? 0 : variant.ac / variant.an).toPrecision(4)}
     </AttributeList.Item>
     <AttributeList.Item label="Quality score">{variant.qual}</AttributeList.Item>
-    <AttributeList.Item label="Position">
+    {/*<AttributeList.Item label="Position">
       <VariantPosition variant={variant} />
-    </AttributeList.Item>
+    </AttributeList.Item>*/}
     {variant.type !== 'BND' && variant.type !== 'CTX' && (
       <AttributeList.Item label="Size">
         {variant.length === -1 ? '—' : `${variant.length.toLocaleString()} bp`}

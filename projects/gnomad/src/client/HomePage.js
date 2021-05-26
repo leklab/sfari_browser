@@ -39,7 +39,7 @@ export default () => (
     <DocumentTitle />
     <HeadingContainer>
       {/* <GnomadHeading width="60%" /> */}
-      <img src="http://www.leklab.org/wp-content/uploads/2020/04/SFARI.png" width="50%" height="50%"></img>
+      <img src="https://genomes.sfari.org/SFARI.png" width="50%" height="50%"></img>
       <SubHeading>Simons Foundation Autism Research Initiative</SubHeading>
       <Searchbox width="100%" />
       <p>

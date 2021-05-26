@@ -2,15 +2,17 @@ import { GraphQLList, GraphQLInt, GraphQLObjectType, GraphQLString } from 'graph
 
 //import { datasetArgumentTypeForMethod, AnyDatasetArgumentType } from '../datasets/datasetArgumentTypes'
 //import datasetsConfig from '../datasets/datasetsConfig'
-//import fetchGnomadStructuralVariantsByRegion from '../datasets/gnomad_sv_r2/fetchGnomadStructuralVariantsByRegion'
 //import coverageType, { fetchCoverageByRegion } from './coverage'
-//import { StructuralVariantSummaryType } from './structuralVariant'
 
 import { UserVisibleError } from '../errors'
 import geneType, { fetchGenesByInterval } from './gene'
 import { VariantSummaryType } from './variant'
 import countVariantsInRegion from '../datasets/countVariantsInRegion'
 import fetchVariantsByRegion from '../datasets/fetchVariantsByRegion'
+
+import { StructuralVariantSummaryType } from './structuralVariant'
+import fetchGnomadStructuralVariantsByRegion from '../datasets/fetchGnomadStructuralVariantsByRegion'
+
 
 // Individual variants will only be returned if a region has fewer than this many variants
 const FETCH_INDIVIDUAL_VARIANTS_LIMIT = 30000
@@ -69,11 +71,12 @@ const regionType = new GraphQLObjectType({
         })
       },
     },
+    */
     structural_variants: {
       type: new GraphQLList(StructuralVariantSummaryType),
       resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByRegion(ctx, obj),
     },
-    */
+    
     
     
     variants: {
