@@ -60,7 +60,7 @@ const RegionPage = ({ datasetId, history, region, regionId, screenSize }) => {
           }}
         />
 
-        {datasetId === 'gnomad_sv_r2' ? (
+        {datasetId === 'sfari_sv' ? (
           <StructuralVariantsInRegion region={region} width={regionViewerWidth} />
         ) : (
           <VariantsInRegion datasetId={datasetId} region={region} width={regionViewerWidth} />

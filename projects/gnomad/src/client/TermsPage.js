@@ -12,6 +12,6 @@ export default () => (
     <PageHeading>Terms and Data Information</PageHeading>
 
     <h2>Terms of use</h2>
-    Place holder text
+    Please refer to the terms page on the <ExternalLink href="https://www.simonsfoundation.org/terms-and-conditions">Simons Foundation website</ExternalLink>
   </InfoPage>
 )

@@ -39,7 +39,7 @@ export default () => (
     <DocumentTitle />
     <HeadingContainer>
       {/* <GnomadHeading width="60%" /> */}
-      <img src="http://www.leklab.org/wp-content/uploads/2020/04/SFARI.png" width="50%" height="50%"></img>
+      <img src="https://genomes.sfari.org/SFARI.png" width="50%" height="50%"></img>
       <SubHeading>Simons Foundation Autism Research Initiative</SubHeading>
       <Searchbox width="100%" />
       <p>
@@ -53,5 +53,17 @@ export default () => (
         </Link>
       </p>
     </HeadingContainer>
+    <p>
+    The SFARI Genomes Browser is a resource developed for integration and visualization of exome and genome sequencing data generated on <ExternalLink href="https://www.sfari.org">SFARI</ExternalLink> cohorts: <ExternalLink href="https://www.sfari.org/resource/simons-simplex-collection">Simons Simplex Collection (SSC)</ExternalLink>, <ExternalLink href="https://www.sfari.org/resource/spark">SPARK</ExternalLink> and <ExternalLink href="https://www.sfari.org/resource/simons-searchlight">Simons Searchlight</ExternalLink>.
+    <br /><br />
+    Summary data are available for the following datasets:<br />
+    <ul>
+    <li> SSC whole genome sequencing data for ~10,000 individuals – sequenced by New York Genome Center (NYGC), and variant calling performed by the Centers of Common Disease Genomics (CCDG) using their analysis pipeline </li>
+    <li> SPARK whole genome sequencing data for ~2,500 individuals – sequenced by NYGC, and variant calling performed by the CCDG using their analysis pipeline </li>
+    <li> SPARK whole exome sequencing data for ~27,000 individuals – sequenced by Regeneron Pharmaceuticals, and variant calling and annotation performed by the SPARK Genome Consortium. </li>
+    </ul>
+    <br />
+    All variant summary data presented here are made available to the wider research community for variant and gene level visualization. For detailed information (including individual data) on released datasets and other available resources, please apply to access through <ExternalLink href="https://base.sfari.org">SFARI Base</ExternalLink>.
+    </p>
   </HomePage>
 )
