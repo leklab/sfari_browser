@@ -46,12 +46,12 @@ import {
 
 */
 
-import { VariantSummaryType } from './variant'
+import { MitoVariantSummaryType } from './mito_variant'
 
-import fetchVariantsByGene from '../datasets/fetchVariantsByGene'
+import fetchMitoVariantsByGene from '../datasets/fetchMitoVariantsByGene'
 
-const geneType = new GraphQLObjectType({
-  name: 'Gene',
+const mitoGeneType = new GraphQLObjectType({
+  name: 'MitoGene',
   fields: () => ({
     _id: { type: GraphQLString },
     omim_description: { type: GraphQLString },
@@ -114,13 +114,16 @@ const geneType = new GraphQLObjectType({
       resolve: (obj, args, ctx) => fetchExacRegionalMissenseConstraintRegions(ctx, obj.gene_name),
     },
     */
+
+    /*
     structural_variants: {
       type: new GraphQLList(StructuralVariantSummaryType),
       resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByGene(ctx, obj),
     },
-    
+    */
+
     variants: {
-      type: new GraphQLList(VariantSummaryType),
+      type: new GraphQLList(MitoVariantSummaryType),
       args: {
         //dataset: { type: datasetArgumentTypeForMethod('fetchVariantsByGene') },
         transcriptId: { type: GraphQLString },
@@ -137,14 +140,15 @@ const geneType = new GraphQLObjectType({
         console.log(obj.gene_id)
         console.log(obj.chrom)
         //const fetchVariantsByGene = datasetsConfig[args.dataset].fetchVariantsByGene
-        return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
+        return fetchMitoVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
       },
     },
   }),
 })
 
-export default geneType
+export default mitoGeneType
 
+/*
 export const lookupGeneByGeneId = (db, gene_id) =>
   db.collection('genes').findOne({ gene_id })
 
@@ -161,3 +165,6 @@ export const fetchGenesByInterval = (ctx, { xstart, xstop }) =>
     .collection('genes')
     .find({ $and: [{ xstart: { $lte: xstop } }, { xstop: { $gte: xstart } }] })
     .toArray()
+*/
+
+

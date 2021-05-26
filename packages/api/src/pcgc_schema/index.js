@@ -34,7 +34,7 @@ import transcriptType, {
   lookupTranscriptsByTranscriptId,
 } from './types/transcript'
 
-
+import mitoGeneType from './types/mito_gene'
 import regionType from './types/region'
 
 import { SearchResultType, resolveSearchResults } from './types/search'
@@ -83,6 +83,27 @@ The fields below allow for different ways to look up PCGC data. Click on the the
         return 'No lookup found'
       },
     },
+
+    mito_gene: {
+      description: 'Look up variant data by mitochondrial gene name. Example: MT-CO1.',
+      type: mitoGeneType,
+      args: {
+        gene_name: { type: GraphQLString },
+        gene_id: { type: GraphQLString },
+        filter: { type: GraphQLString },
+      },
+      resolve: (obj, args, ctx) => {
+        if (args.gene_name) {
+          return lookupGeneByName(ctx.database.gnomad, args.gene_name)
+        }
+        if (args.gene_id) {
+          return lookupGeneByGeneId(ctx.database.gnomad, args.gene_id)
+        }
+        return 'No lookup found'
+      },
+    },
+
+
     transcript: {
       description: 'Look up variant data by transcript ID. Example: ENST00000407236.',
       type: transcriptType,
