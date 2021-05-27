@@ -127,7 +127,7 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
         'AF_proband'*/
 
       ],
-      
+      /*
       body: {
         query : {
           nested: {
@@ -138,8 +138,8 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
               }
             }
           }
-        },
-      /*  
+        },*/
+        
       body: {
         query: {
           bool: {
@@ -153,10 +153,10 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
                 },
               },
               { bool: { should: rangeQueries } },
-              { range: { ['AC_raw']: { gt: 0 } } },
+              { range: { ['ac']: { gt: 0 } } },
             ],
           },
-        },*/
+        },
         sort: [{ pos: { order: 'asc' } }],
       },
     })

@@ -25,6 +25,7 @@ import StructuralVariantsInGene from './StructuralVariantsInGene'
 import TissueExpressionTrack from './TissueExpressionTrack'
 import TranscriptLink from './TranscriptLink'
 import VariantsInGene from './VariantsInGene'
+import MitoVariantsInGene from './MitoVariantsInGene'
 
 const GeneFullName = styled.span`
   font-size: 0.75em;
@@ -340,8 +341,15 @@ class GenePage extends Component {
 
           {datasetId === 'sfari_sv' ? (
             <StructuralVariantsInGene gene={gene} width={regionViewerWidth} />
-          ) : (
-            <VariantsInGene
+          ) : gene.chrom === 'M' ? (
+              <MitoVariantsInGene
+              datasetId={datasetId}
+              gene={gene}
+              transcriptId={transcriptId}
+              width={regionViewerWidth}
+              />
+            ) :
+            ( <VariantsInGene
               datasetId={datasetId}
               gene={gene}
               transcriptId={transcriptId}
