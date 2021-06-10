@@ -39,12 +39,18 @@ import regionType from './types/region'
 
 import { SearchResultType, resolveSearchResults } from './types/search'
 import { VariantInterface } from './types/variant'
+import { MitoVariantInterface } from './types/mito_variant'
+
 
 //import { datasetArgumentTypeForMethod } from './datasets/datasetArgumentTypes'
 //import datasetsConfig, { datasetSpecificTypes } from './datasets/datasetsConfig'
 
 import fetchVariantDetails from './datasets/fetchVariantDetails'
+import fetchMitoVariantDetails from './datasets/fetchMitoVariantDetails'
+
 import VariantDetailsType from './datasets/VariantDetailsType'
+import MitoVariantDetailsType from './datasets/MitoVariantDetailsType'
+
 
 const rootType = new GraphQLObjectType({
   name: 'Root',
@@ -173,13 +179,29 @@ The fields below allow for different ways to look up PCGC data. Click on the the
         return fetchVariantDetails(ctx, args.variantId)
       },
     },
+
+    mito_variant: {
+      description: 'Look up a single variant or rsid. Example: 1-55516888-G-GA.',
+      type: MitoVariantInterface,
+      args: {
+        // dataset: { type: datasetArgumentTypeForMethod('fetchVariantDetails') },
+        variantId: { type: GraphQLString },
+      },
+      resolve: (obj, args, ctx) => {
+        //const { dataset, variantId } = args
+        //const fetchVariantDetails = datasetsConfig[dataset].fetchVariantDetails
+        return fetchMitoVariantDetails(ctx, args.variantId)
+      },
+    },
+
+
     
   }),
 })
 
 const Schema = new GraphQLSchema({
   query: rootType,
-  types: [VariantDetailsType],
+  types: [VariantDetailsType, MitoVariantDetailsType],
   //types: datasetSpecificTypes,
 })
 

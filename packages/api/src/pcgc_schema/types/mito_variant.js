@@ -9,6 +9,17 @@ import {
   GraphQLString,
 } from 'graphql'
 
+export const MitoVariantInterface = new GraphQLInterfaceType({
+  name: 'MitoVariant',
+  fields: {
+    alt: { type: new GraphQLNonNull(GraphQLString) },
+    chrom: { type: new GraphQLNonNull(GraphQLString) },
+    pos: { type: new GraphQLNonNull(GraphQLInt) },
+    ref: { type: new GraphQLNonNull(GraphQLString) },
+    variantId: { type: new GraphQLNonNull(GraphQLString) },
+    xpos: { type: new GraphQLNonNull(GraphQLFloat) },
+  },
+})
 
 const MitoVariantSequencingDataType = new GraphQLObjectType({
   name: 'MitoVariantSequencingData',

@@ -22,10 +22,10 @@ import { GnomadReadData } from './reads/GnomadReadData'
 */
 
 import { TranscriptConsequenceList } from './TranscriptConsequenceList'
-import { VariantDetailsQuery } from './VariantDetailsQuery'
+import { MitoVariantDetailsQuery } from './MitoVariantDetailsQuery'
 import VariantFeedback from './VariantFeedback'
 import VariantNotFound from './VariantNotFound'
-import { GnomadVariantOccurrenceTable } from './VariantOccurrenceTable'
+import { MitoVariantOccurrenceTable } from './MitoVariantOccurrenceTable'
 
 const Section = styled.section`
   width: 100%;
@@ -75,7 +75,7 @@ const VariantId = styled.span`
   white-space: nowrap;
 `
 
-const PcgcVariantPage = ({ datasetId, variantId }) => (
+const MitoVariantPage = ({ datasetId, variantId }) => (
   <Page>
     <DocumentTitle title={variantId} />
     <GnomadPageHeading
@@ -84,7 +84,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
     >
       <VariantType variantId={variantId} />: <VariantId>{variantId}</VariantId>
     </GnomadPageHeading>
-    <VariantDetailsQuery datasetId={datasetId} variantId={variantId}>
+    <MitoVariantDetailsQuery datasetId={datasetId} variantId={variantId}>
       {({ data, error, loading }) => {
         if (loading) {
           return <StatusMessage>Loading variant...</StatusMessage>
@@ -94,16 +94,19 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
           return <StatusMessage>Unable to load variant</StatusMessage>
         }
 
-        if (!data.variant) {
+        if (!data.mito_variant) {
+          // Note this requires coverage data or it errors
           return <VariantNotFound datasetId={datasetId} variantId={variantId} />
         }
 
-        const { variant } = data
+        //const { mito_variant } = data
+        const variant = data.mito_variant
 
         const numTranscripts = variant.sortedTranscriptConsequences.length
         const geneIds = variant.sortedTranscriptConsequences.map(csq => csq.gene_id)
         const numGenes = new Set(geneIds).size
 
+        /*
         let dnm_confidence
 
         if(variant.denovoHC && variant.denovoHC == 'Yes'){
@@ -115,6 +118,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
         else if(variant.denovoHC && variant.denovoHC == 'Unclassified'){
           dnm_confidence = 'UNKNOWN'                                        
         }
+        */
 
         // const dnm_confidence = variant.denovoHC && variant.denovoHC == 'Yes' ? 'HIGH' : 'LOW'
 
@@ -125,10 +129,10 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
           <VariantDetailsContainer>
             <ResponsiveSection>
               <ScrollWrapper>
-                <GnomadVariantOccurrenceTable variant={variant} />
+                <MitoVariantOccurrenceTable variant={variant} />
               </ScrollWrapper>
 
-              {variant.colocatedVariants.length > 0 && (
+              {/*variant.colocatedVariants.length > 0 && (
                 <div>
                   <p>
                     <strong>This variant is multiallelic. Other alt alleles are:</strong>
@@ -141,15 +145,15 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                     ))}
                   </ul>
                 </div>
-              )}
+              )*/}
 
-              {variant.denovoHC && (
+              {/*variant.denovoHC && (
                 <DenovoSection>
                   <p>
                     <strong>This is a {dnm_confidence} confidence de novo variant</strong>
                   </p>
                 </DenovoSection>
-              )}
+              )*/}
 
               {/*variant.multiNucleotideVariants.length > 0 && (
                 <div>
@@ -179,7 +183,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 sortedTranscriptConsequences={variant.sortedTranscriptConsequences}
               />
             </Section>
-            <ResponsiveSection>
+            {/*<ResponsiveSection>
               <h2>Population Frequencies</h2>
               <ScrollWrapper>
                 <PcgcPopulationsTable
@@ -209,7 +213,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
                 />
               </ScrollWrapper>
-            </ResponsiveSection>
+            </ResponsiveSection>*/}
             {/*<ResponsiveSection>
               <h2>Age Distribution</h2>
               {datasetId !== 'gnomad_r2_1' && (
@@ -239,13 +243,13 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
           </VariantDetailsContainer>
         )
       }}
-    </VariantDetailsQuery>
+    </MitoVariantDetailsQuery>
   </Page>
 )
 
-PcgcVariantPage.propTypes = {
+MitoVariantPage.propTypes = {
   datasetId: PropTypes.string.isRequired,
   variantId: PropTypes.string.isRequired,
 }
 
-export default PcgcVariantPage
+export default MitoVariantPage

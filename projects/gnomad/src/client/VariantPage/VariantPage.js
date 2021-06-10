@@ -7,6 +7,7 @@ import { isVariantId, normalizeVariantId } from '@broad/utilities'
 import DocumentTitle from '../DocumentTitle'
 import StructuralVariantPage from '../StructuralVariantPage/StructuralVariantPage'
 import PcgcVariantPage from './PcgcVariantPage'
+import MitoVariantPage from './MitoVariantPage'
 import MNVPage from './MultiNucleotideVariant/MNVPage'
 
 const VariantPage = ({ datasetId, variantId, ...otherProps }) => {
@@ -36,7 +37,17 @@ const VariantPage = ({ datasetId, variantId, ...otherProps }) => {
     return <MNVPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />
   }
 
-  return <PcgcVariantPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />
+  if(chrom === 'M' ){
+    return <MitoVariantPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />
+  }
+  else{
+    return <PcgcVariantPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />
+  }
+
+  /*
+  return (chrom === 'M' ? (<MitoVariantPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />)
+                         : (<MitoVariantPage {...otherProps} datasetId={datasetId} variantId={normalizedVariantId} />))*/
+
 }
 
 VariantPage.propTypes = {
