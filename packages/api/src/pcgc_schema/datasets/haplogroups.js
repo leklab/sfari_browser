@@ -16,3 +16,14 @@ export const HaplogroupType = new GraphQLObjectType({
     ac_hom: { type: GraphQLInt },
   },
 })
+
+
+export const PopulationType = new GraphQLObjectType({
+  name: 'Population',
+  fields: {
+    id: { type: GraphQLString },
+    an: { type: GraphQLInt },
+    ac_het: { type: GraphQLInt },
+    ac_hom: { type: GraphQLInt },
+  },
+})

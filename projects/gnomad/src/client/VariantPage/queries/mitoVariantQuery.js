@@ -14,6 +14,12 @@ query mitoVariant($variantId: String!) {
         ac_hom
         an
       }
+      populations{
+        id
+        an
+        ac_het
+        ac_hom
+      }      
       spark_genome {
         ac
         an

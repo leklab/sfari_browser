@@ -12,6 +12,7 @@ import { MitoVariantInterface } from '../types/mito_variant'
 //import { resolveReads, ReadDataType } from '../shared/reads'
 import { TranscriptConsequenceType } from './transcriptConsequence'
 import { HaplogroupType } from './haplogroups'
+import { PopulationType } from './haplogroups'
 //import { MultiNucleotideVariantSummaryType } from './gnomadMultiNucleotideVariants'
 
 
@@ -59,6 +60,7 @@ const MitoVariantDetailsType = new GraphQLObjectType({
     
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
     haplogroups: { type: new GraphQLList(HaplogroupType)},
+    populations: { type: new GraphQLList(PopulationType)},
 
   },
   isTypeOf: variantData => variantData.gqlType === 'MitoVariantDetails',

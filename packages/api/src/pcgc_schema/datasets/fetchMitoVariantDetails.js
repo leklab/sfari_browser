@@ -85,7 +85,7 @@ const fetchVariantData = async (ctx, variantId) => {
  
 
    const genomeData = await ctx.database.elastic.search({
-    index: 'mito_test2',
+    index: 'mito_test3',
     type: 'variant',
     _source: [
       'alt',
@@ -95,6 +95,7 @@ const fetchVariantData = async (ctx, variantId) => {
       'ref',
       'sortedTranscriptConsequences',
       'haplogroups',
+      'populations',
       'variant_id',
       'xpos',
       'ac',
@@ -344,6 +345,7 @@ const fetchMitoVariantDetails = async (ctx, variantId) => {
 
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
     haplogroups: sharedData.haplogroups || [],
+    populations: sharedData.populations || [],    
   }
 }
 

@@ -13,6 +13,8 @@ import { ReferenceList } from './ReferenceList'
 
 //import { PcgcPopulationsTable } from './PcgcPopulationsTable'
 import { sfariHaplogroupsTable } from './sfariHaplogroupsTable'
+import { AnotherComponent } from './AnotherComponent'
+
 import { TestComponent } from './TestComponent'
 
 
@@ -192,6 +194,14 @@ const MitoVariantPage = ({ datasetId, variantId }) => (
               <h2>Haplogroup Frequencies</h2>
               <ScrollWrapper>
                 <TestComponent haplogroups={variant.haplogroups}/>
+              </ScrollWrapper>
+            </ResponsiveSection>
+
+
+            <ResponsiveSection>
+              <h2>Population Frequencies</h2>
+              <ScrollWrapper>
+                <AnotherComponent populations={variant.populations}/>
               </ScrollWrapper>
             </ResponsiveSection>
             
