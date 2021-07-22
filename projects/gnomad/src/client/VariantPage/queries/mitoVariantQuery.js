@@ -8,6 +8,12 @@ query mitoVariant($variantId: String!) {
     variantId 
     xpos
     ... on MitoVariantDetails {
+      haplogroups{
+        id
+        ac_het
+        ac_hom
+        an
+      }
       spark_genome {
         ac
         an

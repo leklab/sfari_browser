@@ -11,7 +11,10 @@ import StatusMessage from '../StatusMessage'
 import { ReferenceList } from './ReferenceList'
 
 
-import { PcgcPopulationsTable } from './PcgcPopulationsTable'
+//import { PcgcPopulationsTable } from './PcgcPopulationsTable'
+import { sfariHaplogroupsTable } from './sfariHaplogroupsTable'
+import { TestComponent } from './TestComponent'
+
 
 /*
 import GnomadAgeDistribution from './GnomadAgeDistribution'
@@ -124,6 +127,7 @@ const MitoVariantPage = ({ datasetId, variantId }) => (
 
         console.log("Ih here 2")
         console.log(variant)
+        console.log(variant.haplogroups)
 
         return (
           <VariantDetailsContainer>
@@ -172,7 +176,7 @@ const MitoVariantPage = ({ datasetId, variantId }) => (
               {/*<h2>Report</h2>
               <VariantFeedback datasetId={datasetId} variantId={variantId} />*/}
             </ResponsiveSection>
-            <Section>
+            {/*<Section>
               <h2>Annotations</h2>
               <p>
                 This variant falls on {numTranscripts} transcript
@@ -182,38 +186,15 @@ const MitoVariantPage = ({ datasetId, variantId }) => (
               <TranscriptConsequenceList
                 sortedTranscriptConsequences={variant.sortedTranscriptConsequences}
               />
-            </Section>
-            {/*<ResponsiveSection>
-              <h2>Population Frequencies</h2>
+            </Section>*/}
+
+            <ResponsiveSection>
+              <h2>Haplogroup Frequencies</h2>
               <ScrollWrapper>
-                <PcgcPopulationsTable
-                  exomePopulations={variant.spark_exome ? variant.spark_exome.populations : []}
-                  genomePopulations={variant.spark_genome ? variant.spark_genome.populations : []}
-                  sscGenomePopulations={variant.ssc_genome ? variant.ssc_genome.populations : []}
-                  gnomadPopulations={variant.gnomadPopFreq ? variant.gnomadPopFreq : []}
-                  gnomadAF={variant.gnomadAF ? variant.gnomadAF : 0}
-                  exome_male_ac={variant.spark_exome ? variant.spark_exome.ac_male : 0}
-                  exome_male_ac_hom={variant.spark_exome ? variant.spark_exome.ac_male_hom : 0}
-                  exome_male_an={variant.spark_exome ? variant.spark_exome.an_male : 0}
-                  exome_female_ac={variant.spark_exome ? variant.spark_exome.ac_female : 0}
-                  exome_female_ac_hom={variant.spark_exome ? variant.spark_exome.ac_female_hom : 0}
-                  exome_female_an={variant.spark_exome ? variant.spark_exome.an_female : 0}
-                  genome_male_ac={variant.spark_genome ? variant.spark_genome.ac_male : 0}
-                  genome_male_ac_hom={variant.spark_genome ? variant.spark_genome.ac_male_hom : 0}
-                  genome_male_an={variant.spark_genome ? variant.spark_genome.an_male : 0}
-                  genome_female_ac={variant.spark_genome ? variant.spark_genome.ac_female : 0}
-                  genome_female_ac_hom={variant.spark_genome ? variant.spark_genome.ac_female_hom : 0}
-                  genome_female_an={variant.spark_genome ? variant.spark_genome.an_female : 0}
-                  ssc_genome_male_ac={variant.ssc_genome ? variant.ssc_genome.ac_male : 0}
-                  ssc_genome_male_ac_hom={variant.ssc_genome ? variant.ssc_genome.ac_male_hom : 0}
-                  ssc_genome_male_an={variant.ssc_genome ? variant.ssc_genome.an_male : 0}
-                  ssc_genome_female_ac={variant.ssc_genome ? variant.ssc_genome.ac_female : 0}
-                  ssc_genome_female_ac_hom={variant.ssc_genome ? variant.ssc_genome.ac_female_hom : 0}
-                  ssc_genome_female_an={variant.ssc_genome ? variant.ssc_genome.an_female : 0}
-                  // showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
-                />
+                <TestComponent haplogroups={variant.haplogroups}/>
               </ScrollWrapper>
-            </ResponsiveSection>*/}
+            </ResponsiveSection>
+            
             {/*<ResponsiveSection>
               <h2>Age Distribution</h2>
               {datasetId !== 'gnomad_r2_1' && (
