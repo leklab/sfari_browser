@@ -40,10 +40,12 @@ export class Query extends Component {
   static propTypes = {
     children: PropTypes.func.isRequired,
     query: PropTypes.string.isRequired,
+    url: PropTypes.string,
     variables: PropTypes.object,
   }
 
   static defaultProps = {
+    url: process.env.GNOMAD_API_URL,
     variables: {},
   }
 
@@ -87,7 +89,9 @@ export class Query extends Component {
     }
 
     this.currentRequest = cancelable(
-      gqlFetch(process.env.GNOMAD_API_URL)(this.props.query, this.props.variables)
+      //gqlFetch(process.env.GNOMAD_API_URL)(this.props.query, this.props.variables)
+      gqlFetch(this.props.url)(this.props.query, this.props.variables)
+
     )
     this.currentRequest.promise.then(
       response => {
