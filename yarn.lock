@@ -524,6 +524,13 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
+"@babel/plugin-syntax-dynamic-import@^7.8.3":
+  version "7.8.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.8.3.tgz#62bf98b2da3cd21d626154fc96ee5b3cb68eacb3"
+  integrity sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.0"
+
 "@babel/plugin-syntax-import-meta@^7.8.3":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.10.4.tgz#ee601348c370fa334d2207be158777496521fd51"
@@ -5978,10 +5985,27 @@ ignore@^5.0.4:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.0.6.tgz#562dacc7ec27d672dde433aa683c543b24c17694"
   integrity sha512-/+hp3kUf/Csa32ktIaj0OlRqQxrgs30n62M90UBpNd9k+ENEch5S+hmbW3DtcJGz3sYFTh4F3A6fQ0q7KWsp4w==
 
-igv@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/igv/-/igv-2.1.0.tgz#1b3b18a2fa1ae1a6c9beb7772f4181ac7eb48a64"
-  integrity sha512-VI2ywuI2FYt2ZkyUO2dMk3xrLpZ5hxSGzDyMgKad95lwzmZNe0nK2ZpY/N8VobEjey/8gozIfk7PCTtYp/SFSA==
+"igv-ui@git+https://github.com/igvteam/igv-ui.git#v1.1.7":
+  version "1.1.7"
+  resolved "git+https://github.com/igvteam/igv-ui.git#b7fddfda708d2339b3bba704f8e1aeccbcd695a4"
+  dependencies:
+    igv-utils "github:igvteam/igv-utils#v1.2.8"
+
+"igv-utils@git+https://github.com/igvteam/igv-utils.git#v1.2.10":
+  version "1.2.10"
+  resolved "git+https://github.com/igvteam/igv-utils.git#8146c3c3ea92598b972cbfe9a836f66af0d8ae47"
+
+"igv-utils@github:igvteam/igv-utils#v1.2.8":
+  version "1.2.8"
+  resolved "https://codeload.github.com/igvteam/igv-utils/tar.gz/4443005457137b0d45d77165c2fc551265522490"
+
+igv@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/igv/-/igv-2.9.3.tgz#d65e1098e668a55b191ae14f48e1521c2a7af948"
+  integrity sha512-rqlFhRsgrfE/OCIX4xa2pgN7vzqoKyD+sPotg8aTN13keeFaxcf+bMGl68FR5BJbZi5gFITHd2qbkaeQ0uWQQQ==
+  dependencies:
+    igv-ui "git+https://github.com/igvteam/igv-ui.git#v1.1.7"
+    igv-utils "git+https://github.com/igvteam/igv-utils.git#v1.2.10"
 
 immutable@^3.8.1, immutable@^3.8.2:
   version "3.8.2"

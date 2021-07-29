@@ -36,6 +36,9 @@ const config = {
           loader: 'babel-loader',
           options: {
             rootMode: 'upward',
+            plugins: [
+                "@babel/plugin-syntax-dynamic-import"
+            ]
           },
         },
       },

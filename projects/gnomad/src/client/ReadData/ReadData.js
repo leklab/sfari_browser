@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React, { Component, Suspense, lazy } from 'react'
 import styled from 'styled-components'
 
-import { Badge, Button, ExternalLink } from '@gnomad/ui'
+import { Badge, Button, ExternalLink } from '@broad/ui'
 
-import { isSubset } from '../datasets'
+//import { isSubset } from '../datasets'
 //import { BaseQuery } from '../Query'
 import { Query } from '../Query'
 import StatusMessage from '../StatusMessage'
@@ -59,7 +59,6 @@ const ReadDataPropType = PropTypes.shape({
 class ReadData extends Component {
   static propTypes = {
     children: PropTypes.node,
-    datasetId: PropTypes.string.isRequired,
     referenceGenome: PropTypes.oneOf(['GRCh37', 'GRCh38']).isRequired,
     chrom: PropTypes.string.isRequired,
     start: PropTypes.number.isRequired,
@@ -247,18 +246,12 @@ class ReadData extends Component {
   }
 
   render() {
-    const { children, datasetId, referenceGenome, chrom, start, stop, showHemizygotes } = this.props
+    const { children, referenceGenome, chrom, start, stop, showHemizygotes } = this.props
 
     if (!this.hasReadData('exome') && !this.hasReadData('genome')) {
       return (
         <div>
           <p>No read data available for this variant.</p>
-          {(datasetId === 'exac' || datasetId.startsWith('gnomad_r2')) && (
-            <p>
-              <Badge level="info">Note</Badge> Read data for non-coding regions is not available in
-              gnomAD v2.1.1 and ExAC.
-            </p>
-          )}
         </div>
       )
     }
@@ -318,18 +311,6 @@ class ReadData extends Component {
           , so they accurately represent what HaplotypeCaller was seeing when it called this
           variant.
         </p>
-        {datasetId.startsWith('gnomad_r2') && (
-          <p>
-            <Badge level="info">Note</Badge> Reads shown here may include low quality genotypes that
-            were excluded from allele counts.
-          </p>
-        )}
-        {isSubset(datasetId) && (
-          <p>
-            <Badge level="info">Note</Badge> Samples shown below are not guaranteed to be part of
-            the selected subset.
-          </p>
-        )}
 
         {children}
 
@@ -395,20 +376,12 @@ const interleaveReads = allVariantReads => {
   return reads
 }
 
-const ReadDataContainer = ({ datasetId, variantIds }) => {
+const ReadDataContainer = ({ variantIds }) => {
   if (variantIds.length === 0) {
     return null
   }
 
-  // Reads are not broken down by subset.
-  let readsDatasetId
-  if (datasetId.startsWith('gnomad_r3')) {
-    readsDatasetId = 'gnomad_r3'
-  } else if (datasetId.startsWith('gnomad_r2')) {
-    readsDatasetId = 'gnomad_r2'
-  } else {
-    readsDatasetId = datasetId
-  }
+  const readsDatasetId = 'gnomad_r3'
 
   const query = `
     {
@@ -437,8 +410,8 @@ const ReadDataContainer = ({ datasetId, variantIds }) => {
   `
 
   return (
-    {/*<BaseQuery query={query} url="/reads/">*/}
-    <BaseQuery query={query} url="https://gnomad.broadinstitute.org/reads/">
+    //<BaseQuery query={query} url="/reads/">
+    <Query query={query} url="/reads/">
       {({ data, error, graphQLErrors, loading }) => {
         if (loading) {
           return <StatusMessage>Loading reads...</StatusMessage>
@@ -509,10 +482,7 @@ const ReadDataContainer = ({ datasetId, variantIds }) => {
 
         return (
           <ReadData
-            datasetId={datasetId}
-            referenceGenome={
-              readsDatasetId === 'exac' || readsDatasetId === 'gnomad_r2' ? 'GRCh37' : 'GRCh38'
-            }
+            referenceGenome={'GRCh38'}
             chrom={chrom}
             start={start}
             stop={stop}
@@ -529,12 +499,11 @@ const ReadDataContainer = ({ datasetId, variantIds }) => {
           </ReadData>
         )
       }}
-    </BaseQuery>
+    </Query>
   )
 }
 
 ReadDataContainer.propTypes = {
-  datasetId: PropTypes.string.isRequired,
   variantIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 

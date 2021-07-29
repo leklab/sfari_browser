@@ -10,6 +10,7 @@ import Link from '../Link'
 import StatusMessage from '../StatusMessage'
 import { ReferenceList } from './ReferenceList'
 
+import ReadData from '../ReadData/ReadData'
 
 import { PcgcPopulationsTable } from './PcgcPopulationsTable'
 
@@ -236,6 +237,12 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
               />
             </Section>*/}
+
+          <Section>
+            <h2>Read Data</h2>
+            <ReadData variantIds={[variantId]} />
+          </Section>
+
           </VariantDetailsContainer>
         )
       }}
