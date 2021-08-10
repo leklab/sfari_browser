@@ -8,7 +8,7 @@ const ZYGOSITY_CATEGORIES = ['het', 'hom', 'hemi']
 const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, pos, ref }) => {
   //const dbPath = path.join(readsDirectory, `all_variants_${meta}.chr${chrom}.db`)
 
-  const dbPath = path.join(readsDirectory, `s18_gs10_gn2_gi0000_habfb8a837.chrM.db`)
+  const dbPath = path.join(readsDirectory, `all_variants.chr${chrom}.db`)
 
   console.log("In resolveReads")
   console.log(dbPath)

@@ -10,6 +10,7 @@ import Link from '../Link'
 import StatusMessage from '../StatusMessage'
 import { ReferenceList } from './ReferenceList'
 
+import MitoReadData from '../ReadData/MitoReadData'
 
 //import { PcgcPopulationsTable } from './PcgcPopulationsTable'
 import { sfariHaplogroupsTable } from './sfariHaplogroupsTable'
@@ -231,6 +232,11 @@ const MitoVariantPage = ({ datasetId, variantId }) => (
                 showHemizygotes={variant.chrom === 'X' || variant.chrom === 'Y'}
               />
             </Section>*/}
+
+            <Section>
+              <h2>Read Data</h2>
+              <MitoReadData variantIds={[variantId]} />
+            </Section>
           </VariantDetailsContainer>
         )
       }}
