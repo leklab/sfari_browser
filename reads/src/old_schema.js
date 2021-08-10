@@ -31,11 +31,9 @@ const ReadType = new GraphQLObjectType({
 const VariantReadsType = new GraphQLObjectType({
   name: 'VariantReads',
   fields: {
-    
     exome: {
       type: new GraphQLList(ReadType),
       resolve: async obj => {
-        /*
         const { dataset, variantId } = obj
         const config = datasets[dataset].exomes
         if (!config) {
@@ -49,39 +47,20 @@ const VariantReadsType = new GraphQLObjectType({
           logger.warn(err)
           throw new UserVisibleError(`Unable to load exome reads for ${variantId}`)
         }
-        */
-        return null
       },
-    },   
+    },
     genome: {
       type: new GraphQLList(ReadType),
       resolve: async obj => {
-        //const { dataset, variantId } = obj
-        const { variantId } = obj
-    
-        //const config = datasets[dataset].genomes
-        /*
-        const config = {
-          readsDirectory: '/readviz/datasets/gnomad_r3_1',
-          publicPath: '/reads/gnomad_r3/genomes',
-          meta: 's42811_gs50_gn857',
-        }
-        */
-        const config = {
-          readsDirectory: '/home/ubuntu/readviz',
-          publicPath: '/readviz',
-          meta: 's42811_gs50_gn857',
-        }
-        
+        const { dataset, variantId } = obj
+        const config = datasets[dataset].genomes
         if (!config) {
           return null
         }
 
-        //const resolve = config.legacyResolver ? resolveReadsLegacy : resolveReads
-        
+        const resolve = config.legacyResolver ? resolveReadsLegacy : resolveReads
         try {
-          //return await resolve(config, obj)
-          return await resolveReads(config, obj)        
+          return await resolve(config, obj)
         } catch (err) {
           logger.warn(err)
           throw new UserVisibleError(`Unable to load genome reads for ${variantId}`)
@@ -91,7 +70,7 @@ const VariantReadsType = new GraphQLObjectType({
   },
 })
 
-const VARIANT_ID_REGEX = /^(\d+|X|Y|M)-([1-9][0-9]*)-([ACGT]+)-([ACGT]+)$/
+const VARIANT_ID_REGEX = /^(\d+|X|Y)-([1-9][0-9]*)-([ACGT]+)-([ACGT]+)$/
 
 const isVariantId = str => {
   const match = VARIANT_ID_REGEX.exec(str)
@@ -119,20 +98,18 @@ const RootType = new GraphQLObjectType({
     variantReads: {
       type: VariantReadsType,
       args: {
-        //dataset: { type: new GraphQLNonNull(DatasetArgumentType) },
+        dataset: { type: new GraphQLNonNull(DatasetArgumentType) },
         variantId: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve: (obj, args) => {
-        //const { dataset, variantId } = args
-        const { variantId } = args
-        
+        const { dataset, variantId } = args
         if (!isVariantId(variantId)) {
           throw new UserVisibleError(`Invalid variant ID: "${variantId}"`)
         }
 
         const [chrom, pos, ref, alt] = variantId.split('-')
         return {
-          //dataset,
+          dataset,
           variantId,
           chrom,
           pos: Number(pos),
