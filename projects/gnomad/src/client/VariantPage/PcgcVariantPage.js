@@ -10,7 +10,8 @@ import Link from '../Link'
 import StatusMessage from '../StatusMessage'
 import { ReferenceList } from './ReferenceList'
 
-import ReadData from '../ReadData/ReadData'
+// import ReadData from '../ReadData/ReadData'
+import MitoReadData from '../ReadData/MitoReadData'
 
 import { PcgcPopulationsTable } from './PcgcPopulationsTable'
 
@@ -240,7 +241,7 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
 
           <Section>
             <h2>Read Data</h2>
-            <ReadData variantIds={[variantId]} />
+            <MitoReadData variantIds={[variantId]} />
           </Section>
 
           </VariantDetailsContainer>

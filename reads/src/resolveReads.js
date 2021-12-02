@@ -32,12 +32,25 @@ const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, 
   console.log("Finish running query")
   console.log(rows)
 
-  return rows.map(row => ({
-    bamPath: `${publicPath}/${row.combined_bamout_id}.bam`,
-    category: ZYGOSITY_CATEGORIES[row.zygosity - 1],
-    indexPath: `${publicPath}/${row.combined_bamout_id}.bai`,
-    readGroup: `${chrom}-${pos}-${ref}-${alt}-${row.zygosity}-${row.read_group_id}`,
-  }))
+
+  if(chrom == 'M')
+    return rows.map(row => ({
+      bamPath: `${publicPath}/${row.combined_bamout_id}.bam`,
+      category: ZYGOSITY_CATEGORIES[row.zygosity - 1],
+      indexPath: `${publicPath}/${row.combined_bamout_id}.bam.bai`,
+      readGroup: `${chrom}-${pos}-${ref}-${alt}-${row.zygosity}-${row.read_group_id}`,
+    }))
+
+  else{
+    return rows.map(row => ({
+      bamPath: `${publicPath}/${row.combined_bamout_id}.bam`,
+      category: ZYGOSITY_CATEGORIES[row.zygosity - 1],
+      indexPath: `${publicPath}/${row.combined_bamout_id}.bai`,
+      readGroup: `${chrom}-${pos}-${ref}-${alt}-${row.zygosity}-${row.read_group_id}`,
+    }))
+  }
+
+
 }
 
 module.exports = resolveReads

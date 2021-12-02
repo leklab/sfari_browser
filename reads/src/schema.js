@@ -68,8 +68,8 @@ const VariantReadsType = new GraphQLObjectType({
         }
         */
         const config = {
-          readsDirectory: '/home/ubuntu/readviz',
-          publicPath: '/readviz',
+          readsDirectory: '/home/ubuntu/readviz/spark_wgs',
+          publicPath: '/readviz/spark_wgs',
           meta: 's42811_gs50_gn857',
         }
         
