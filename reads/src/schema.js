@@ -53,7 +53,7 @@ const VariantReadsType = new GraphQLObjectType({
         return null
       },
     },   
-    genome: {
+    spark_genome: {
       type: new GraphQLList(ReadType),
       resolve: async obj => {
         //const { dataset, variantId } = obj
@@ -88,6 +88,43 @@ const VariantReadsType = new GraphQLObjectType({
         }
       },
     },
+
+    ssc_genome: {
+      type: new GraphQLList(ReadType),
+      resolve: async obj => {
+        //const { dataset, variantId } = obj
+        const { variantId } = obj
+    
+        //const config = datasets[dataset].genomes
+        /*
+        const config = {
+          readsDirectory: '/readviz/datasets/gnomad_r3_1',
+          publicPath: '/reads/gnomad_r3/genomes',
+          meta: 's42811_gs50_gn857',
+        }
+        */
+        const config = {
+          readsDirectory: '/home/ubuntu/readviz/ssc_wgs',
+          publicPath: '/readviz/ssc_wgs',
+          meta: 's42811_gs50_gn857',
+        }
+        
+        if (!config) {
+          return null
+        }
+
+        //const resolve = config.legacyResolver ? resolveReadsLegacy : resolveReads
+        
+        try {
+          //return await resolve(config, obj)
+          return await resolveReads(config, obj)        
+        } catch (err) {
+          logger.warn(err)
+          throw new UserVisibleError(`Unable to load genome reads for ${variantId}`)
+        }
+      },
+    },
+
   },
 })
 

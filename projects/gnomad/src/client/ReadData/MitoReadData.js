@@ -320,7 +320,7 @@ class MitoReadData extends Component {
 
         {this.hasReadData('exome') && (
           <ControlContainer>
-            <strong>Exomes:</strong>
+            <strong>SSC Genomes:</strong>
             {this.renderLoadMoreButton('exome', 'het')}
             {this.renderLoadMoreButton('exome', 'hom')}
             {showHemizygotes && this.renderLoadMoreButton('exome', 'hemi')}
@@ -329,7 +329,7 @@ class MitoReadData extends Component {
 
         {this.hasReadData('genome') && (
           <ControlContainer>
-            <strong>Genomes:</strong>
+            <strong>SPARK Genomes:</strong>
             {this.renderLoadMoreButton('genome', 'het')}
             {this.renderLoadMoreButton('genome', 'hom')}
             {showHemizygotes && this.renderLoadMoreButton('genome', 'hemi')}
@@ -397,12 +397,18 @@ const TestContainer = ({ variantIds }) => {
           indexPath
           readGroup
         }
-        genome {
+        spark_genome {
           bamPath
           category
           indexPath
           readGroup
         }
+        ssc_genome {
+          bamPath
+          category
+          indexPath
+          readGroup
+        }        
       }`
         )
         .join('\n')}
@@ -470,12 +476,12 @@ const TestContainer = ({ variantIds }) => {
         const genomeReads = interleaveReads(
           variantIds.map((variantId, i) => {
             const categoryCount = { het: 0, hom: 0, hemi: 0 }
-            return (data[`variant_${i}`].genome || []).map(read => {
+            return (data[`variant_${i}`].spark_genome || []).map(read => {
               const { category } = read
               categoryCount[category] += 1
               return {
                 ...read,
-                label: `${variantIds.length > 1 ? `${variantId} ` : ''}${category} [genome] #${
+                label: `${variantIds.length > 1 ? `${variantId} ` : ''}${category} [spark_genome] #${
                   categoryCount[category]
                 }`,
               }
@@ -483,13 +489,31 @@ const TestContainer = ({ variantIds }) => {
           })
         )
 
+        const sscGenomeReads = interleaveReads(
+          variantIds.map((variantId, i) => {
+            const categoryCount = { het: 0, hom: 0, hemi: 0 }
+            return (data[`variant_${i}`].ssc_genome || []).map(read => {
+              const { category } = read
+              categoryCount[category] += 1
+              return {
+                ...read,
+                label: `${variantIds.length > 1 ? `${variantId} ` : ''}${category} [ssc_genome] #${
+                  categoryCount[category]
+                }`,
+              }
+            })
+          })
+        )
+
+
+
         return (
           <MitoReadData
             referenceGenome={'GRCh38'}
             chrom={chrom}
             start={start}
             stop={stop}
-            exomeReads={exomeReads}
+            exomeReads={sscGenomeReads}
             genomeReads={genomeReads}
             showHemizygotes={chrom === 'X' || chrom === 'Y'}
           >

@@ -329,7 +329,7 @@ class ReadData extends Component {
 
         {this.hasReadData('genome') && (
           <ControlContainer>
-            <strong>Genomes:</strong>
+            <strong>SPARK Genomes:</strong>
             {this.renderLoadMoreButton('genome', 'het')}
             {this.renderLoadMoreButton('genome', 'hom')}
             {showHemizygotes && this.renderLoadMoreButton('genome', 'hemi')}
@@ -397,7 +397,7 @@ const ReadDataContainer = ({ variantIds }) => {
           indexPath
           readGroup
         }
-        genome {
+        spark_genome {
           bamPath
           category
           indexPath
@@ -467,12 +467,12 @@ const ReadDataContainer = ({ variantIds }) => {
         const genomeReads = interleaveReads(
           variantIds.map((variantId, i) => {
             const categoryCount = { het: 0, hom: 0, hemi: 0 }
-            return (data[`variant_${i}`].genome || []).map(read => {
+            return (data[`variant_${i}`].spark_genome || []).map(read => {
               const { category } = read
               categoryCount[category] += 1
               return {
                 ...read,
-                label: `${variantIds.length > 1 ? `${variantId} ` : ''}${category} [genome] #${
+                label: `${variantIds.length > 1 ? `${variantId} ` : ''}${category} [spark_genome] #${
                   categoryCount[category]
                 }`,
               }
