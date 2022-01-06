@@ -11,6 +11,11 @@ export async function fetchAllSearchResults(esClient, searchParams) {
 
   const size = searchParams.size || 1000
   const scroll = searchParams.scroll || '30s'
+  
+  // You can also retrieve hits.total as a number in the rest response by adding rest_total_hits_as_int=true
+  // https://www.elastic.co/guide/en/elasticsearch/reference/current/breaking-changes-7.0.html#hits-total-now-object-search-response
+  // Change between Elastic Search 7 and 6
+  const rest_total_hits_as_int=true
 
   //console.log(searchParams)
 
@@ -19,8 +24,10 @@ export async function fetchAllSearchResults(esClient, searchParams) {
       ...searchParams,
       scroll,
       size,
+      rest_total_hits_as_int
     })
   )
+
 
   while (responseQueue.length) {
     const response = responseQueue.shift()
@@ -44,6 +51,7 @@ export async function fetchAllSearchResults(esClient, searchParams) {
       })
     )
   }
+  
 
   return allResults
 }

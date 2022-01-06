@@ -21,7 +21,7 @@ app.use(cors())
     })
 
     const elastic = new elasticsearch.Client({
-      apiVersion: '5.5',
+      apiVersion: '7.6',
       host: process.env.ELASTICSEARCH_URL,
     })
 

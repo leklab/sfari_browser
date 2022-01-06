@@ -136,7 +136,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   //await Promise.all(
 //    const hits = fetchAllSearchResults(ctx.database.elastic, {
-
+  //console.log("In fetchVariantsByGene")
+  //console.log("About to make first ES query")
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
@@ -202,6 +203,9 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         sort: [{ pos: { order: 'asc' } }],
       },
     })
+
+
+  //console.log("Done making first query")
 
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
 
@@ -332,6 +336,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   // console.log(exomeAndGenomeVariants)
 
+  console.log("Performed search in ES")
+  console.log(allVariants)
 
   //)
   //console.log("Checking local ES query")
@@ -360,6 +366,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //console.log("In here 33")
   //const gnomad_data = request("http://gnomad.broadinstitute.org/api", query).then(console.log).catch(console.error)
 
+  //console.log("About to request data from gnomAD")
   const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
   //console.log(gnomad_data.gene.variants)
 
