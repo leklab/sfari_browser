@@ -13,7 +13,7 @@ import { VariantInterface } from '../types/variant'
 import { TranscriptConsequenceType } from './transcriptConsequence'
 //import { MultiNucleotideVariantSummaryType } from './gnomadMultiNucleotideVariants'
 
-/*
+
 const HistogramType = new GraphQLObjectType({
   name: 'Histogram',
   fields: {
@@ -24,6 +24,7 @@ const HistogramType = new GraphQLObjectType({
   },
 })
 
+/*
 const GnomadSubpopulationType = new GraphQLObjectType({
   name: 'GnomadVariantSubpopulation',
   fields: {
@@ -48,9 +49,31 @@ const PopulationType = new GraphQLObjectType({
 })
 
 /*
+const VariantGenotypeQuality = new GraphQLObjectType({
+  name: 'VariantGenotypeQuality',
+  fields: {
+    bin_edges: { type: new GraphQLList(GraphQLFloat)},
+    bin_freq: { type: new GraphQLList(GraphQLFloat)},
+    n_larger: { type: GraphQLInt},
+    n_smaller: { type: GraphQLInt}
+  }
+})
+*/
+
+const InSilicoPredictorsType = new GraphQLObjectType({
+  name: 'InSilicoPredictors',
+  fields: {
+    cadd: { type: GraphQLFloat},
+    splice_ai: { type: GraphQLFloat},
+    revel: { type: GraphQLString},
+    primate_ai: { type: GraphQLFloat},
+  }
+})
+
 const GnomadVariantQualityMetricsType = new GraphQLObjectType({
   name: 'GnomadVariantQualityMetrics',
   fields: {
+    /*
     alleleBalance: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantAlleleBalance',
@@ -58,7 +81,7 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
           alt: { type: HistogramType },
         },
       }),
-    },
+    },*/
     genotypeDepth: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantGenotypeDepth',
@@ -68,6 +91,7 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
         },
       }),
     },
+    /*
     genotypeQuality: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantGenotypeQuality',
@@ -97,10 +121,11 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
           VQSLOD: { type: GraphQLFloat },
         },
       }),
-    },
+    },*/
   },
 })
 
+/*
 const GnomadVariantFilteringAlleleFrequencyType = new GraphQLObjectType({
   name: 'GnomadVariantFilteringAlleleFrequency',
   fields: {
@@ -167,9 +192,14 @@ const VariantDetailsType = new GraphQLObjectType({
           //faf99: { type: GnomadVariantFilteringAlleleFrequencyType },
           //filters: { type: new GraphQLList(GraphQLString) },
           populations: { type: new GraphQLList(PopulationType) },
-          
           /*
+          qualityMetrics: {
+            genotype_quality: { type: VariantGenotypeQuality}
+          }
+         */ 
+          
           qualityMetrics: { type: GnomadVariantQualityMetricsType },
+          /*
           reads: {
             type: new GraphQLList(ReadDataType),
             resolve: async obj => {
@@ -268,6 +298,7 @@ const VariantDetailsType = new GraphQLObjectType({
     clinvarAlleleID: { type: GraphQLString },
     denovoHC: { type: GraphQLString },
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
+    in_silico_predictors: { type: InSilicoPredictorsType}
   },
   isTypeOf: variantData => variantData.gqlType === 'VariantDetails',
 })

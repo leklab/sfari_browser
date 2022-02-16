@@ -2,7 +2,8 @@
 //import { fetchGnomadMNVSummariesByVariantId } from './gnomadMultiNucleotideVariants'
 import { request } from "graphql-request"
 
-/*
+
+
 const formatHistogram = histogramData => ({
   bin_edges: histogramData.bin_edges.split('|').map(s => Number(s)),
   bin_freq: histogramData.bin_freq.split('|').map(s => Number(s)),
@@ -10,7 +11,7 @@ const formatHistogram = histogramData => ({
   n_smaller: histogramData.n_smaller,
 })
 
-*/
+
 
 //const POPULATIONS = ['afr', 'amr', 'asj', 'eas', 'fin', 'nfe', 'oth', 'sas']
 const POPULATIONS = ['afr', 'amr', 'eas', 'eur', 'oth', 'sas']
@@ -153,8 +154,7 @@ const fetchVariantData = async (ctx, variantId) => {
 
   const exomeData = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'pcgc_exomes',
-    type: 'variant',
+    index: 'spark_exomes',
     _source: [
 //      requestSubset,
 //      'ab_hist_alt',
@@ -196,6 +196,9 @@ const fetchVariantData = async (ctx, variantId) => {
       'AC_female',
       'AN_female',
       'nhomalt_female',
+      'genotype_quality',
+      'genotype_depth',
+      'in_silico_predictors'
     ],
     body: {
       query: {
@@ -219,8 +222,8 @@ const fetchVariantData = async (ctx, variantId) => {
   //.then(response => return response.hits.hits[0])
   //.then(doc => (doc ? { ...doc._source } : undefined))
   //.then(response => response.hits.hits[0])
-
-  //console.log(exomeData)
+  console.log("Showing exome data")
+  console.log(exomeData.hits.hits[0]._source)
 
   //return esHit => {
   //  return esHit.hits.hits[0]
@@ -622,6 +625,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const colocatedVariants = await fetchColocatedVariants(ctx, variantId)
   // console.log(colocatedVariants)
+  console.log(exomeData.genotype_depth.all_raw)
 
   return {
     gqlType: 'VariantDetails',
@@ -669,15 +673,24 @@ const fetchVariantDetails = async (ctx, variantId) => {
           //filters: exomeData.filters,
           populations: formatPopulations(exomeData),
           
-          /*
+          qualityMetrics: null,
+          
           qualityMetrics: {
+            /*
             alleleBalance: {
               alt: formatHistogram(exomeData.ab_hist_alt),
             },
+            */
+            
             genotypeDepth: {
-              all: formatHistogram(exomeData.dp_hist_all),
-              alt: formatHistogram(exomeData.dp_hist_alt),
+              //all: formatHistogram(exomeData.genotype_depth.all_raw),
+              //alt: formatHistogram(exomeData.genotype_depth.alt_raw),
+
+              all: exomeData.genotype_depth.all_raw,
+              alt: exomeData.genotype_depth.alt_raw,
+
             },
+            /*
             genotypeQuality: {
               all: formatHistogram(exomeData.gq_hist_all),
               alt: formatHistogram(exomeData.gq_hist_alt),
@@ -687,8 +700,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
               pab_max: exomeData.pab_max,
               RF: exomeData.rf_tp_probability,
               SiteQuality: exomeData.qual,
-            },
-          },*/
+            },*/
+          },
 
         }
       : null,
@@ -789,6 +802,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
+    in_silico_predictors: exomeData.in_silico_predictors
   }
 }
 
