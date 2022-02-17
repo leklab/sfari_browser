@@ -29,6 +29,9 @@ import VariantFeedback from './VariantFeedback'
 import VariantNotFound from './VariantNotFound'
 import { GnomadVariantOccurrenceTable } from './VariantOccurrenceTable'
 
+
+import VariantInSilicoPredictors from './VariantInSilicoPredictors'
+
 const Section = styled.section`
   width: 100%;
 `
@@ -180,6 +183,8 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               <TranscriptConsequenceList
                 sortedTranscriptConsequences={variant.sortedTranscriptConsequences}
               />
+              <h2>In Silico Predictors</h2>
+              <VariantInSilicoPredictors variant={variant} />
             </Section>
             <ResponsiveSection>
               <h2>Population Frequencies</h2>

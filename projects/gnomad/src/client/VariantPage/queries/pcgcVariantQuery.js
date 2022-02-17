@@ -88,6 +88,12 @@ query PcgcVariant($variantId: String!) {
         sift_prediction
         transcript_id
       }
+      in_silico_predictors {
+        cadd
+        splice_ai
+        primate_ai
+        revel
+      }
     }
   }
 }

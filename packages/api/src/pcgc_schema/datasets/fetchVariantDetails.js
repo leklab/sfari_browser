@@ -222,8 +222,8 @@ const fetchVariantData = async (ctx, variantId) => {
   //.then(response => return response.hits.hits[0])
   //.then(doc => (doc ? { ...doc._source } : undefined))
   //.then(response => response.hits.hits[0])
-  console.log("Showing exome data")
-  console.log(exomeData.hits.hits[0]._source)
+  //console.log("Showing exome data")
+  //console.log(exomeData.hits.hits[0]._source)
 
   //return esHit => {
   //  return esHit.hits.hits[0]
@@ -572,8 +572,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   
   const denovoData = denovoES.hits.hits[0] ? denovoES.hits.hits[0]._source : undefined
-  console.log("In here")
-  console.log(denovoData)
+  //console.log("In here")
+  //console.log(denovoData)
 
   
 
@@ -625,7 +625,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const colocatedVariants = await fetchColocatedVariants(ctx, variantId)
   // console.log(colocatedVariants)
-  console.log(exomeData.genotype_depth.all_raw)
+  //console.log(exomeData.genotype_depth.all_raw)
 
   return {
     gqlType: 'VariantDetails',
@@ -802,7 +802,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
-    in_silico_predictors: exomeData.in_silico_predictors
+    in_silico_predictors: exomeData ? exomeData.in_silico_predictors : null
   }
 }
 
