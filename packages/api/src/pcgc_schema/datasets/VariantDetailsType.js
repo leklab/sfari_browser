@@ -73,7 +73,7 @@ const InSilicoPredictorsType = new GraphQLObjectType({
 const GnomadVariantQualityMetricsType = new GraphQLObjectType({
   name: 'GnomadVariantQualityMetrics',
   fields: {
-    /*
+    
     alleleBalance: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantAlleleBalance',
@@ -81,7 +81,7 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
           alt: { type: HistogramType },
         },
       }),
-    },*/
+    },
     genotypeDepth: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantGenotypeDepth',
@@ -90,8 +90,7 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
           alt: { type: HistogramType },
         },
       }),
-    },
-    /*
+    },    
     genotypeQuality: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantGenotypeQuality',
@@ -101,6 +100,7 @@ const GnomadVariantQualityMetricsType = new GraphQLObjectType({
         },
       }),
     },
+    /*
     siteQualityMetrics: {
       type: new GraphQLObjectType({
         name: 'GnomadVariantSiteQualityMetrics',

@@ -198,6 +198,7 @@ const fetchVariantData = async (ctx, variantId) => {
       'nhomalt_female',
       'genotype_quality',
       'genotype_depth',
+      'allele_balance',
       'in_silico_predictors'
     ],
     body: {
@@ -222,8 +223,8 @@ const fetchVariantData = async (ctx, variantId) => {
   //.then(response => return response.hits.hits[0])
   //.then(doc => (doc ? { ...doc._source } : undefined))
   //.then(response => response.hits.hits[0])
-  //console.log("Showing exome data")
-  //console.log(exomeData.hits.hits[0]._source)
+  console.log("Showing exome data")
+  console.log(exomeData.hits.hits[0]._source)
 
   //return esHit => {
   //  return esHit.hits.hits[0]
@@ -672,29 +673,31 @@ const fetchVariantDetails = async (ctx, variantId) => {
           //faf99: formatFilteringAlleleFrequency(exomeData, 'faf99_adj'),
           //filters: exomeData.filters,
           populations: formatPopulations(exomeData),
-          
-          qualityMetrics: null,
-          
+                    
           qualityMetrics: {
-            /*
+            
             alleleBalance: {
-              alt: formatHistogram(exomeData.ab_hist_alt),
+              //alt: formatHistogram(exomeData.ab_hist_alt),
+              alt: exomeData.allele_balance.alt_raw,
             },
-            */
             
             genotypeDepth: {
               //all: formatHistogram(exomeData.genotype_depth.all_raw),
               //alt: formatHistogram(exomeData.genotype_depth.alt_raw),
-
               all: exomeData.genotype_depth.all_raw,
               alt: exomeData.genotype_depth.alt_raw,
 
-            },
-            /*
+            },            
             genotypeQuality: {
-              all: formatHistogram(exomeData.gq_hist_all),
-              alt: formatHistogram(exomeData.gq_hist_alt),
+              //all: formatHistogram(exomeData.gq_hist_all),
+              //alt: formatHistogram(exomeData.gq_hist_alt),
+
+              all: exomeData.genotype_quality.all_raw,
+              alt: exomeData.genotype_quality.alt_raw,
+
             },
+
+            /*
             siteQualityMetrics: {
               ...exomeData.allele_info,
               pab_max: exomeData.pab_max,
