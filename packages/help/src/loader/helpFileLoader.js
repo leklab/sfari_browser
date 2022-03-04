@@ -1,6 +1,7 @@
 const path = require('path')
 
 const loaderUtils = require('loader-utils')
+//import {remark} from 'remark'
 const remark = require('remark')
 const extract = require('remark-extract-frontmatter')
 const frontmatter = require('remark-frontmatter')
