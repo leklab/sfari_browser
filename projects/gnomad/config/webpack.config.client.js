@@ -70,8 +70,7 @@ const config = {
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),
-    new CopyWebpackPlugin([path.resolve(__dirname, '../src/client/opensearch.xml')], {
-      writeToDisk: true,
+    new CopyWebpackPlugin({patterns: [{from: path.resolve(__dirname, '../src/client/opensearch.xml')}], 
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/client/index.html'),
