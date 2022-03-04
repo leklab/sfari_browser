@@ -9,7 +9,7 @@
   "dependencies": {
     "@broad/region-viewer": "*",
     "@broad/track-variant": "*",
-    "d3-scale": "^2.2.2",
+    "d3-scale": "^4.0.2",
     "prop-types": "^15.7.2",
     "react-cursor-position": "^3.0.3"
   },

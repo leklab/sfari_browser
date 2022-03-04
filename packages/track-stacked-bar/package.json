@@ -8,10 +8,10 @@
   ],
   "dependencies": {
     "@vx/axis": "^0.0.184",
-    "@vx/scale": "^0.0.182",
+    "@vx/scale": "^0.0.199",
     "@vx/shape": "^0.0.184",
-    "d3-array": "^1.2.4",
-    "d3-scale": "^2.2.2",
+    "d3-array": "^3.1.1",
+    "d3-scale": "^4.0.2",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

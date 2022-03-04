@@ -1,4 +1,9 @@
-import R from 'ramda'
+//import R from 'ramda'
+//import * as R from 'ramda'
+//import * as R from './node_modules/ramda/es/index.js'
+
+import { curry, findLast, init, pipe } from 'ramda'
+
 import { scaleLinear } from 'd3-scale'
 
 const sortRegions = regions => [...regions].sort((r1, r2) => r1.start - r2.start)
@@ -42,7 +47,7 @@ const mergeOverlappingRegions = sortedRegions => {
   return mergedRegions
 }
 
-export const addPadding = R.curry((padding, regions) => {
+export const addPadding = curry((padding, regions) => {
   if (padding === 0) return regions
   return regions.reduce((acc, region) => {
     const startPad = {
@@ -60,7 +65,7 @@ export const addPadding = R.curry((padding, regions) => {
     // check if total padding greater than distance between exons
     if (region.previousRegionDistance < padding * 2) {
       return [
-        ...R.init(acc), // remove previous end_pad
+        ...init(acc), // remove previous end_pad
         {
           feature_type: 'intron',
           start: region.start - region.previousRegionDistance,
@@ -74,7 +79,7 @@ export const addPadding = R.curry((padding, regions) => {
   }, [])
 })
 
-export const calculateOffset = R.curry(regions =>
+export const calculateOffset = curry(regions =>
   regions.reduce((acc, region, i) => {
     if (i === 0) return [{ ...region, offset: 0 }]
     return [
@@ -88,7 +93,7 @@ export const calculateOffset = R.curry(regions =>
 )
 
 export const calculateOffsetRegions = (padding = 50, regions) =>
-  R.pipe(
+  pipe(
     sortRegions,
     mergeOverlappingRegions,
     calculateRegionDistances,
@@ -96,8 +101,8 @@ export const calculateOffsetRegions = (padding = 50, regions) =>
     calculateOffset
   )(regions)
 
-export const calculatePositionOffset = R.curry((regions, position) => {
-  const lastRegionBeforePosition = R.findLast(region => region.start <= position)(regions)
+export const calculatePositionOffset = curry((regions, position) => {
+  const lastRegionBeforePosition = findLast(region => region.start <= position)(regions)
 
   if (lastRegionBeforePosition) {
     // Position is within a region
@@ -119,7 +124,7 @@ export const calculatePositionOffset = R.curry((regions, position) => {
   }
 })
 
-export const invertPositionOffset = R.curry((regions, xScale, scaledPosition) => {
+export const invertPositionOffset = curry((regions, xScale, scaledPosition) => {
   let result = 0
   for (let i = 0; i < regions.length; i++) {
     if (

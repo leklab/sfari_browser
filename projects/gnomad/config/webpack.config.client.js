@@ -58,8 +58,18 @@ const config = {
     publicPath: '/',
     filename: isDev ? '[name].js' : '[name]-[hash].js',
   },
+
+  resolve: {
+    alias: {
+      process: 'process/browser',
+    },
+  },
+
   plugins: [
     new webpack.DefinePlugin(definitions),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
     new CopyWebpackPlugin([path.resolve(__dirname, '../src/client/opensearch.xml')], {
       writeToDisk: true,
     }),
