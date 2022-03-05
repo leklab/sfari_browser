@@ -91,6 +91,8 @@ const GeneDataContainer = connect(
               })
             })
             .catch(() => {
+              console.log("In the catch")
+              console.log(this.props.fetchGene)
               if (!this.mounted) {
                 return
               }

@@ -1,4 +1,6 @@
-import fetch from 'graphql-fetch'
+//import fetch from 'graphql-fetch'
+
+import 'whatwg-fetch'
 import queryString from 'query-string'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
@@ -6,6 +8,25 @@ import { withRouter } from 'react-router-dom'
 import { Searchbox } from '@broad/ui'
 
 const fetchSearchResults = query =>
+
+  //console.log("In fetchSearchResults")
+
+  fetch('/api/', {
+        body: JSON.stringify({
+          query: `query Search($query: String!){
+                    searchResults(query: $query) {
+                        label
+                        value: url
+                    }
+                  }`,
+          variables: {query}
+        }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }}).then(response => response.json()).then(response => response.data.searchResults)
+
+/*
   fetch(process.env.GNOMAD_API_URL)(
     `
   query Search($query: String!) {
@@ -17,6 +38,10 @@ const fetchSearchResults = query =>
 `,
     { query }
   ).then(response => response.data.searchResults)
+*/
+
+
+
 
 export default withRouter(props => {
   const { history, location, match, ...rest } = props

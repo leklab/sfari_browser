@@ -1,4 +1,6 @@
-import gqlFetch from 'graphql-fetch'
+//import gqlFetch from 'graphql-fetch'
+import 'whatwg-fetch'
+
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 
@@ -90,8 +92,17 @@ export class Query extends Component {
 
     this.currentRequest = cancelable(
       //gqlFetch(process.env.GNOMAD_API_URL)(this.props.query, this.props.variables)
-      gqlFetch(this.props.url)(this.props.query, this.props.variables)
+      //gqlFetch(this.props.url)(this.props.query, this.props.variables)
 
+      fetch('/api/', {
+        body: JSON.stringify({
+          query: this.props.query,
+          variables: this.props.variables,
+        }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }}).then(response => response.json())
     )
     this.currentRequest.promise.then(
       response => {

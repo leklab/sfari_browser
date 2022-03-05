@@ -1,4 +1,6 @@
-import fetch from 'graphql-fetch'
+//import fetch from 'graphql-fetch'
+
+import 'whatwg-fetch'
 
 export const fetchGnomadGenePage = geneName => {
   const argument = geneName.startsWith('ENSG')
@@ -168,7 +170,24 @@ export const fetchGnomadGenePage = geneName => {
 
 
   console.log(query)
-  return fetch(process.env.GNOMAD_API_URL)(query)
+  //return fetch(process.env.GNOMAD_API_URL)(query)
+  
+  //const variables = {geneName: geneName}
+  
+
+  console.log("Running new fetch!")
+  //console.log(variables)
+  return fetch('/api/', {
+        body: JSON.stringify({
+          query
+        }),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }}).then(response => response.json())
+
+
+
 }
 
     /*const query = `{
