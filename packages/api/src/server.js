@@ -43,6 +43,7 @@ app.use(cors())
       graphQLHTTP({
         schema: pcgcSchema,
         graphiql: true,
+        validationRules: [NoIntrospection],
         context: {
           database: {
             gnomad: mongoClient.db(),

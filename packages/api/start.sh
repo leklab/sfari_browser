@@ -24,9 +24,11 @@ export GRAPHQL_PORT=8007
 rm -rf dist
 
 # Bundle server once before starting nodemon
-webpack --display=errors-only
+#webpack --display=errors-only
+webpack
 
-webpack --display=errors-only --watch &
+#webpack --display=errors-only --watch &
+webpack --watch &
 PID[0]=$!
 
 nodemon dist/server.js &
