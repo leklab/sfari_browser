@@ -75,7 +75,9 @@ const shapeGnomadVariantSummary = (context) => {
 
     
     // eslint-disable-next-line no-underscore-dangle
-    const isExomeVariant = esHit._index === 'pcgc_exomes'
+    const isExomeVariant = esHit._index === 'spark_exomes'
+
+    //const isExomeVariant = esHit._index === 'pcgc_exomes'
 
     /*
     const ac = variantData[subsetKey].AC_adj.total
@@ -129,7 +131,7 @@ const shapeGnomadVariantSummary = (context) => {
       an_gnomad: 0,
 
       spark_genome: esHit._index === 'spark_genomes' ? data_block : null,
-      spark_exome: esHit._index === 'pcgc_exomes' ? data_block : null,
+      spark_exome: esHit._index === 'spark_exomes' ? data_block : null,
 
       ssc_genome: esHit._index === 'ssc_genomes' ? data_block : null,
       

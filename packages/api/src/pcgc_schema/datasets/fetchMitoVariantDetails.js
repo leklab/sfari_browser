@@ -1,6 +1,10 @@
 //import { UserVisibleError } from '../../errors'
 //import { fetchGnomadMNVSummariesByVariantId } from './gnomadMultiNucleotideVariants'
-import { request } from "graphql-request"
+//import { request } from "graphql-request"
+import 'whatwg-fetch'
+
+//import fetch from 'node-fetch'
+
 
 /*
 const formatHistogram = histogramData => ({
@@ -246,9 +250,18 @@ const fetchRSID = async (ctx, variantId) => {
   ` 
 
   try{
-    const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+    //const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
 
-    return gnomad_data
+    const gnomad_data = await fetch("https://gnomad.broadinstitute.org/api", {
+      body: JSON.stringify({
+        query
+      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }}).then(response => response.json())
+
+    return gnomad_data.json()
   }catch(error){
     return undefined
   }
@@ -282,7 +295,16 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
   ` 
 
   try{
-    const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)    
+    //const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)    
+    const gnomad_data = await fetch("https://gnomad.broadinstitute.org/api", {
+      body: JSON.stringify({
+        query
+      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }}).then(response => response.json())
+
     //console.log(gnomad_data.variant.genome.populations)
 
     return gnomad_data.variant.genome

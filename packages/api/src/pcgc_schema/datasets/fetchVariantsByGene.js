@@ -1,7 +1,12 @@
 import { fetchAllSearchResults } from '../../utilities/elasticsearch'
 import { mergeOverlappingRegions } from '../../utilities/region'
 import { lookupExonsByGeneId } from '../types/exon'
-import { request } from "graphql-request"
+
+//import { request } from "graphql-request"
+
+import fetch from 'node-fetch'
+//import 'whatwg-fetch'
+
 /*
 import {
   annotateVariantsWithMNVFlag,
@@ -141,8 +146,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
-      index: 'pcgc_exomes',
-      type: 'variant',
+      index: 'spark_exomes',
       size: 10000,
       _source: [
         'AC_adj',
@@ -205,10 +209,10 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
     })
 
 
-  //console.log("Done making first query")
-
+  console.log("Done making first query")
+  console.log(hits)
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
-
+  //console.log(exomeVariants)
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
       index: 'spark_genomes',
@@ -336,8 +340,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   // console.log(exomeAndGenomeVariants)
 
-  console.log("Performed search in ES")
-  console.log(allVariants)
+  //console.log("Performed search in ES")
+  //console.log(allVariants)
 
   //)
   //console.log("Checking local ES query")
@@ -366,13 +370,39 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   //console.log("In here 33")
   //const gnomad_data = request("http://gnomad.broadinstitute.org/api", query).then(console.log).catch(console.error)
 
-  //console.log("About to request data from gnomAD")
-  const gnomad_data = await request("https://gnomad.broadinstitute.org/api", query)
+  console.log("About to request data from gnomAD")
+  //console.log(query)
+  //console.log(JSON.stringify({query}))
+  /*
+  const gnomad_data = await fetch("http://gnomad.broadinstitute.org/api", {
+    method: 'POST', 
+    body: JSON.stringify({
+      query}),
+    headers:{
+      'Content-Type': 'application/json',
+    }})
+  */
+
+  //const gnomad_data = await fetch("http://gnomad.broadinstitute.org/api",{method: 'POST',body: JSON.stringify(query})}).then(response => response.json())
+
+  
+  const gnomad_data = await fetch("https://gnomad.broadinstitute.org/api", {
+    body: JSON.stringify({
+      query
+    }),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    }}).then(response => response.json())
+
+    //console.log(gnomad_data)
+  
+
   //console.log(gnomad_data.gene.variants)
 
   //const combinedVariants = mergePcgcAndGnomadVariantSummaries(exomeVariants,gnomad_data.gene.variants)
-  const combinedVariants = mergePcgcAndGnomadVariantSummaries(allVariants,gnomad_data.gene.variants)
-  console.log(combinedVariants)
+  const combinedVariants = mergePcgcAndGnomadVariantSummaries(allVariants,gnomad_data.data.gene.variants)
+  //console.log(combinedVariants)
 
   const dnms = await fetchDenovos(ctx,geneId)
   //console.log(dnms)

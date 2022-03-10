@@ -8,6 +8,7 @@ import Redis from 'ioredis'
 import serveStatic from 'serve-static'
 
 import pcgcSchema from './pcgc_schema'
+import NoIntrospection from 'graphql-disable-introspection'
 
 const app = express()
 app.use(compression())

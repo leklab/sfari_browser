@@ -1,7 +1,10 @@
 import { fetchAllSearchResults } from '../../utilities/elasticsearch'
 import { mergeOverlappingRegions } from '../../utilities/region'
 import { lookupExonsByGeneId } from '../types/exon'
-import { request } from "graphql-request"
+
+//import { request } from "graphql-request"
+//import fetch from 'node-fetch'
+
 /*
 import {
   annotateVariantsWithMNVFlag,
