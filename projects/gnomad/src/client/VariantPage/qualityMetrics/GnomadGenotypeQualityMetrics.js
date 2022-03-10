@@ -11,7 +11,7 @@ export class GnomadGenotypeQualityMetrics extends Component {
     super(props)
 
     this.state = {
-      selectedDataset: props.variant.exome ? 'exome' : 'genome',
+      //selectedDataset: props.variant.exome ? 'exome' : 'genome',
       selectedMetric: 'genotypeQuality', // 'genotypeQality', 'genotypeDepth', or 'alleleBalance'
       selectedSamples: 'all', // 'all' or 'alt'
     }
@@ -19,9 +19,12 @@ export class GnomadGenotypeQualityMetrics extends Component {
 
   render() {
     const { variant } = this.props
-    const { selectedDataset, selectedMetric, selectedSamples } = this.state
+    //const { selectedDataset, selectedMetric, selectedSamples } = this.state
+    const { selectedMetric, selectedSamples } = this.state
 
-    const histogramData = variant[selectedDataset].qualityMetrics[selectedMetric][selectedSamples]
+    console.log(variant.spark_exome.qualityMetrics)
+
+    const histogramData = variant['spark_exome'].qualityMetrics[selectedMetric][selectedSamples]
 
     const xLabel = {
       genotypeQuality: 'Genotype Quality',
@@ -31,7 +34,9 @@ export class GnomadGenotypeQualityMetrics extends Component {
 
     const yLabel = selectedSamples === 'all' ? 'All Individuals' : 'Variant carriers'
 
-    const graphColor = selectedDataset === 'exome' ? '#428bca' : '#73ab3d'
+    //const graphColor = selectedDataset === 'exome' ? '#428bca' : '#73ab3d'
+    const graphColor = '#428bca'
+
 
     return (
       <div>
@@ -75,7 +80,7 @@ export class GnomadGenotypeQualityMetrics extends Component {
             <option value="alleleBalance">Allele Balance</option>
           </Select>
 
-          <SegmentedControl
+          {/*<SegmentedControl
             id="genotype-quality-metrics-dataset"
             onChange={dataset => {
               this.setState({ selectedDataset: dataset })
@@ -85,7 +90,7 @@ export class GnomadGenotypeQualityMetrics extends Component {
               { disabled: !variant.genome, label: 'Genomes', value: 'genome' },
             ]}
             value={selectedDataset}
-          />
+          />*/}
         </ControlSection>
       </div>
     )
@@ -113,6 +118,7 @@ const genotypeQualityMetricPropType = PropTypes.shape({
   }).isRequired,
 })
 
+/*
 GnomadGenotypeQualityMetrics.propTypes = {
   variant: PropTypes.shape({
     exome: PropTypes.shape({
@@ -123,3 +129,4 @@ GnomadGenotypeQualityMetrics.propTypes = {
     }),
   }).isRequired,
 }
+*/

@@ -31,6 +31,44 @@ query PcgcVariant($variantId: String!) {
           an
           ac_hom
         }
+        qualityMetrics{
+          alleleBalance {
+            alt {
+              bin_edges
+              bin_freq
+              n_smaller
+              n_larger
+            }
+          }
+          genotypeDepth {
+            all {
+              bin_edges
+              bin_freq
+              n_smaller
+              n_larger
+            }
+            alt {
+              bin_edges
+              bin_freq
+              n_smaller
+              n_larger
+            }
+          }
+          genotypeQuality {
+            all {
+              bin_edges
+              bin_freq
+              n_smaller
+              n_larger
+            }
+            alt {
+              bin_edges
+              bin_freq
+              n_smaller
+              n_larger
+            }
+          }
+        }          
       }
      spark_genome {
         ac

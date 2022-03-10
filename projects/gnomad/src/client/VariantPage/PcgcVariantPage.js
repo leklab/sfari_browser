@@ -23,6 +23,8 @@ import { GnomadSiteQualityMetrics } from './qualityMetrics/GnomadSiteQualityMetr
 import { GnomadReadData } from './reads/GnomadReadData'
 */
 
+import { GnomadGenotypeQualityMetrics } from './qualityMetrics/GnomadGenotypeQualityMetrics'
+
 import { TranscriptConsequenceList } from './TranscriptConsequenceList'
 import { VariantDetailsQuery } from './VariantDetailsQuery'
 import VariantFeedback from './VariantFeedback'
@@ -183,8 +185,12 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               <TranscriptConsequenceList
                 sortedTranscriptConsequences={variant.sortedTranscriptConsequences}
               />
+              {!!variant.in_silico_predictors && (
+              <div>
               <h2>In Silico Predictors</h2>
               <VariantInSilicoPredictors variant={variant} />
+              </div>
+              )}
             </Section>
             <ResponsiveSection>
               <h2>Population Frequencies</h2>
@@ -225,12 +231,15 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 </p>
               )}
               <GnomadAgeDistribution variant={variant} />
-            </ResponsiveSection>
+            </ResponsiveSection>*/}
+
+            { !!variant.spark_exome && (
             <ResponsiveSection>
               <h2>Genotype Quality Metrics</h2>
               <GnomadGenotypeQualityMetrics variant={variant} />
             </ResponsiveSection>
-            <ResponsiveSection>
+            )}
+            {/*<ResponsiveSection>
               <h2>Site Quality Metrics</h2>
               <GnomadSiteQualityMetrics datasetId={datasetId} variant={variant} />
             </ResponsiveSection>
