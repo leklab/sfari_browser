@@ -89,8 +89,8 @@ const fetchVariantData = async (ctx, variantId) => {
  
 
    const genomeData = await ctx.database.elastic.search({
-    index: 'mito_test3',
-    type: 'variant',
+    index: 'spark_mito',
+    //type: 'variant',
     _source: [
       'alt',
       'chrom',

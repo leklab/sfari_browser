@@ -1,4 +1,5 @@
 import igv from 'igv/dist/igv'
+//import igv from 'igv'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import styled from 'styled-components'
@@ -68,6 +69,8 @@ class IGVBrowser extends Component {
   }
 
   componentDidMount() {
+    console.log("In IGV Did mount")
+
     const { config, onCreateBrowser } = this.props
 
     const browserConfig = {
@@ -106,6 +109,7 @@ class IGVBrowser extends Component {
   }
 
   componentWillUnmount() {
+    console.log("In IGV Will mount")
     if (this.browser) {
       igv.removeBrowser(this.browser)
     }
@@ -117,6 +121,7 @@ class IGVBrowser extends Component {
   }
 
   render() {
+    console.log("In render")
     return <IGVWrapper ref={this.elementRef} />
   }
 }

@@ -209,10 +209,12 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
     })
 
 
-  console.log("Done making first query")
-  console.log(hits)
+  console.log("Done making first query - spark_exomes")
+  //console.log(hits)
   const exomeVariants = hits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
   //console.log(exomeVariants)
+  console.log("Done merging first query - spark_exomes")
+
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
       index: 'spark_genomes',
@@ -281,6 +283,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
     })
 
   //console.log(ghits)
+  console.log("Done making second query - spark_genomes")
+
   const genomeVariants = ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
   //console.log(genomeVariants)
   const sparkVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)
@@ -330,6 +334,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
       },
     })
 
+  console.log("Done making third query - ssc_genomes")
 
   //console.log(ssc_ghits)
   

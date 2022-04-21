@@ -78,7 +78,7 @@ export default () => (
           <tr><TableHeader>Data Set</TableHeader><TableHeader>Samples</TableHeader></tr>
           <tr><TableData>SSC Genomes</TableData><TableData>9,209</TableData></tr>
           <tr><TableData>SPARK Genomes</TableData><TableData>2,629</TableData></tr>
-          <tr><TableData>SPARK Exomes</TableData><TableData>27,266</TableData></tr>
+          <tr><TableData>SPARK Exomes</TableData><TableData>70,487</TableData></tr>
 
         </TableStyled>
         <br />

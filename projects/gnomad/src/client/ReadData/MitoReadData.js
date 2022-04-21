@@ -9,7 +9,8 @@ import { Badge, Button, ExternalLink } from '@broad/ui'
 import { Query } from '../Query'
 import StatusMessage from '../StatusMessage'
 
-const IGVBrowser = lazy(() => import('./IGVBrowser'))
+//const IGVBrowser = lazy(() => import('./IGVBrowser'))
+import IGVBrowser from './IGVBrowser'
 
 const ControlContainer = styled.div`
   /* Offset the 80px wide label to center buttons under the IGV browser */
@@ -248,6 +249,7 @@ class MitoReadData extends Component {
   render() {
     const { children, referenceGenome, chrom, start, stop, showHemizygotes } = this.props
 
+    console.log("In here 3")
     if (!this.hasReadData('exome') && !this.hasReadData('genome')) {
       return (
         <div>
@@ -257,6 +259,11 @@ class MitoReadData extends Component {
     }
 
     const locus = `${chrom}:${start}-${stop}`
+
+    console.log("In here 4")
+    console.log(this.props.exomeReads)
+    console.log(this.props.genomeReads)
+
 
     const browserConfig =
       referenceGenome === 'GRCh37'
@@ -317,6 +324,7 @@ class MitoReadData extends Component {
         <Suspense fallback={null}>
           <IGVBrowser config={browserConfig} onCreateBrowser={this.onCreateBrowser} />
         </Suspense>
+
 
         {this.hasReadData('exome') && (
           <ControlContainer>
@@ -505,7 +513,8 @@ const TestContainer = ({ variantIds }) => {
           })
         )
 
-
+        console.log("In here")
+        //console.log(graphQLErrors)
 
         return (
           <MitoReadData

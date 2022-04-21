@@ -85,8 +85,8 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
-      index: 'mito_test2',
-      type: 'variant',
+      index: 'spark_mito',
+      //type: 'variant',
       size: 10000,
       _source: [
         'alt',
