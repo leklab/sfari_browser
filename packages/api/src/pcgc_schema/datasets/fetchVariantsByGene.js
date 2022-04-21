@@ -246,7 +246,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'AN_proband',
         'AF_proband'
       ],
-      /*
+      
       body: {
         query: {
           bool: {
@@ -265,8 +265,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
           },
         },
         sort: [{ pos: { order: 'asc' } }],
-      },*/
-      
+      },
+/*      
       body: {
         query : {
           nested: {
@@ -279,7 +279,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
           }
         },
         sort: [{ pos: { order: 'asc' } }],
-      },
+      },*/
     })
 
   //console.log(ghits)
@@ -319,6 +319,28 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         'AN_proband',
         'AF_proband'
       ],
+
+      body: {
+        query: {
+          bool: {
+            filter: [
+              {
+                nested: {
+                  path: 'sortedTranscriptConsequences',
+                  query: {
+                    term: { 'sortedTranscriptConsequences.gene_id': geneId },
+                  },
+                },
+              },
+              { bool: { should: rangeQueries } },
+              { range: { ['AC_raw']: { gt: 0 } } },
+            ],
+          },
+        },
+        sort: [{ pos: { order: 'asc' } }],
+      },
+
+      /*
       body: {
         query : {
           nested: {
@@ -331,7 +353,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
           }
         },
         sort: [{ pos: { order: 'asc' } }],
-      },
+      },*/
     })
 
   console.log("Done making third query - ssc_genomes")
