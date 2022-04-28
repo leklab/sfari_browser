@@ -24,6 +24,9 @@ const GeneInfo = ({ currentTranscript, gene }) => {
   const geneCardsUrl = `http://www.genecards.org/cgi-bin/carddisp.pl?gene=${geneName}`
   const omimUrl = `http://omim.org/entry/${omimAccession}`
 
+  const sfariUrl = `https://gene.sfari.org/database/human-gene/${geneName}`
+  const geneBassUrl = `https://genebass.org/gene/${geneId}?burdenSet=pLoF&phewasOpts=1&resultLayout=full`
+
   return (
     <AttributeList labelWidth={160}>
       <AttributeList.Item label="Ensembl gene ID">
@@ -43,6 +46,12 @@ const GeneInfo = ({ currentTranscript, gene }) => {
       </AttributeList.Item>
       <AttributeList.Item label="OMIM">
         {omimAccession ? <ExternalLink href={omimUrl}>{omimAccession}</ExternalLink> : '—'}
+      </AttributeList.Item>
+      <AttributeList.Item label="SFARI Gene">
+        <ExternalLink href={sfariUrl}>{geneName}</ExternalLink>
+      </AttributeList.Item>
+      <AttributeList.Item label="Genebass">
+        <ExternalLink href={geneBassUrl}>{geneId}</ExternalLink>
       </AttributeList.Item>
     </AttributeList>
   )

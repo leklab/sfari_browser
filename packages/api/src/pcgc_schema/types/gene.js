@@ -8,6 +8,7 @@ import {
   GraphQLFloat,
 } from 'graphql'
 
+import { withCache } from '../../utilities/redis'
 
 /*
 import { datasetArgumentTypeForMethod } from '../datasets/datasetArgumentTypes'
@@ -137,7 +138,14 @@ const geneType = new GraphQLObjectType({
         console.log(obj.gene_id)
         console.log(obj.chrom)
         //const fetchVariantsByGene = datasetsConfig[args.dataset].fetchVariantsByGene
-        return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
+
+        
+        return withCache(ctx, `gene_cache:${obj.gene_id}`, async () => {
+          return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
+        })
+        
+
+        //return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
       },
     },
   }),
