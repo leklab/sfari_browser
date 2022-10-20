@@ -4,7 +4,7 @@ const add = (n1, n2, n3) => (n1 || 0) + (n2 || 0) + (n3 || 0)
 
 const mergeExomeAndGenomeData = variants =>
   variants.map(variant => {
-    const { spark_genome } = variant
+    const { spark_genome, ssc_genome } = variant
 
     var totalAC = 0
     var totalAN = 0
@@ -22,14 +22,20 @@ const mergeExomeAndGenomeData = variants =>
       totalHet += spark_genome.ac_het
       max_cohort_heteroplasmy = spark_genome.max_heteroplasmy
     }
-    /*
+    
     if(ssc_genome){
       totalAC += ssc_genome.ac
       totalAN += ssc_genome.an
-      totalProband += ssc_genome.ac_proband
+
       totalHom += ssc_genome.ac_hom
+      totalHet += ssc_genome.ac_het
+
+      //max_cohort_heteroplasmy = spark_genome.max_heteroplasmy
+
+      //totalProband += ssc_genome.ac_proband
+      //totalHom += ssc_genome.ac_hom
     }
-    */    
+        
     //const totalAC = add(spark_exome.ac,spark_genome.ac,ssc_genome.ac)
     //const totalAN = add(spark_exome.an,spark_genome.an,ssc_genome.an)
     

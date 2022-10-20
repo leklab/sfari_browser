@@ -82,6 +82,7 @@ export const MitoVariantSummaryType = new GraphQLObjectType({
     // will keep with this name for future
     //spark_exome: { type: VariantSequencingDataType },
     spark_genome: { type: MitoVariantSequencingDataType },
+    ssc_genome: { type: MitoVariantSequencingDataType },
     //ssc_genome: { type: VariantSequencingDataType },
     // genome: { type: VariantSequencingDataType },
   },

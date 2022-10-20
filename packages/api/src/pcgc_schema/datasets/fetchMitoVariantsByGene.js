@@ -17,6 +17,8 @@ import {
 //import mergeSSCVariants from './mergeSSCVariants'
 
 import shapeMitoVariantSummary from './shapeMitoVariantSummary'
+import mergeMitoVariants from './mergeMitoVariants'
+
 
 /*
 const annotateVariantsWithDenovoFlag = (variants, dnms) => {
@@ -85,7 +87,7 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
-      index: 'spark_mito',
+      index: 'mito_test4',
       //type: 'variant',
       size: 10000,
       _source: [
@@ -101,7 +103,8 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
         'ac_hom',
         'an',
         'af',
-        'max_heteroplasmy'
+        'max_heteroplasmy',
+        'filters',
         /*
         'AC_adj',
         'AN_adj',
@@ -164,11 +167,63 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
       },
     })
 
-  const mitoVariants = hits.map(shapeMitoVariantSummary({ type: 'gene', geneId }))
+  //console.log(hits)
+  
+
+
+  const sparkVariants = hits.map(shapeMitoVariantSummary({ type: 'gene', geneId }))
+
+  const ssc_hits = await fetchAllSearchResults(ctx.database.elastic, { 
+//      index: 'pcgc_chr20_test',
+      index: 'ssc_mito',
+      //type: 'variant',
+      size: 10000,
+      _source: [
+        'alt',
+        'chrom',
+        'pos',
+        'ref',
+        'sortedTranscriptConsequences',
+        'variant_id',
+        'xpos',
+        'ac',
+        'ac_het',
+        'ac_hom',
+        'an',
+        'af',
+        'max_heteroplasmy',
+        'filters',
+      ],
+      body: {
+        query: {
+          bool: {
+            filter: [
+              {
+                nested: {
+                  path: 'sortedTranscriptConsequences',
+                  query: {
+                    term: { 'sortedTranscriptConsequences.gene_id': geneId },
+                  },
+                },
+              },
+              { bool: { should: rangeQueries } },
+              { range: { ['ac']: { gt: 0 } } },
+            ],
+          },
+        },
+        sort: [{ pos: { order: 'asc' } }],
+      },
+    })
 
 
 
-  return mitoVariants
+  const sscVariants = ssc_hits.map(shapeMitoVariantSummary({ type: 'gene', geneId }))
+
+  const allVariants = mergeMitoVariants(sparkVariants, sscVariants)
+
+  //return sparkVariants
+  return allVariants
+  //return sscVariants
 
 }
 
