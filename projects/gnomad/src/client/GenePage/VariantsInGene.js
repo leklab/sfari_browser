@@ -223,13 +223,13 @@ class VariantsInGene extends Component {
           )}
           <p style={{ marginBottom: 0 }}>
             <b>Cohort Key:</b>&nbsp; <img
-                    src={require('../VariantList/SPARK_icon.png')}
+                    src={require('../VariantList/SPARK_icon.png').default}
                     height={20}
                     width={20}
                     alt={"SPARK"}
                   />&nbsp; SPARK &nbsp; &nbsp; &nbsp; 
                   <img
-                    src={require('../VariantList/SSC_icon.png')}
+                    src={require('../VariantList/SSC_icon.png').default}
                     height={20}
                     width={20}
                     alt={"SSC"}
