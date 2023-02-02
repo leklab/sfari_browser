@@ -281,6 +281,14 @@ const ConnectedMitoVariantsInGene = ({ datasetId, gene, transcriptId, width }) =
           ac_het
           max_heteroplasmy
         }
+        ssc_genome {
+          ac
+          an
+          af
+          ac_hom
+          ac_het
+          max_heteroplasmy
+        }
       }
     }
   }`

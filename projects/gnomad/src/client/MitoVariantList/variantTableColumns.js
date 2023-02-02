@@ -133,12 +133,22 @@ export const getColumns = ({ width, includeHomozygoteAC, includeHemizygoteAC }) 
       minWidth: 60,
       render: variant => (
               <React.Fragment>
+                {variant.spark_genome && (
                   <img
                     src={require('./SPARK_icon.png')}
                     height={20}
                     width={20}
                     alt={"SPARK"}
                   />
+                )}
+                {variant.ssc_genome && (
+                  <img
+                    src={require('./SSC_icon.png')}
+                    height={20}
+                    width={20}
+                    alt={"SSC"}
+                  />
+                )}                
               </React.Fragment>
             ),
     },

@@ -57,6 +57,19 @@ const MitoVariantDetailsType = new GraphQLObjectType({
         },
       }),
     },
+
+    ssc_genome: {
+      type: new GraphQLObjectType({
+        name: 'MitoVariantDetailsGenomeDataX',
+        fields: {
+          ac: { type: GraphQLInt },
+          an: { type: GraphQLInt },
+          ac_het: { type: GraphQLInt },
+          ac_hom: { type: GraphQLInt },
+          max_heteroplasmy: {type: GraphQLFloat }          
+        },
+      }),
+    },
     
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
     haplogroups: { type: new GraphQLList(HaplogroupType)},

@@ -135,7 +135,9 @@ const shapeMitoVariantSummary = (context) => {
       //ac_gnomad: 0,
       //an_gnomad: 0,
 
-      spark_genome: data_block
+      spark_genome: esHit._index === 'mito_test4' ? data_block : null,
+      ssc_genome: esHit._index === 'ssc_mito' ? data_block : null,
+
 
     } //return
 
