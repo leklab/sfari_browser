@@ -258,9 +258,11 @@ class MitoReadData extends Component {
       )
     }
 
-    const locus = `${chrom}:${start}-${stop}`
+    //const locus = `${chrom}:${start}-${stop}`
+    const locus = `chr${chrom}:${start}-${stop}`
 
     console.log("In here 4")
+    console.log(locus)
     console.log(this.props.exomeReads)
     console.log(this.props.genomeReads)
 
