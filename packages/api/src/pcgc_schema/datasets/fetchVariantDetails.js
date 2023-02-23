@@ -232,7 +232,7 @@ const fetchVariantData = async (ctx, variantId) => {
   //console.log("In here 3.1") 
   const genomeData = await ctx.database.elastic.search({
     index: 'spark_genomes',
-    type: 'variant',
+    //type: 'variant',
     _source: [
       'alt',
       'chrom',
@@ -275,7 +275,7 @@ const fetchVariantData = async (ctx, variantId) => {
 
  const sscGenomeData = await ctx.database.elastic.search({
     index: 'ssc_genomes',
-    type: 'variant',
+    //type: 'variant',
     _source: [
       'alt',
       'chrom',
@@ -367,8 +367,8 @@ const fetchColocatedVariants = async (ctx, variantId) => {
 
   const exomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'pcgc_exomes',
-    type: 'variant',
+    index: 'spark_exomes',
+    //type: 'variant',
     _source: ['variant_id'],
     body: {
       query: {
@@ -386,7 +386,7 @@ const fetchColocatedVariants = async (ctx, variantId) => {
   const genomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
     index: 'spark_genomes',
-    type: 'variant',
+    //type: 'variant',
     _source: ['variant_id'],
     body: {
       query: {
@@ -542,7 +542,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const clinVarES = await ctx.database.elastic.search({
     index: 'clinvar_grch38',
-    type: 'variant',
+    //type: 'variant',
     _source: [
       'allele_id',
       'alt',
@@ -574,7 +574,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const denovoES = await ctx.database.elastic.search({
     index: 'autism_dnms',
-    type: 'variant',
+    //type: 'variant',
     _source: [
       'variant_id',
       'high_confidence_dnm',
@@ -821,7 +821,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     gnomad_faf95_popmax: gnomad_pop_data ? gnomad_pop_data.faf95.popmax : null,
     gnomad_faf95_population: gnomad_pop_data ? gnomad_pop_data.faf95.popmax_population : null,
 
-    rsid: gnomad_data ? gnomad_data.variant.rsid : null,
+    rsid: gnomad_data.data.variant ? gnomad_data.data.variant.rsid : null,
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],

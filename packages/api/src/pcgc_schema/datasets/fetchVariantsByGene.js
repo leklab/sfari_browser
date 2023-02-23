@@ -218,7 +218,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   const ghits = await fetchAllSearchResults(ctx.database.elastic, { 
       index: 'spark_genomes',
-      type: 'variant',
+      //type: 'variant',
       size: 10000,
       _source: [
         'AC_adj',
@@ -291,7 +291,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   const ssc_ghits = await fetchAllSearchResults(ctx.database.elastic, { 
       index: 'ssc_genomes',
-      type: 'variant',
+      //type: 'variant',
       size: 10000,
       _source: [
         'AC_adj',
@@ -359,7 +359,6 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   console.log("Done making third query - ssc_genomes")
 
   //console.log(ssc_ghits)
-  
   const ssc_genomeVariants = ssc_ghits.map(shapeGnomadVariantSummary({ type: 'gene', geneId }))
   
   //console.log(ssc_genomeVariants)
@@ -422,7 +421,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
       'Content-Type': 'application/json',
     }}).then(response => response.json())
 
-    //console.log(gnomad_data)
+    console.log(gnomad_data)
   
 
   //console.log(gnomad_data.gene.variants)

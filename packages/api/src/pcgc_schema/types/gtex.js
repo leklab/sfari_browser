@@ -69,7 +69,7 @@ export const fetchGtexTissueExpressionsByTranscript = async (ctx, transcriptId) 
 
   const response = await ctx.database.elastic.search({
     index: 'gtex_tissue_tpms_by_transcript',
-    type: 'tissue_tpms',
+    // type: 'tissue_tpms',
     size: 1,
     body: {
         query : {
