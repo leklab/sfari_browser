@@ -87,7 +87,7 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
-      index: 'mito_test4',
+      index: 'spark_mito',
       //type: 'variant',
       size: 10000,
       _source: [
@@ -172,6 +172,7 @@ const fetchMitoVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subse
 
 
   const sparkVariants = hits.map(shapeMitoVariantSummary({ type: 'gene', geneId }))
+  console.log(sparkVariants)
 
   const ssc_hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',

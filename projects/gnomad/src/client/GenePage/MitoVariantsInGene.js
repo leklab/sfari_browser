@@ -227,13 +227,13 @@ class MitoVariantsInGene extends Component {
           )}
           <p style={{ marginBottom: 0 }}>
             <b>Cohort Key:</b>&nbsp; <img
-                    src={require('../MitoVariantList/SPARK_icon.png')}
+                    src={require('../MitoVariantList/SPARK_icon.png').default}
                     height={20}
                     width={20}
                     alt={"SPARK"}
                   />&nbsp; SPARK &nbsp; &nbsp; &nbsp; 
                   <img
-                    src={require('../MitoVariantList/SSC_icon.png')}
+                    src={require('../MitoVariantList/SSC_icon.png').default}
                     height={20}
                     width={20}
                     alt={"SSC"}
