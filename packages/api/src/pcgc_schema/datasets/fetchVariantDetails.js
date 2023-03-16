@@ -154,7 +154,9 @@ const fetchVariantData = async (ctx, variantId) => {
 
   const exomeData = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'spark_exomes',
+//    index: 'spark_exomes',
+    index: 'spark_exomes_v2',
+
     _source: [
 //      requestSubset,
 //      'ab_hist_alt',
@@ -367,7 +369,9 @@ const fetchColocatedVariants = async (ctx, variantId) => {
 
   const exomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'spark_exomes',
+  //  index: 'spark_exomes',
+    index: 'spark_exomes_v2',
+
     //type: 'variant',
     _source: ['variant_id'],
     body: {

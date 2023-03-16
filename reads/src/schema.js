@@ -50,7 +50,25 @@ const VariantReadsType = new GraphQLObjectType({
           throw new UserVisibleError(`Unable to load exome reads for ${variantId}`)
         }
         */
-        return null
+        const config = {
+          readsDirectory: '/readviz/spark_exome',
+          publicPath: '/readviz/spark_exome',
+          meta: 's42811_gs50_gn857',
+        }
+        
+        if (!config) {
+          return null
+        }
+        
+        try {
+          //return await resolve(config, obj)
+          return await resolveReads(config, obj)        
+        } catch (err) {
+          logger.warn(err)
+          throw new UserVisibleError(`Unable to load exome reads for ${variantId}`)
+        }
+        
+        //return null
       },
     },   
     spark_genome: {
@@ -68,7 +86,7 @@ const VariantReadsType = new GraphQLObjectType({
         }
         */
         const config = {
-          readsDirectory: '/home/ubuntu/readviz/spark_wgs',
+          readsDirectory: '/readviz/spark_wgs',
           publicPath: '/readviz/spark_wgs',
           meta: 's42811_gs50_gn857',
         }
@@ -104,7 +122,7 @@ const VariantReadsType = new GraphQLObjectType({
         }
         */
         const config = {
-          readsDirectory: '/home/ubuntu/readviz/ssc_wgs',
+          readsDirectory: '/readviz/ssc_wgs',
           publicPath: '/readviz/ssc_wgs',
           meta: 's42811_gs50_gn857',
         }

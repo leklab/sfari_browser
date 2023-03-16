@@ -65,8 +65,7 @@ class MitoReadData extends Component {
     start: PropTypes.number.isRequired,
     stop: PropTypes.number.isRequired,
     exomeReads: PropTypes.arrayOf(ReadDataPropType).isRequired,
-    sparkGenomeReads: PropTypes.arrayOf(ReadDataPropType).isRequired,
-    sscGenomeReads: PropTypes.arrayOf(ReadDataPropType).isRequired,    
+    genomeReads: PropTypes.arrayOf(ReadDataPropType).isRequired,
     showHemizygotes: PropTypes.bool,
   }
 
@@ -78,7 +77,7 @@ class MitoReadData extends Component {
   constructor(props) {
     super(props)
 
-    const { exomeReads, sparkGenomeReads, sscGenomeReads } = this.props
+    const { exomeReads, genomeReads } = this.props
 
     this.state = {
       tracksAvailable: {
@@ -89,21 +88,13 @@ class MitoReadData extends Component {
           }),
           { het: 0, hom: 0, hemi: 0 }
         ),
-        sparkGenome: sparkGenomeReads.reduce(
+        genome: genomeReads.reduce(
           (acc, read) => ({
             ...acc,
             [read.category]: acc[read.category] + 1,
           }),
           { het: 0, hom: 0, hemi: 0 }
         ),
-        sscGenome: sscGenomeReads.reduce(
-          (acc, read) => ({
-            ...acc,
-            [read.category]: acc[read.category] + 1,
-          }),
-          { het: 0, hom: 0, hemi: 0 }
-        ),
-
       },
       tracksLoaded: {
         exome: {
@@ -111,12 +102,7 @@ class MitoReadData extends Component {
           hom: 0,
           hemi: 0,
         },
-        sparkGenome: {
-          het: 0,
-          hom: 0,
-          hemi: 0,
-        },
-        sscGenome: {
+        genome: {
           het: 0,
           hom: 0,
           hemi: 0,
@@ -130,17 +116,11 @@ class MitoReadData extends Component {
         hom: 0,
         hemi: 0,
       },
-      sparkGenome: {
+      genome: {
         het: 0,
         hom: 0,
         hemi: 0,
       },
-      sscGenome: {
-        het: 0,
-        hom: 0,
-        hemi: 0,
-      },
-
     }
   }
 
@@ -151,18 +131,14 @@ class MitoReadData extends Component {
   }
 
   hasReadData(exomeOrGenome) {
-    const { exomeReads, sparkGenomeReads, sscGenomeReads } = this.props
+    const { exomeReads, genomeReads } = this.props
 
     if (exomeOrGenome === 'exome') {
       return exomeReads && exomeReads.length > 0
     }
-    if (exomeOrGenome === 'sparkGenome') {
-      return sparkGenomeReads && sparkGenomeReads.length > 0
+    if (exomeOrGenome === 'genome') {
+      return genomeReads && genomeReads.length > 0
     }
-    if (exomeOrGenome === 'sscGenome') {
-      return sscGenomeReads && sscGenomeReads.length > 0
-    }
-
     return false
   }
 
@@ -185,11 +161,10 @@ class MitoReadData extends Component {
   }
 
   loadNextTrack(exomeOrGenome, category) {
-    const { exomeReads, sparkGenomeReads, sscGenomeReads } = this.props
+    const { exomeReads, genomeReads } = this.props
     const reads = {
       exome: exomeReads,
-      sparkGenome: sparkGenomeReads,
-      sscGenome: sscGenomeReads
+      genome: genomeReads,
     }[exomeOrGenome]
 
     const tracksLoadedForCategory = this.tracksLoaded[exomeOrGenome][category]
@@ -236,7 +211,7 @@ class MitoReadData extends Component {
   }
 
   loadInitialTracks() {
-    ;['exome', 'sparkGenome', 'sscGenome'].forEach(exomeOrGenome => {
+    ;['exome', 'genome'].forEach(exomeOrGenome => {
       ;['het', 'hom', 'hemi'].forEach(category => {
         if (this.canLoadMoreTracks(exomeOrGenome, category)) {
           this.loadNextTrack(exomeOrGenome, category)
@@ -248,7 +223,7 @@ class MitoReadData extends Component {
   loadAllTracks() {
     const { tracksAvailable, tracksLoaded } = this.state
 
-    ;['exome', 'sparkGenome', 'sscGenome'].forEach(exomeOrGenome => {
+    ;['exome', 'genome'].forEach(exomeOrGenome => {
       ;['het', 'hom', 'hemi'].forEach(category => {
         const tracksAvailableForCategory = tracksAvailable[exomeOrGenome][category]
         const tracksLoadedForCategory = tracksLoaded[exomeOrGenome][category]
@@ -275,7 +250,7 @@ class MitoReadData extends Component {
     const { children, referenceGenome, chrom, start, stop, showHemizygotes } = this.props
 
     console.log("In here 3")
-    if (!this.hasReadData('exome') && !this.hasReadData('sparkGenome') && !this.hasReadData('sscGenome')) {
+    if (!this.hasReadData('exome') && !this.hasReadData('genome')) {
       return (
         <div>
           <p>No read data available for this variant.</p>
@@ -289,8 +264,7 @@ class MitoReadData extends Component {
     console.log("In here 4")
     console.log(locus)
     console.log(this.props.exomeReads)
-    console.log(this.props.sparkGenomeReads)
-    console.log(this.props.sscGenomeReads)
+    console.log(this.props.genomeReads)
 
 
     const browserConfig =
@@ -298,34 +272,34 @@ class MitoReadData extends Component {
         ? {
             locus,
             reference: {
-              fastaURL: '/readviz/reference/Homo_sapiens_assembly19.fasta',
+              fastaURL: '/reads/reference/Homo_sapiens_assembly19.fasta',
               id: 'hg19',
-              indexURL: '/readviz/reference/Homo_sapiens_assembly19.fasta.fai',
+              indexURL: '/reads/reference/Homo_sapiens_assembly19.fasta.fai',
             },
             tracks: [
               {
                 displayMode: 'SQUISHED',
-                indexURL: '/readviz/reference/gencode.v19.bed.gz.tbi',
+                indexURL: '/reads/reference/gencode.v19.bed.gz.tbi',
                 name: 'GENCODE v19',
                 removable: false,
-                url: '/readviz/reference/gencode.v19.bed.gz',
+                url: '/reads/reference/gencode.v19.bed.gz',
               },
             ],
           }
         : {
             locus,
             reference: {
-              fastaURL: '/readviz/reference/Homo_sapiens_assembly38.fasta',
+              fastaURL: '/reads/reference/Homo_sapiens_assembly38.fasta',
               id: 'hg38',
-              indexURL: '/readviz/reference/Homo_sapiens_assembly38.fasta.fai',
+              indexURL: '/reads/reference/Homo_sapiens_assembly38.fasta.fai',
             },
             tracks: [
               {
                 displayMode: 'SQUISHED',
-                indexURL: '/readviz/reference/gencode.v35.bed.gz.tbi',
+                indexURL: '/reads/reference/gencode.v35.bed.gz.tbi',
                 name: 'GENCODE v35',
                 removable: false,
-                url: '/readviz/reference/gencode.v35.bed.gz',
+                url: '/reads/reference/gencode.v35.bed.gz',
               },
             ],
           }
@@ -356,28 +330,19 @@ class MitoReadData extends Component {
 
         {this.hasReadData('exome') && (
           <ControlContainer>
-            <strong>iWES Exomes:</strong>
+            <strong>SSC Genomes:</strong>
             {this.renderLoadMoreButton('exome', 'het')}
             {this.renderLoadMoreButton('exome', 'hom')}
             {showHemizygotes && this.renderLoadMoreButton('exome', 'hemi')}
           </ControlContainer>
         )}
 
-        {this.hasReadData('sparkGenome') && (
+        {this.hasReadData('genome') && (
           <ControlContainer>
             <strong>SPARK Genomes:</strong>
-            {this.renderLoadMoreButton('sparkGenome', 'het')}
-            {this.renderLoadMoreButton('sparkGenome', 'hom')}
-            {showHemizygotes && this.renderLoadMoreButton('sparkGenome', 'hemi')}
-          </ControlContainer>
-        )}
-
-        {this.hasReadData('sscGenome') && (
-          <ControlContainer>
-            <strong>SSC Genomes:</strong>
-            {this.renderLoadMoreButton('sscGenome', 'het')}
-            {this.renderLoadMoreButton('sscGenome', 'hom')}
-            {showHemizygotes && this.renderLoadMoreButton('sscGenome', 'hemi')}
+            {this.renderLoadMoreButton('genome', 'het')}
+            {this.renderLoadMoreButton('genome', 'hom')}
+            {showHemizygotes && this.renderLoadMoreButton('genome', 'hemi')}
           </ControlContainer>
         )}
 
@@ -388,12 +353,9 @@ class MitoReadData extends Component {
                 this.canLoadMoreTracks('exome', 'het') ||
                 this.canLoadMoreTracks('exome', 'hom') ||
                 this.canLoadMoreTracks('exome', 'hemi') ||
-                this.canLoadMoreTracks('sparkGenome', 'het') ||
-                this.canLoadMoreTracks('sparkGenome', 'hom') ||
-                this.canLoadMoreTracks('sparkGenome', 'hemi') ||
-                this.canLoadMoreTracks('sscGenome', 'het') ||
-                this.canLoadMoreTracks('sscGenome', 'hom') ||
-                this.canLoadMoreTracks('sscGenome', 'hemi')
+                this.canLoadMoreTracks('genome', 'het') ||
+                this.canLoadMoreTracks('genome', 'hom') ||
+                this.canLoadMoreTracks('genome', 'hemi')
               )
             }
             onClick={() => this.loadAllTracks()}
@@ -521,7 +483,7 @@ const TestContainer = ({ variantIds }) => {
           })
         )
 
-        const sparkGenomeReads = interleaveReads(
+        const genomeReads = interleaveReads(
           variantIds.map((variantId, i) => {
             const categoryCount = { het: 0, hom: 0, hemi: 0 }
             return (data[`variant_${i}`].spark_genome || []).map(read => {
@@ -562,9 +524,8 @@ const TestContainer = ({ variantIds }) => {
             chrom={chrom}
             start={start}
             stop={stop}
-            exomeReads={exomeReads}            
-            sscGenomeReads={sscGenomeReads}
-            sparkGenomeReads={sparkGenomeReads}
+            exomeReads={sscGenomeReads}
+            genomeReads={genomeReads}
             showHemizygotes={chrom === 'X' || chrom === 'Y'}
           >
             {graphQLErrors && (

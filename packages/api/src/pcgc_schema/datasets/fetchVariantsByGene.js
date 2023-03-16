@@ -146,7 +146,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, { 
 //      index: 'pcgc_chr20_test',
-      index: 'spark_exomes',
+      //index: 'spark_exomes',
+      index: 'spark_exomes_v2',
       size: 10000,
       _source: [
         'AC_adj',
