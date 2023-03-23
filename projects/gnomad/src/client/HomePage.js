@@ -60,7 +60,7 @@ export default () => (
     <ul>
     <li> SSC whole genome sequencing data for ~10,000 individuals – sequenced by New York Genome Center (NYGC), and variant calling performed by the Centers of Common Disease Genomics (CCDG) using their analysis pipeline </li>
     <li> SPARK whole genome sequencing data for ~2,500 individuals – sequenced by NYGC, and variant calling performed by the CCDG using their analysis pipeline </li>
-    <li> SPARK whole exome sequencing data for ~70,000 individuals – sequenced by Regeneron Pharmaceuticals, and variant calling and annotation performed by the SPARK Genome Consortium. </li>
+    <li> SPARK whole exome sequencing data for ~106,000 individuals – sequenced by Regeneron Pharmaceuticals, and variant calling and annotation performed by the SPARK Genome Consortium. </li>
     </ul>
     <br />
     All variant summary data presented here are made available to the wider research community for variant and gene level visualization. For detailed information (including individual data) on released datasets and other available resources, please apply to access through <ExternalLink href="https://base.sfari.org">SFARI Base</ExternalLink>.
