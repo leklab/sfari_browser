@@ -1,7 +1,7 @@
 const fetchGnomadConstraintByTranscript = async (ctx, transcriptId) => {
   const response = await ctx.database.elastic.search({
     index: 'gnomad_constraint_2_1_1',
-    type: 'constraint',
+    //type: 'constraint',
     body: {
       query: {
         bool: {

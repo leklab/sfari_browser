@@ -4,7 +4,7 @@ import rankedSVGeneConsequences from './rankedSVGeneConsequences'
 const fetchGnomadStructuralVariantsByGene = async (ctx, { gene_name: geneName }) => {
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
     index: 'gnomad_structural_variants',
-    type: 'variant',
+    // type: 'variant',
     size: 10000,
     _source: [
       'ac.total',

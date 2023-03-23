@@ -3,7 +3,7 @@ import { UserVisibleError } from '../errors'
 const fetchGnomadStructuralVariantDetails = async (ctx, variantId) => {
   const response = await ctx.database.elastic.search({
     index: 'gnomad_structural_variants',
-    type: 'variant',
+    //type: 'variant',
     body: {
       query: {
         bool: {
