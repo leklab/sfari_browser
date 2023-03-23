@@ -38,7 +38,7 @@ const fetchDenovos = async (ctx, geneId) => {
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
 
     index: 'autism_dnms',
-    type: 'variant',
+    //type: 'variant',
     size: 10000,
     _source: [
       'variant_id',
