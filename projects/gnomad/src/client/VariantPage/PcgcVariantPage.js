@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Page } from '@broad/ui'
+import { Badge, TooltipAnchor } from '@broad/ui'
+import QCFilter from '../QCFilter'
 
 import DocumentTitle from '../DocumentTitle'
 import GnomadPageHeading from '../GnomadPageHeading'
@@ -82,6 +84,27 @@ const VariantId = styled.span`
   white-space: nowrap;
 `
 
+//const renderGnomadVariantFlag = (variant, exomeOrGenome) => {
+const renderGnomadVariantFlag = (variant) => {
+
+  /*
+  if (!variant[exomeOrGenome]) {
+    return <Badge level="error">No variant</Badge>
+  }
+  */
+  const filters = variant.filters  
+
+  if(!filters){
+    return <Badge level="info">Not in gnomAD</Badge>
+  }
+  
+  else if (filters.length === 0) {
+    return <Badge level="success">Pass</Badge>
+  }
+  return filters.map(filter => <QCFilter key={filter} filter={filter} />)
+}
+
+
 const PcgcVariantPage = ({ datasetId, variantId }) => (
   <Page>
     <DocumentTitle title={variantId} />
@@ -133,6 +156,9 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
             <ResponsiveSection>
               <ScrollWrapper>
                 <GnomadVariantOccurrenceTable variant={variant} />
+                <p>
+                <h3>gnomAD Filters: {renderGnomadVariantFlag(variant)}</h3>
+                </p>
               </ScrollWrapper>
 
               {variant.colocatedVariants.length > 0 && (

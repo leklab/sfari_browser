@@ -166,6 +166,7 @@ const VariantDetailsType = new GraphQLObjectType({
     multiNucleotideVariants: { type: new GraphQLList(MultiNucleotideVariantSummaryType) },
     */
 
+    filters: { type: new GraphQLList(GraphQLString) },
     colocatedVariants: { type: new GraphQLList(GraphQLString) },
     gnomadPopFreq: { type: new GraphQLList(PopulationType) },
     gnomadAF: {type: GraphQLFloat},

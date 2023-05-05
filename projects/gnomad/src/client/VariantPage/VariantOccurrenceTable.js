@@ -34,12 +34,20 @@ const NoWrap = styled.span`
   white-space: nowrap;
 `
 
-const renderGnomadVariantFlag = (variant, exomeOrGenome) => {
+//const renderGnomadVariantFlag = (variant, exomeOrGenome) => {
+const renderGnomadVariantFlag = (variant) => {
+
+  /*
   if (!variant[exomeOrGenome]) {
     return <Badge level="error">No variant</Badge>
   }
-  const filters = variant[exomeOrGenome].filters
-  if (filters.length === 0) {
+  */
+  const filters = variant.filters  
+  
+  if(!filters){
+    return <Badge level="info">Not in gnomAD</Badge>
+  }
+  else if (filters.length === 0) {
     return <Badge level="success">Pass</Badge>
   }
   return filters.map(filter => <QCFilter key={filter} filter={filter} />)
@@ -152,6 +160,13 @@ export const GnomadVariantOccurrenceTable = ({ variant }) => {
         {/*<tr>
           <th scope="row">Filter</th>
           <td>{renderGnomadVariantFlag(variant, 'exome')}</td>
+        </tr>*/}
+        {/*<tr>
+          <th scope="row">gnomAD Filter</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{renderGnomadVariantFlag(variant)}</td>
         </tr>*/}
         <tr>
           <th scope="row">Allele Count</th>

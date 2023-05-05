@@ -154,8 +154,8 @@ const fetchVariantData = async (ctx, variantId) => {
 
   const exomeData = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-//    index: 'spark_exomes',
-    index: 'spark_exomes_v2',
+   index: 'spark_exomes',
+    // index: 'spark_exomes_v2',
 
     _source: [
 //      requestSubset,
@@ -369,8 +369,8 @@ const fetchColocatedVariants = async (ctx, variantId) => {
 
   const exomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-  //  index: 'spark_exomes',
-    index: 'spark_exomes_v2',
+    index: 'spark_exomes',
+   //index: 'spark_exomes_v2',
 
     //type: 'variant',
     _source: ['variant_id'],
@@ -478,6 +478,7 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
         genome{
           ac
           an
+          filters
           faf95 {
             popmax
             popmax_population
@@ -508,11 +509,15 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
         'Content-Type': 'application/json',
       }}).then(response => response.json())
 
+    //console.log(gnomad_data.data.variant.genome)
     //console.log(gnomad_data.variant.genome.populations)
 
-    return gnomad_data.variant.genome
+    return gnomad_data.data.variant.genome
     //return gnomad_data
   }catch(error){
+  	console.log("Error caught")
+  	console.log(error)
+
     return undefined
   }
 
@@ -628,7 +633,9 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log(gnomad_data)  
 
   const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
-  //console.log(gnomad_pop_data)
+
+  console.log("Show gnomad pop data")
+  console.log(gnomad_pop_data)
 
   const sharedData = exomeData || genomeData || sscGenomeData
 
@@ -666,7 +673,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
     colocatedVariants,
     multiNucleotideVariants,
     */
-
+    filters: gnomad_pop_data ? gnomad_pop_data.filters : null,
     colocatedVariants,
     gnomadPopFreq: gnomad_pop_data ? gnomad_pop_data.populations : null,
     gnomadAF: gnomad_pop_data ? gnomad_pop_data.ac/gnomad_pop_data.an : null,

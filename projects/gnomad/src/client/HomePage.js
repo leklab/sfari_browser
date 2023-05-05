@@ -53,6 +53,9 @@ export default () => (
         </Link>
       </p>
     </HeadingContainer>
+    <video width="384" height="240" controls allowfullscreen>
+      <source src="/readviz/SFARI_browser_demo_20230324.mp4" type="video/mp4" />
+    </video>
     <p>
     The SFARI Genomes Browser is a resource developed for integration and visualization of exome and genome sequencing data generated on <ExternalLink href="https://www.sfari.org">SFARI</ExternalLink> cohorts: <ExternalLink href="https://www.sfari.org/resource/simons-simplex-collection">Simons Simplex Collection (SSC)</ExternalLink>, <ExternalLink href="https://www.sfari.org/resource/spark">SPARK</ExternalLink> and <ExternalLink href="https://www.sfari.org/resource/simons-searchlight">Simons Searchlight</ExternalLink>.
     <br /><br />

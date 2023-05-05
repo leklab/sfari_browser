@@ -15,6 +15,7 @@ query PcgcVariant($variantId: String!) {
       gnomadAF
       gnomad_faf95_population
       gnomad_faf95_popmax
+      filters
       spark_exome {
         ac
         an
