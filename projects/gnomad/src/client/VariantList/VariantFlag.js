@@ -14,6 +14,11 @@ const flagProps = {
     level: 'info',
     tooltip: 'De novo variant',
   },
+  filtered: {
+    children: 'Filtered',
+    level: 'info',
+    tooltip: 'gnomAD filtered variant',
+  },  
   lc_lof: {
     children: 'LC LoF',
     level: 'error',

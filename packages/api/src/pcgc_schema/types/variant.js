@@ -65,6 +65,7 @@ export const VariantSummaryType = new GraphQLObjectType({
     consequence: { type: GraphQLString },
     consequence_in_canonical_transcript: { type: GraphQLBoolean },
     flags: { type: new GraphQLList(GraphQLString) },
+    // gnomad_filters: { type: new GraphQLList(GraphQLString) },
     hgvs: { type: GraphQLString },
     hgvsc: { type: GraphQLString },
     hgvsp: { type: GraphQLString },

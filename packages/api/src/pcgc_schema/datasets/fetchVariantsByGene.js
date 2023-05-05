@@ -388,6 +388,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
         genome{
           ac
           an
+          filters
         }
       }
     }

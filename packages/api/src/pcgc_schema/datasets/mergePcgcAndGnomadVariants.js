@@ -68,6 +68,7 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
             //console.log(tmp_gnomad.exome.ac)
             //console.log(tmp_push.exome.ac_gnomad)
             //console.log(tmp_push)
+
           }
 
           if(tmp_gnomad.genome){
@@ -79,9 +80,16 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
             //console.log(tmp_push)
 
               // take filters from gnomAD
-              if(tmp_gnomad.genome.filters){
-                tmp_push.filters = tmp_gnomad.genome.filters
+
+              //console.log(tmp_gnomad.genome)
+
+              if(tmp_gnomad.genome.filters && tmp_gnomad.genome.filters.length > 0){
+              //if(tmp_gnomad.genome.filters){
+                //tmp_push.flags = tmp_gnomad.genome.filters
+                tmp_push.flags.push('filtered')
               }
+
+
           }
 
           // take rsid from gnomAD

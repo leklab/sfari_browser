@@ -118,8 +118,7 @@ const shapeGnomadVariantSummary = (context) => {
       ref: variantData.ref,
       variantId: variantData.variant_id,
       xpos: variantData.xpos,
-      // Other fields
-      
+      // Other fields      
       consequence: transcriptConsequence.major_consequence,
       consequence_in_canonical_transcript: !!transcriptConsequence.canonical,
       flags: getFlags(variantData, transcriptConsequence),
@@ -130,6 +129,7 @@ const shapeGnomadVariantSummary = (context) => {
       rsid: variantData.rsid,
       ac_gnomad: 0,
       an_gnomad: 0,
+      // gnomad_filters: [],
 
       spark_genome: esHit._index === 'spark_genomes' ? data_block : null,
       spark_exome: esHit._index === 'spark_exomes' ? data_block : null,
