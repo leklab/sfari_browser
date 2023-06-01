@@ -154,7 +154,8 @@ const fetchVariantData = async (ctx, variantId) => {
 
   const exomeData = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-   index: 'spark_exomes',
+   //index: 'spark_exomes',
+   index: 'spark_exomes_test',
     // index: 'spark_exomes_v2',
 
     _source: [
@@ -226,6 +227,9 @@ const fetchVariantData = async (ctx, variantId) => {
   //.then(doc => (doc ? { ...doc._source } : undefined))
   //.then(response => response.hits.hits[0])
   console.log("Showing exome data")
+  console.log(exomeData)
+  console.log(exomeData.hits.hits[0])
+
   //console.log(exomeData.hits.hits[0]._source)
 
   //return esHit => {
@@ -369,7 +373,8 @@ const fetchColocatedVariants = async (ctx, variantId) => {
 
   const exomeResponse = await ctx.database.elastic.search({
   //await ctx.database.elastic.search({
-    index: 'spark_exomes',
+    //index: 'spark_exomes',
+    index: 'spark_exomes_test',
    //index: 'spark_exomes_v2',
 
     //type: 'variant',
@@ -546,6 +551,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   //console.log(sscGenomeData) 
 
+  console.log(exomeData) 
+
   // const sharedData = exomeData
 
 
@@ -709,22 +716,31 @@ const fetchVariantDetails = async (ctx, variantId) => {
             
             alleleBalance: {
               //alt: formatHistogram(exomeData.ab_hist_alt),
-              alt: exomeData.allele_balance.alt_raw,
+              //alt: exomeData.allele_balance.alt_raw,
+              alt: exomeData.allele_balance.alt_adj,
+
             },
             
             genotypeDepth: {
               //all: formatHistogram(exomeData.genotype_depth.all_raw),
               //alt: formatHistogram(exomeData.genotype_depth.alt_raw),
-              all: exomeData.genotype_depth.all_raw,
-              alt: exomeData.genotype_depth.alt_raw,
+              //all: exomeData.genotype_depth.all_raw,
+              //alt: exomeData.genotype_depth.alt_raw,
+
+              all: exomeData.genotype_depth.all_adj,
+              alt: exomeData.genotype_depth.alt_adj,
+
 
             },            
             genotypeQuality: {
               //all: formatHistogram(exomeData.gq_hist_all),
               //alt: formatHistogram(exomeData.gq_hist_alt),
 
-              all: exomeData.genotype_quality.all_raw,
-              alt: exomeData.genotype_quality.alt_raw,
+              //all: exomeData.genotype_quality.all_raw,
+              //alt: exomeData.genotype_quality.alt_raw,
+
+              all: exomeData.genotype_quality.all_adj,
+              alt: exomeData.genotype_quality.alt_adj,
 
             },
 

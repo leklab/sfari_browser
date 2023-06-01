@@ -89,10 +89,17 @@ const shapeGnomadVariantSummary = (context) => {
 
     //console.log(variantData.AN_adj['eur'])
     const data_block = {
-      ac: variantData.AC_raw,
-      ac_hom: variantData.nhomalt_raw,
-      an: variantData.AN_raw,
-      af: variantData.AF_raw,        
+      //ac: variantData.AC_raw,
+      ac: variantData.AC,
+
+      //ac_hom: variantData.nhomalt_raw,
+      //an: variantData.AN_raw,
+      //af: variantData.AF_raw,        
+
+      ac_hom: variantData.nhomalt,
+      an: variantData.AN,
+      af: variantData.AF,        
+
 
       ac_proband: variantData.AC_proband,
       an_proband: variantData.AN_proband,
@@ -132,7 +139,7 @@ const shapeGnomadVariantSummary = (context) => {
       // gnomad_filters: [],
 
       spark_genome: esHit._index === 'spark_genomes' ? data_block : null,
-      spark_exome: esHit._index === 'spark_exomes' ? data_block : null,
+      spark_exome: esHit._index === 'spark_exomes_test' ? data_block : null,
       //spark_exome: esHit._index === 'spark_exomes_v2' ? data_block : null,
 
       ssc_genome: esHit._index === 'ssc_genomes' ? data_block : null,
