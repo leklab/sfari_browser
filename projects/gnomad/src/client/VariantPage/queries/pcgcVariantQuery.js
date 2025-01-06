@@ -133,6 +133,13 @@ query PcgcVariant($variantId: String!) {
         primate_ai
         revel
       }
+      dis_asd {
+        DNA_Disease_impact_score
+        RNA_Disease_impact_score
+      }
+      func_annotation {
+        Classification
+      }
     }
   }
 }

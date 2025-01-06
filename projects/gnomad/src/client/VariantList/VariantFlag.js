@@ -14,6 +14,11 @@ const flagProps = {
     level: 'info',
     tooltip: 'De novo variant',
   },
+  func: {
+    children: 'Func',
+    level: 'info',
+    tooltip: 'Functional data',
+  },  
   filtered: {
     children: 'Filtered',
     level: 'info',

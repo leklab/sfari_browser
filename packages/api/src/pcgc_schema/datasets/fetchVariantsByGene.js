@@ -32,6 +32,18 @@ const annotateVariantsWithDenovoFlag = (variants, dnms) => {
   return variants
 }
 
+const annotateVariantsWithFuncFlag = (variants, func_data) => {
+  const funcDataIds = new Set(func_data.reduce((acc, func_data) => acc.concat(func_data.variant), []))
+
+  variants.forEach(variant => {
+    if (funcDataIds.has(variant.variantId)) {
+      variant.flags.push('func')
+    }
+  })
+
+  return variants
+}
+
 
 const fetchDenovos = async (ctx, geneId) => {
 
@@ -58,6 +70,34 @@ const fetchDenovos = async (ctx, geneId) => {
 
   return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
 }
+
+const fetchFunctionalData = async (ctx, geneId) => {
+
+  const hits = await fetchAllSearchResults(ctx.database.elastic, {
+
+    index: 'haas_pten',
+    //type: 'variant',
+    size: 10000,
+    _source: [
+      'variant',
+      'Classification',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { gene_id: geneId } },
+          ],
+        },
+      },
+      sort: [{ pos: { order: 'asc' } }],
+    },
+  })
+
+  return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
+}
+
+
 
 const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) => {
   const geneExons = await lookupExonsByGeneId(ctx.database.gnomad, geneId)
@@ -438,6 +478,14 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   const dnms = await fetchDenovos(ctx,geneId)
   //console.log(dnms)
   annotateVariantsWithDenovoFlag(combinedVariants,dnms)
+
+  const func_data = await fetchFunctionalData(ctx,geneId)
+  annotateVariantsWithFuncFlag(combinedVariants,func_data)
+
+  // console.log("Functional data")
+  // console.log(func_data)
+
+
 
   //console.log(combinedVariants)
   //const combinedVariants = mergeExomeAndGenomeVariantSummaries(exomeVariants, genomeVariants)

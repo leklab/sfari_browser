@@ -520,8 +520,8 @@ const fetchGnomadPopFreq = async (ctx, variantId) => {
     return gnomad_data.data.variant.genome
     //return gnomad_data
   }catch(error){
-  	console.log("Error caught")
-  	console.log(error)
+  	//console.log("Error caught")
+  	//console.log(error)
 
     return undefined
   }
@@ -612,9 +612,61 @@ const fetchVariantDetails = async (ctx, variantId) => {
   //console.log("In here")
   //console.log(denovoData)
 
-  
+   
+  const dis_asd = await ctx.database.elastic.search({
+    index: 'dis_asd',
+    //type: 'variant',
+    _source: [
+      'DNA_Disease_impact_score',
+      'RNA_Disease_impact_score'
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant_id: variantId } },
+          ],
+        },
+      }
+    },
+    size: 1,
+  })
+
+  console.log("Dis ASD data")
+  const dis_asdData = dis_asd.hits.hits[0] ? dis_asd.hits.hits[0]._source : undefined
+
+  console.log(dis_asdData)
 
 
+  const pten_func = await ctx.database.elastic.search({
+
+    index: 'haas_pten',
+    //type: 'variant',
+    _source: [
+      'Classification',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { variant: variantId } },
+          ],
+        },
+      },
+    },
+  })
+
+  console.log("PTEN func data")
+  const ptenData = pten_func.hits.hits[0] ? pten_func.hits.hits[0]._source : undefined
+
+  console.log(ptenData)
+
+
+  /*
+  if(dis_asd.hits.hits[0]){
+    console.log(dis_asd.hits.hits[0]._source)
+  }
+  */
   /*
   const query = `{
     variant(variantId: "${variantId}", dataset: gnomad_r3){
@@ -641,8 +693,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   const gnomad_pop_data = await fetchGnomadPopFreq(ctx, variantId)
 
-  console.log("Show gnomad pop data")
-  console.log(gnomad_pop_data)
+  //console.log("Show gnomad pop data")
+  //console.log(gnomad_pop_data)
 
   const sharedData = exomeData || genomeData || sscGenomeData
 
@@ -851,6 +903,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     rsid: gnomad_data.data.variant ? gnomad_data.data.variant.rsid : null,
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
+    dis_asd: dis_asdData ? dis_asdData : null,    
+    func_annotation: ptenData ? ptenData : null,    
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
     in_silico_predictors: exomeData ? exomeData.in_silico_predictors : null
   }

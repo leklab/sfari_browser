@@ -70,6 +70,22 @@ const InSilicoPredictorsType = new GraphQLObjectType({
   }
 })
 
+const dis_asdType = new GraphQLObjectType({
+  name: 'dis_asd',
+  fields: {
+    DNA_Disease_impact_score: { type: GraphQLFloat},
+    RNA_Disease_impact_score: { type: GraphQLString},
+  }
+})
+
+const func_annoType = new GraphQLObjectType({
+  name: 'func_annotation',
+  fields: {
+    Classification: { type: GraphQLString},
+  }
+})
+
+
 const GnomadVariantQualityMetricsType = new GraphQLObjectType({
   name: 'GnomadVariantQualityMetrics',
   fields: {
@@ -298,6 +314,8 @@ const VariantDetailsType = new GraphQLObjectType({
     rsid: { type: GraphQLString },
     clinvarAlleleID: { type: GraphQLString },
     denovoHC: { type: GraphQLString },
+    dis_asd: { type: dis_asdType },
+    func_annotation: { type: func_annoType},    
     sortedTranscriptConsequences: { type: new GraphQLList(TranscriptConsequenceType) },
     in_silico_predictors: { type: InSilicoPredictorsType}
   },

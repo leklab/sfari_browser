@@ -159,8 +159,9 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                 <p>
                 <h3>gnomAD Filters: {renderGnomadVariantFlag(variant)}</h3>
                 </p>
-              </ScrollWrapper>
 
+
+              </ScrollWrapper>
               {variant.colocatedVariants.length > 0 && (
                 <div>
                   <p>
@@ -183,6 +184,24 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   </p>
                 </DenovoSection>
               )}
+
+              {variant.dis_asd && (
+                <p>
+                <h3>Non-coding scores from Human Base</h3>
+                <b>DNA Disease impact score:</b> {variant.dis_asd.DNA_Disease_impact_score}<br />
+                <b>RNA Disease impact score:</b> {variant.dis_asd.RNA_Disease_impact_score}
+
+                </p>
+              )}
+
+              {variant.func_annotation && (
+                <p>
+                <h3>Functional Annotation</h3>
+                <b>Classification:</b> {variant.func_annotation.Classification}<br />
+
+                </p>
+              )}
+
 
               {/*variant.multiNucleotideVariants.length > 0 && (
                 <div>
