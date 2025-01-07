@@ -9,7 +9,7 @@ import datasetLabels from '../datasetLabels'
 import { Query } from '../Query'
 import StatusMessage from '../StatusMessage'
 import { TrackPageSection } from '../TrackPage'
-import ExportVariantsButton from '../MitoVariantList/ExportVariantsButton'
+// import ExportVariantsButton from '../MitoVariantList/ExportVariantsButton'
 import filterVariants from '../MitoVariantList/filterVariants'
 import mergeExomeAndGenomeData from '../MitoVariantList/mergeExomeAndGenomeData'
 import sortVariants from '../MitoVariantList/sortVariants'
@@ -21,7 +21,6 @@ import ClinVarTrack from './ClinVarTrack'
 
 class MitoVariantsInGene extends Component {
   static propTypes = {
-    //clinVarVariants: PropTypes.arrayOf(PropTypes.object).isRequired,
     datasetId: PropTypes.string.isRequired,
     gene: PropTypes.shape({
       chrom: PropTypes.string.isRequired,
@@ -57,16 +56,6 @@ class MitoVariantsInGene extends Component {
     const defaultSortKey = 'variant_id'
     const defaultSortOrder = 'ascending'
 
-/*    const renderedVariants = sortVariants(
-      mergeExomeAndGenomeData(filterVariants(props.variants, defaultFilter)),
-      {
-        sortKey: defaultSortKey,
-        sortOrder: defaultSortOrder,
-      }
-    )
-*/
-
-    //console.log(props.variants)
     const renderedVariants = mergeExomeAndGenomeData(props.variants)
 
     console.log("Printing renderedVariants")
@@ -82,16 +71,6 @@ class MitoVariantsInGene extends Component {
       visibleVariantWindow: [0, 19],
     }
   }
-  /*
-  getColumns = memoizeOne((width, chrom, datasetId) =>
-    getColumns({
-      datasetId,
-      width,
-      includeHomozygoteAC: chrom !== 'Y',
-      includeHemizygoteAC: chrom === 'X' || chrom === 'Y',
-    })
-  )
-  */
 
   getColumns = memoizeOne((width, chrom) =>
     getColumns({
@@ -181,7 +160,7 @@ class MitoVariantsInGene extends Component {
   }
 
   render() {
-    //const { clinVarVariants, datasetId, gene, transcriptId, width } = this.props
+
     const { datasetId, gene, transcriptId, width } = this.props
 
     const {
@@ -198,7 +177,6 @@ class MitoVariantsInGene extends Component {
 
     return (
       <div>
-        {/*<ClinVarTrack variants={clinVarVariants} variantFilter={filter.includeCategories} />*/}
 
         <VariantTrack
           title={`SFARI Mito Variants (${renderedVariants.length})`}
@@ -213,13 +191,6 @@ class MitoVariantsInGene extends Component {
         />
         <TrackPageSection style={{ fontSize: '14px', marginTop: '1em' }}>
           <VariantFilterControls onChange={this.onFilter} value={filter} />
-          {/* <div>
-            <ExportVariantsButton
-              datasetId={datasetId}
-              exportFileName={`${datasetLabel}_${gene.gene_id}`}
-              variants={renderedVariants}
-            />
-          </div> */}
           {!transcriptId && (
             <p style={{ marginBottom: 0 }}>
               † denotes a consequence that is for a non-canonical transcript
@@ -257,8 +228,7 @@ class MitoVariantsInGene extends Component {
 }
 
 const ConnectedMitoVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
-  //const clinvarTranscriptArg = transcriptId ? `(transcriptId: "${transcriptId}")` : ''
-  const transcriptArg = transcriptId ? `, transcriptId: "${transcriptId}"` : ''
+  // const transcriptArg = transcriptId ? `, transcriptId: "${transcriptId}"` : ''
 
   
   const query = `{
@@ -293,80 +263,14 @@ const ConnectedMitoVariantsInGene = ({ datasetId, gene, transcriptId, width }) =
     }
   }`
   
-
-// PCGC API
-/*  
-  const query = `{
-    gene(gene_id: "${gene.gene_id}") {
-      clinvar_variants${clinvarTranscriptArg} {
-        alleleId
-        clinicalSignificance
-        goldStars
-        majorConsequence
-        pos
-        variantId
-      }      
-      variants {
-        consequence
-        flags
-        hgvs
-        hgvsp
-        hgvsc
-        ${transcriptId ? '' : 'isCanon: consequence_in_canonical_transcript'}
-        pos
-        variant_id: variantId
-        xpos
-        ac_gnomad
-        an_gnomad
-        spark_exome {
-          ac
-          an
-          af
-          ac_hom
-          ac_proband
-          an_proband
-          af_proband
-        }
-        spark_genome {
-          ac
-          an
-          af
-          ac_hom
-          ac_proband
-          an_proband
-          af_proband
-        }
-        ssc_genome {
-          ac
-          an
-          af
-          ac_hom
-          ac_proband
-          an_proband
-          af_proband
-        }                
-      }
-    }
-  }`
-*/
-
-  console.log("In here")
-  console.log(query)
-
+  
   return (
     <Query query={query}>
       {({ data, error, graphQLErrors, loading }) => {
-        console.log("In here - loading1")
-        console.log(error)
-        console.log(graphQLErrors)
 
         if (loading) {
-          console.log("In here - loading2")
           return <StatusMessage>Loading variants...</StatusMessage>
         }
-        console.log("In here - out of loading")
-        console.log(data)
-        console.log(error)
 
         if (error || !((data || {}).mito_gene || {}).variants) {
           return <StatusMessage>Failed to load variants</StatusMessage>
@@ -374,7 +278,6 @@ const ConnectedMitoVariantsInGene = ({ datasetId, gene, transcriptId, width }) =
 
         return (
           <MitoVariantsInGene
-            //clinVarVariants={data.gene.clinvar_variants}
             datasetId={datasetId}
             gene={gene}
             transcriptId={transcriptId}
@@ -387,19 +290,6 @@ const ConnectedMitoVariantsInGene = ({ datasetId, gene, transcriptId, width }) =
   )
 }
 
-
-/*
-        return (
-          <VariantsInGene
-            clinVarVariants={data.gene.clinvar_variants}
-            datasetId={datasetId}
-            gene={gene}
-            transcriptId={transcriptId}
-            variants={data.gene.variants}
-            width={width}
-          />
-        )
-*/
 
 ConnectedMitoVariantsInGene.propTypes = {
   datasetId: PropTypes.string.isRequired,

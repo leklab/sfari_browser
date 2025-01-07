@@ -5,9 +5,7 @@ import queryString from 'query-string'
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-
 import datasetLabels from './datasetLabels'
-import sampleCounts from './sampleCounts'
 
 const NavigationMenuWrapper = styled.ul`
   display: flex;
@@ -407,78 +405,6 @@ const DatasetSelector = withRouter(({ datasetOptions, history, selectedDataset }
     selectedDataset !== 'gnomad_sv_r2' ? selectedDataset : 'gnomad_r2_1'
 
   let datasets = []
-
-  /*
-  if (includeShortVariants) {
-    const shortVariantDatasets = [
-      {
-        id: 'current_short_variant',
-        isActive: selectedDataset !== 'gnomad_sv_r2',
-        label: datasetLabels[topLevelShortVariantDataset],
-        url: datasetLink(topLevelShortVariantDataset),
-      },
-      {
-        id: 'gnomad_subsets',
-        isActive: selectedDataset !== 'gnomad_sv_r2',
-        label: 'gnomAD subsets',
-        children: [
-          {
-            id: 'gnomad_r2_1',
-            label: datasetLabels.gnomad_r2_1,
-            url: datasetLink('gnomad_r2_1'),
-            description: `${sampleCounts.gnomad_r2_1.total.toLocaleString()} samples`,
-          },
-          {
-            id: 'gnomad_r2_1_controls',
-            label: datasetLabels.gnomad_r2_1_controls,
-            url: datasetLink('gnomad_r2_1_controls'),
-            description: `${sampleCounts.gnomad_r2_1_controls.total.toLocaleString()} samples`,
-          },
-          {
-            id: 'gnomad_r2_1_non_cancer',
-            label: datasetLabels.gnomad_r2_1_non_cancer,
-            url: datasetLink('gnomad_r2_1_non_cancer'),
-            description: `${sampleCounts.gnomad_r2_1_non_cancer.total.toLocaleString()} samples`,
-          },
-          {
-            id: 'gnomad_r2_1_non_neuro',
-            label: datasetLabels.gnomad_r2_1_non_neuro,
-            url: datasetLink('gnomad_r2_1_non_neuro'),
-            description: `${sampleCounts.gnomad_r2_1_non_neuro.total.toLocaleString()} samples`,
-          },
-          {
-            id: 'gnomad_r2_1_non_topmed',
-            label: datasetLabels.gnomad_r2_1_non_topmed,
-            url: datasetLink('gnomad_r2_1_non_topmed'),
-            description: `${sampleCounts.gnomad_r2_1_non_topmed.total.toLocaleString()} samples`,
-          },
-        ],
-      },
-    ]
-
-    
-    if (includeExac) {
-      shortVariantDatasets[1].children.push({
-        id: 'exac',
-        label: datasetLabels.exac,
-        url: datasetLink('exac'),
-        description: `${sampleCounts.exac.total.toLocaleString()} samples`,
-      })
-    }
-
-    datasets = datasets.concat(shortVariantDatasets)
-  }
-
-  if (includeStructuralVariants) {
-    datasets.push({
-      id: 'gnomad_sv_r2',
-      isActive: selectedDataset === 'gnomad_sv_r2',
-      label: datasetLabels.gnomad_sv_r2,
-      url: datasetLink('gnomad_sv_r2'),
-    })
-  }
-  */
-
 
   if (includeShortVariants) {
     const shortVariantDatasets = [

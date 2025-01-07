@@ -7,7 +7,6 @@ import { ExternalLink, PageHeading } from '@broad/ui'
 
 import DocumentTitle from './DocumentTitle'
 import InfoPage from './InfoPage'
-import SampleCountTable from './SampleCountTable'
 
 const AnchorLink = styled.a.attrs({ 'aria-hidden': 'true' })`
   position: absolute;

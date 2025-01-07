@@ -1,10 +1,7 @@
 import React from 'react'
-
 import { ExternalLink, PageHeading } from '@broad/ui'
-
 import DocumentTitle from './DocumentTitle'
 import InfoPage from './InfoPage'
-import Link from './Link'
 
 export default () => (
   <InfoPage>

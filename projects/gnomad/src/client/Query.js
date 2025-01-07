@@ -1,4 +1,3 @@
-//import gqlFetch from 'graphql-fetch'
 import 'whatwg-fetch'
 
 import PropTypes from 'prop-types'
@@ -47,7 +46,6 @@ export class Query extends Component {
   }
 
   static defaultProps = {
-    //url: process.env.GNOMAD_API_URL,
     url: '/api/',
     variables: {},
   }
@@ -92,9 +90,6 @@ export class Query extends Component {
     }
 
     this.currentRequest = cancelable(
-      //gqlFetch(process.env.GNOMAD_API_URL)(this.props.query, this.props.variables)
-      //gqlFetch(this.props.url)(this.props.query, this.props.variables)
-
       fetch(this.props.url, {
         body: JSON.stringify({
           query: this.props.query,

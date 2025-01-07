@@ -6,23 +6,22 @@ import styled from 'styled-components'
 
 import { QuestionMark } from '@broad/help'
 import { RegionViewer } from '@broad/region-viewer'
-//import { ConnectedTranscriptsTrack } from '@broad/track-transcript'
 import { ConnectedTranscriptsTrack } from './track-transcript/ConnectedTranscriptsTrack'
 import { screenSize } from '@broad/ui'
 
 import DocumentTitle from '../DocumentTitle'
 import GnomadPageHeading from '../GnomadPageHeading'
-import RegionCoverageTrack from '../RegionPage/CoverageTrack'
-import StatusMessage from '../StatusMessage'
+// import RegionCoverageTrack from '../RegionPage/CoverageTrack'
+// import StatusMessage from '../StatusMessage'
 import { TrackPage, TrackPageSection } from '../TrackPage'
 import { ConstraintTableOrPlaceholder } from './Constraint'
-import GeneCoverageTrack from './CoverageTrack'
+// import GeneCoverageTrack from './CoverageTrack'
 import { fetchGnomadGenePage } from './fetch'
 import GeneDataContainer from './GeneDataContainer'
 import GeneInfo from './GeneInfo'
-import RegionalConstraintTrack from './RegionalConstraintTrack'
+// import RegionalConstraintTrack from './RegionalConstraintTrack'
 import StructuralVariantsInGene from './StructuralVariantsInGene'
-import TissueExpressionTrack from './TissueExpressionTrack'
+// import TissueExpressionTrack from './TissueExpressionTrack'
 import TranscriptLink from './TranscriptLink'
 import VariantsInGene from './VariantsInGene'
 import MitoVariantsInGene from './MitoVariantsInGene'
@@ -222,25 +221,7 @@ class GenePage extends Component {
           padding={75}
           regions={regionViewerRegions}
           rightPanelWidth={smallScreen ? 0 : 160}
-        > 
-          {/*datasetId === 'gnomad_sv_r2' ? (
-            <RegionCoverageTrack
-              chrom={gene.chrom}
-              datasetId={datasetId}
-              showExomeCoverage={false}
-              start={gene.start}
-              stop={gene.stop}
-            />
-          ) : (
-            hasCodingExons && (
-              <GeneCoverageTrack
-                datasetId={datasetId}
-                geneId={geneId}
-                showExomeCoverage={datasetId !== 'gnomad_sv_r2'}
-              />
-            )
-          )*/}
-
+        >
           <ControlPanel marginLeft={100} width={regionViewerWidth - 100 - (smallScreen ? 0 : 160)}>
             Include:
             <Legend>
@@ -321,23 +302,6 @@ class GenePage extends Component {
               }
             />
           )}
-
-          {/*!hasCodingExons && (
-            <StatusMessage>
-              Coverage &amp; transcripts not shown for genes with no coding exons
-            </StatusMessage>
-          )*/}
-
-          {/* hasCodingExons && (
-            <TissueExpressionTrack exons={cdsCompositeExons} expressionRegions={gene.pext} />
-          )*/}
-
-          {/* gene.exac_regional_missense_constraint_regions.length > 0 && datasetId === 'exac' && (
-            <RegionalConstraintTrack
-              height={15}
-              regions={gene.exac_regional_missense_constraint_regions}
-            />
-          ) */}
 
           {datasetId === 'sfari_sv' ? (
             <StructuralVariantsInGene gene={gene} width={regionViewerWidth} />
