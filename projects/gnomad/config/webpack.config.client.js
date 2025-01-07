@@ -30,8 +30,11 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /node_modules/,
+        resolve: {
+           fullySpecified: false,
+        },
         use: {
           loader: 'babel-loader',
           options: {
