@@ -2,7 +2,7 @@ import { fetchAllSearchResults } from '../../utilities/elasticsearch'
 import { mergeOverlappingRegions } from '../../utilities/region'
 import { lookupExonsByGeneId } from '../types/exon'
 import fetch from 'node-fetch'
-import mergePcgcAndGnomadVariantSummaries from './mergePcgcAndGnomadVariants'
+import mergeSfariAndGnomadVariantSummaries from './mergeSfariAndGnomadVariants'
 import mergeExomeAndGenomeVariantSummaries from './mergeExomeAndGenomeVariants'
 import mergeSSCVariants from './mergeSSCVariants'
 import shapeGnomadVariantSummary from './shapeGnomadVariantSummary'
@@ -293,7 +293,7 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
     }
   }).then(response => response.json())
 
-  const combinedVariants = mergePcgcAndGnomadVariantSummaries(allVariants, gnomad_data.data.gene.variants)
+  const combinedVariants = mergeSfariAndGnomadVariantSummaries(allVariants, gnomad_data.data.gene.variants)
   const dnms = await fetchDenovos(ctx, geneId)
 
   annotateVariantsWithDenovoFlag(combinedVariants, dnms)

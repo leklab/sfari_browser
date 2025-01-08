@@ -9,21 +9,8 @@ import {
 
 import { getXpos } from '../utilities/variant'
 
-
-/*
-import { AggregateQualityMetricsType } from './datasets/aggregateQualityMetrics'
-import {
-  MultiNucleotideVariantDetailsType,
-  fetchGnomadMNVDetails,
-} from './datasets/gnomad_r2_1/gnomadMultiNucleotideVariants'
-
-import fetchGnomadStructuralVariantDetails from './datasets/gnomad_sv_r2/fetchGnomadStructuralVariantDetails'
-import GnomadStructuralVariantDetailsType from './datasets/gnomad_sv_r2/GnomadStructuralVariantDetailsType'
-
-*/
 import fetchGnomadStructuralVariantDetails from './datasets/fetchGnomadStructuralVariantDetails'
 import GnomadStructuralVariantDetailsType from './datasets/GnomadStructuralVariantDetailsType'
-
 
 import geneType, {
   lookupGeneByGeneId,
@@ -41,10 +28,6 @@ import { SearchResultType, resolveSearchResults } from './types/search'
 import { VariantInterface } from './types/variant'
 import { MitoVariantInterface } from './types/mito_variant'
 
-
-//import { datasetArgumentTypeForMethod } from './datasets/datasetArgumentTypes'
-//import datasetsConfig, { datasetSpecificTypes } from './datasets/datasetsConfig'
-
 import fetchVariantDetails from './datasets/fetchVariantDetails'
 import fetchMitoVariantDetails from './datasets/fetchMitoVariantDetails'
 
@@ -55,22 +38,9 @@ import MitoVariantDetailsType from './datasets/MitoVariantDetailsType'
 const rootType = new GraphQLObjectType({
   name: 'Root',
   description: `
-The fields below allow for different ways to look up PCGC data. Click on the the Gene, Variant, or Region types to see more information.
+The fields below allow for different ways to look up SFARI data. Click on the the Gene, Variant, or Region types to see more information.
   `,
   fields: () => ({
-/*
-    aggregateQualityMetrics: {
-      type: AggregateQualityMetricsType,
-      args: {
-        dataset: { type: datasetArgumentTypeForMethod('fetchAggregateQualityMetrics') },
-      },
-      resolve: (obj, args, ctx) => {
-        const fetchAggregateQualityMetrics =
-          datasetsConfig[args.dataset].fetchAggregateQualityMetrics
-        return fetchAggregateQualityMetrics(ctx)
-      },
-    },
-*/    
     gene: {
       description: 'Look up variant data by gene name. Example: ACTA1.',
       type: geneType,
@@ -120,15 +90,6 @@ The fields below allow for different ways to look up PCGC data. Click on the the
         return lookupTranscriptsByTranscriptId(ctx.database.gnomad, args.transcript_id)
       },
     },
-    /*
-    multiNucleotideVariant: {
-      type: MultiNucleotideVariantDetailsType,
-      args: {
-        variantId: { type: new GraphQLNonNull(GraphQLString) },
-      },
-      resolve: (obj, args, ctx) => fetchGnomadMNVDetails(ctx, args.variantId),
-    },
-    */
 
     region: {
       description: 'Look up data by start/stop. Example: (start: 55505222, stop: 55505300, chrom: 1).',
@@ -156,7 +117,7 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       resolve: (obj, args, ctx) => resolveSearchResults(ctx, args.query),
     },
 
-    
+
     structural_variant: {
       type: GnomadStructuralVariantDetailsType,
       args: {
@@ -164,18 +125,15 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       },
       resolve: (obj, args, ctx) => fetchGnomadStructuralVariantDetails(ctx, args.variantId),
     },
-    
-    
+
+
     variant: {
       description: 'Look up a single variant or rsid. Example: 1-55516888-G-GA.',
       type: VariantInterface,
       args: {
-        // dataset: { type: datasetArgumentTypeForMethod('fetchVariantDetails') },
         variantId: { type: GraphQLString },
       },
       resolve: (obj, args, ctx) => {
-        //const { dataset, variantId } = args
-        //const fetchVariantDetails = datasetsConfig[dataset].fetchVariantDetails
         return fetchVariantDetails(ctx, args.variantId)
       },
     },
@@ -184,25 +142,18 @@ The fields below allow for different ways to look up PCGC data. Click on the the
       description: 'Look up a single variant or rsid. Example: 1-55516888-G-GA.',
       type: MitoVariantInterface,
       args: {
-        // dataset: { type: datasetArgumentTypeForMethod('fetchVariantDetails') },
         variantId: { type: GraphQLString },
       },
       resolve: (obj, args, ctx) => {
-        //const { dataset, variantId } = args
-        //const fetchVariantDetails = datasetsConfig[dataset].fetchVariantDetails
         return fetchMitoVariantDetails(ctx, args.variantId)
       },
     },
-
-
-    
   }),
 })
 
 const Schema = new GraphQLSchema({
   query: rootType,
   types: [VariantDetailsType, MitoVariantDetailsType],
-  //types: datasetSpecificTypes,
 })
 
 export default Schema

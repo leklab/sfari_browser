@@ -7,7 +7,7 @@ import cors from 'cors'
 import Redis from 'ioredis'
 import serveStatic from 'serve-static'
 
-import pcgcSchema from './pcgc_schema'
+import sfariSchema from './sfari_schema'
 import NoIntrospection from 'graphql-disable-introspection'
 
 const app = express()
@@ -42,7 +42,7 @@ app.use(cors())
     app.use(
       [/^\/$/, /^\/api\/?$/],
       graphQLHTTP({
-        schema: pcgcSchema,
+        schema: sfariSchema,
         graphiql: true,
         validationRules: [NoIntrospection],
         context: {

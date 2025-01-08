@@ -1,29 +1,29 @@
-const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
+const mergeSfariAndGnomadVariantSummaries = (sfariVariants, gnomadVariants) => {
   const mergedVariants = []
 
-  while (pcgcVariants.length) {
-    const currentPcgcVariant = pcgcVariants[0]
+  while (sfariVariants.length) {
+    const currentsfariVariant = sfariVariants[0]
     const currentGnomadVariant = gnomadVariants[0]
 
     if (currentGnomadVariant === undefined) {
-      mergedVariants.push(pcgcVariants.shift())
+      mergedVariants.push(sfariVariants.shift())
     }
-    else if (currentPcgcVariant === undefined) {
+    else if (currentsfariVariant === undefined) {
       gnomadVariants.shift()
     }
-    else if (currentPcgcVariant.pos < currentGnomadVariant.pos) {
-      mergedVariants.push(pcgcVariants.shift())
+    else if (currentsfariVariant.pos < currentGnomadVariant.pos) {
+      mergedVariants.push(sfariVariants.shift())
     }
-    else if (currentGnomadVariant.pos < currentPcgcVariant.pos) {
+    else if (currentGnomadVariant.pos < currentsfariVariant.pos) {
       gnomadVariants.shift()
     }
     else {
-      const currentPosition = currentPcgcVariant.pos
+      const currentPosition = currentsfariVariant.pos
 
-      const pcgcVariantsAtThisPosition = []
+      const sfariVariantsAtThisPosition = []
 
-      while (pcgcVariants.length && pcgcVariants[0].pos === currentPosition) {
-        pcgcVariantsAtThisPosition.push(pcgcVariants.shift())
+      while (sfariVariants.length && sfariVariants[0].pos === currentPosition) {
+        sfariVariantsAtThisPosition.push(sfariVariants.shift())
       }
       const gnomadVariantsAtThisPosition = []
 
@@ -31,28 +31,28 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
         gnomadVariantsAtThisPosition.push(gnomadVariants.shift())
       }
 
-      pcgcVariantsAtThisPosition.sort((v1, v2) => v1.variantId.localeCompare(v2.variantId))
+      sfariVariantsAtThisPosition.sort((v1, v2) => v1.variantId.localeCompare(v2.variantId))
       gnomadVariantsAtThisPosition.sort((v1, v2) => v1.variantId.localeCompare(v2.variantId))
 
-      while (pcgcVariantsAtThisPosition.length || gnomadVariantsAtThisPosition.length) {
-        const currentPcgcVariantAtThisPosition = pcgcVariantsAtThisPosition[0]
+      while (sfariVariantsAtThisPosition.length || gnomadVariantsAtThisPosition.length) {
+        const currentsfariVariantAtThisPosition = sfariVariantsAtThisPosition[0]
         const currentGnomadVariantAtThisPosition = gnomadVariantsAtThisPosition[0]
 
         if (currentGnomadVariantAtThisPosition === undefined) {
-          mergedVariants.push(pcgcVariantsAtThisPosition.shift())
+          mergedVariants.push(sfariVariantsAtThisPosition.shift())
         }
-        else if (currentPcgcVariantAtThisPosition === undefined) {
+        else if (currentsfariVariantAtThisPosition === undefined) {
           gnomadVariantsAtThisPosition.shift()
         }
-        else if (currentPcgcVariantAtThisPosition.variantId.localeCompare(currentGnomadVariantAtThisPosition.variantId) < 0) {
-          mergedVariants.push(pcgcVariantsAtThisPosition.shift())
+        else if (currentsfariVariantAtThisPosition.variantId.localeCompare(currentGnomadVariantAtThisPosition.variantId) < 0) {
+          mergedVariants.push(sfariVariantsAtThisPosition.shift())
         }
-        else if (currentPcgcVariantAtThisPosition.variantId.localeCompare(currentGnomadVariantAtThisPosition.variantId) > 0) {
+        else if (currentsfariVariantAtThisPosition.variantId.localeCompare(currentGnomadVariantAtThisPosition.variantId) > 0) {
           gnomadVariantsAtThisPosition.shift()
         }
         else {
           const tmp_gnomad = gnomadVariantsAtThisPosition.shift()
-          const tmp_push = pcgcVariantsAtThisPosition.shift()
+          const tmp_push = sfariVariantsAtThisPosition.shift()
 
           if (tmp_gnomad.exome) {
             tmp_push.ac_gnomad += tmp_gnomad.exome.ac
@@ -79,4 +79,4 @@ const mergePcgcAndGnomadVariantSummaries = (pcgcVariants, gnomadVariants) => {
   return mergedVariants
 }
 
-export default mergePcgcAndGnomadVariantSummaries
+export default mergeSfariAndGnomadVariantSummaries

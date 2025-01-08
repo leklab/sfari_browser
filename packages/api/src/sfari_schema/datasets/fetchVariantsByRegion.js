@@ -1,8 +1,6 @@
 import { fetchAllSearchResults } from '../../utilities/elasticsearch'
-// import { getXpos } from '../../utilities/variant'
 import shapeGnomadVariantSummary from './shapeGnomadVariantSummary'
 import mergeExomeAndGenomeVariantSummaries from './mergeExomeAndGenomeVariants'
-// import mergePcgcAndGnomadVariantSummaries from './mergePcgcAndGnomadVariants'
 
 const fetchVariantsByRegion = async (ctx, { chrom, start, stop }, subset) => {
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
