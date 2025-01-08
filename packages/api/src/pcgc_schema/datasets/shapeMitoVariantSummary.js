@@ -1,7 +1,4 @@
-//import POPULATIONS from './populations'
-
 const POPULATIONS = ['afr', 'amr', 'eas', 'eur', 'oth', 'sas']
-
 
 const getFlags = (variantData, transcriptConsequence) => {
   const flags = []
@@ -35,13 +32,6 @@ const getFlags = (variantData, transcriptConsequence) => {
     flags.push('lc_lof')
   }
 
-  // This flag isn't working properly
-  /*
-  if (isLofOnNonCodingTranscript) {
-    flags.push('nc_transcript')
-  }
-  */
-
   return flags
 }
 
@@ -66,25 +56,12 @@ const shapeMitoVariantSummary = (context) => {
       throw Error(`Invalid context for shapeGnomadVariantSummary: ${context.type}`)
   }
   
-
-  // console.log("In function")
   return esHit => {
     // eslint-disable-next-line no-underscore-dangle
     const variantData = esHit._source
-    // console.log(variantData)
-
     
     // eslint-disable-next-line no-underscore-dangle
-    //const isExomeVariant = esHit._index === 'pcgc_exomes'
-
-    /*
-    const ac = variantData[subsetKey].AC_adj.total
-    const an = variantData[subsetKey].AN_adj.total
-    */
     const transcriptConsequence = getConsequence(variantData) || {}
-    
-
-    //console.log(variantData.AN_adj['eur'])
     
     const data_block = {
       ac: variantData.ac,
@@ -93,26 +70,8 @@ const shapeMitoVariantSummary = (context) => {
       an: variantData.an,
       af: variantData.af,
       max_heteroplasmy: variantData.max_heteroplasmy        
-
-      //ac_proband: variantData.AC_proband,
-      //an_proband: variantData.AN_proband,
-      //af_proband: variantData.AF_proband,
-
-      //filters: variantData.filters || [],
-      /*
-      populations: POPULATIONS.map(popId => ({
-        id: popId.toUpperCase(),
-        ac: variantData.AC_adj[popId] || 0,
-        an: variantData.AN_adj[popId] || 0,
-        //an: variantData.AN_adj[popId],
-
-        //ac_hemi: variantData.nonpar ? (variantData[subsetKey].AC_adj[popId] || {}).male || 0 : 0,
-        ac_hom: variantData.nhomalt_adj[popId] || 0,
-      }))
-      */
     }
     
-
     return {
       // Variant ID fields
       alt: variantData.alt,
@@ -125,25 +84,15 @@ const shapeMitoVariantSummary = (context) => {
       
       consequence: transcriptConsequence.major_consequence,
       consequence_in_canonical_transcript: !!transcriptConsequence.canonical,
-      //flags: getFlags(variantData, transcriptConsequence),
       flags: [],
       hgvs: transcriptConsequence.hgvs,
       hgvsc: transcriptConsequence.hgvsc ? transcriptConsequence.hgvsc.split(':')[1] : null,
       hgvsp: transcriptConsequence.hgvsp ? transcriptConsequence.hgvsp.split(':')[1] : null,
-      
-      //rsid: variantData.rsid,
-      //ac_gnomad: 0,
-      //an_gnomad: 0,
 
       spark_genome: esHit._index === 'spark_mito' ? data_block : null,
       ssc_genome: esHit._index === 'ssc_mito' ? data_block : null,
+    }
+  }
+}
 
-
-    } //return
-
-  }// return eHit
-
-}// function
-
-//sudo lsof -i -P -n | grep LISTEN
 export default shapeMitoVariantSummary

@@ -1,7 +1,6 @@
 const mergeExomeAndsscVariantsummaries = (sparkVariants, sscVariants) => {
   const mergedVariants = []
 
-  
   while (sparkVariants.length || sscVariants.length) {
     const currentSparkVariant = sparkVariants[0]
     const currentSscVariant = sscVariants[0]
@@ -52,15 +51,13 @@ const mergeExomeAndsscVariantsummaries = (sparkVariants, sscVariants) => {
         } else {
           mergedVariants.push({
             ...sparkVariantsAtThisPosition.shift(),
-            //genome: sscVariantsAtThisPosition.shift().genome,
             ssc_genome: sscVariantsAtThisPosition.shift().ssc_genome,
-
           })
         }
       }
     }
   }
-  
+
   return mergedVariants
 }
 

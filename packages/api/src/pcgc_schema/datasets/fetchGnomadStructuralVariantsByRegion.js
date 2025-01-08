@@ -7,7 +7,6 @@ const fetchGnomadStructuralVariantsByRegion = async (
 ) => {
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
     index: 'gnomad_structural_variants',
-    //type: 'variant',
     size: 10000,
     _source: [
       'ac.total',
@@ -45,16 +44,6 @@ const fetchGnomadStructuralVariantsByRegion = async (
                 },
               },
             },
-
-            /*
-            {
-              range: {
-                end_xpos: {
-                  gte: xstart,
-                },
-              },
-            },
-          */
           ],
         },
       },
@@ -62,16 +51,8 @@ const fetchGnomadStructuralVariantsByRegion = async (
     },
   })
 
-  console.log(xstart)
-  console.log(xstop)
-  console.log(hits)
-
   const variants = hits.map(hit => {
     const variant = hit._source // eslint-disable-line no-underscore-dangle
-
-    //if(variant.pos >= start){
-    //  console.log(variant.pos)
-    //}
 
     let majorConsequence = rankedSVGeneConsequences.find(csq => variant.consequences[csq])
     if (!majorConsequence && variant.intergenic) {
@@ -96,18 +77,14 @@ const fetchGnomadStructuralVariantsByRegion = async (
   })
 
   return variants.filter(variant => {
-    // Only include insertions if the start point falls within the requested region.
-    
-    //return variant.chrom === chrom && variant.pos >= start && variant.pos <= stop
+    // Only include insertions if the start point falls within the requested region.    
     return variant.chrom === chrom 
-
 
     /*
     if (variant.type === 'INS') {
       return variant.chrom === chrom && variant.pos >= start && variant.pos <= stop
     }
 
-    
     // Only include interchromosomal variants (CTX, BNDs, a few INS and CPX) if one of the endpoints
     // falls within the requested region.
     if (variant.type === 'BND' || variant.type === 'CTX' || variant.chrom !== variant.end_chrom) {

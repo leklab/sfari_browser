@@ -1,7 +1,6 @@
 const mergeSSCVariants = (exomeVariants, genomeVariants) => {
   const mergedVariants = []
 
-  
   while (exomeVariants.length || genomeVariants.length) {
     const currentExomeVariant = exomeVariants[0]
     const currentGenomeVariant = genomeVariants[0]
@@ -52,7 +51,6 @@ const mergeSSCVariants = (exomeVariants, genomeVariants) => {
         } else {
           mergedVariants.push({
             ...exomeVariantsAtThisPosition.shift(),
-            //genome: genomeVariantsAtThisPosition.shift().genome,
             ssc_genome: genomeVariantsAtThisPosition.shift().ssc_genome,
 
           })
@@ -60,7 +58,7 @@ const mergeSSCVariants = (exomeVariants, genomeVariants) => {
       }
     }
   }
-  
+
   return mergedVariants
 }
 
