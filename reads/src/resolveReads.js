@@ -1,19 +1,11 @@
 const path = require('path')
-
 const sqlite = require('sqlite')
 const sqlite3 = require('sqlite3')
 
 const ZYGOSITY_CATEGORIES = ['het', 'hom', 'hemi']
 
 const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, pos, ref }) => {
-  //const dbPath = path.join(readsDirectory, `all_variants_${meta}.chr${chrom}.db`)
-
   const dbPath = path.join(readsDirectory, `all_variants.chr${chrom}.db`)
-
-  console.log("In resolveReads")
-  console.log(dbPath)
-
-  console.log("Opening db file")
 
   const db = await sqlite.open({
     filename: dbPath,
@@ -29,11 +21,7 @@ const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, 
   )
   await db.close()
 
-  console.log("Finish running query")
-  console.log(rows)
-
-
-  if(chrom == 'M')
+  if (chrom == 'M')
     return rows.map(row => ({
       bamPath: `${publicPath}/${row.combined_bamout_id}.bam`,
       category: ZYGOSITY_CATEGORIES[row.zygosity - 1],
@@ -41,7 +29,7 @@ const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, 
       readGroup: `${chrom}-${pos}-${ref}-${alt}-${row.zygosity}-${row.read_group_id}`,
     }))
 
-  else{
+  else {
     return rows.map(row => ({
       bamPath: `${publicPath}/${row.combined_bamout_id}.bam`,
       category: ZYGOSITY_CATEGORIES[row.zygosity - 1],
@@ -49,7 +37,6 @@ const resolveReads = async ({ readsDirectory, publicPath, meta }, { alt, chrom, 
       readGroup: `${chrom}-${pos}-${ref}-${alt}-${row.zygosity}-${row.read_group_id}`,
     }))
   }
-
 
 }
 

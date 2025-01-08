@@ -38,17 +38,6 @@ app.get('/health/ready', (request, response) => {
   response.send('true')
 })
 
-/*
-app.use(
-  '/reads',
-  graphqlHTTP({
-    schema,
-    graphiql: true,
-    customFormatErrorFn: formatError,
-  })
-)
-*/
-
 app.use(
   [/^\/$/, /^\/myreads\/?$/],
   graphqlHTTP({
@@ -57,7 +46,6 @@ app.use(
     customFormatErrorFn: formatError,
   })
 )
-
 
 app.listen(config.PORT, () => {
   logger.info(`Listening on ${config.PORT}`)
