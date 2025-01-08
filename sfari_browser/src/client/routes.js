@@ -9,7 +9,7 @@ import { normalizeRegionId } from '@broad/utilities'
 
 import AboutPage from './AboutPage'
 import ContactPage from './ContactPage'
-import DownloadsPage from './DownloadsPage'
+// import DownloadsPage from './DownloadsPage'
 import ErrorBoundary from './ErrorBoundary'
 import FAQPage from './FAQPage'
 import GenePage from './GenePage/GenePage'
@@ -116,7 +116,6 @@ const App = () => (
             }}
           />
           <Route exact path="/about" component={AboutPage} />
-          <Route exact path="/downloads" component={DownloadsPage} />
           <Route exact path="/terms" component={TermsPage} />
           <Route exact path="/contact" component={ContactPage} />
           <Route exact path="/faq" component={FAQPage} />
