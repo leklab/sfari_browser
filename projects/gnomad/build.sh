@@ -9,7 +9,8 @@ export PATH=$PATH:$PROJECT_DIR/../../node_modules/.bin
 
 rm -rf dist
 
-export GNOMAD_API_URL=${GNOMAD_API_URL:-"https://genomes.sfari.org/api"}
+#export GNOMAD_API_URL=${GNOMAD_API_URL:-"https://genomes.sfari.org/api"}
+export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://35.173.212.181/api"}
 export NODE_ENV=${NODE_ENV:-"production"}
 
 webpack --config=./config/webpack.config.client.js

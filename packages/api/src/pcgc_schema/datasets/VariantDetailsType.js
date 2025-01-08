@@ -81,7 +81,7 @@ const dis_asdType = new GraphQLObjectType({
 const func_annoType = new GraphQLObjectType({
   name: 'func_annotation',
   fields: {
-    Classification: { type: GraphQLString},
+    score: { type: GraphQLFloat},
   }
 })
 

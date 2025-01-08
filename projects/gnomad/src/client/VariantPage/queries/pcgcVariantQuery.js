@@ -138,7 +138,7 @@ query PcgcVariant($variantId: String!) {
         RNA_Disease_impact_score
       }
       func_annotation {
-        Classification
+        score
       }
     }
   }

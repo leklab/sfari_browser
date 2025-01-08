@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Page } from '@broad/ui'
-import { Badge, TooltipAnchor } from '@broad/ui'
+import { Badge, TooltipAnchor, TooltipHint, BaseTable } from '@broad/ui'
 import QCFilter from '../QCFilter'
 
 import DocumentTitle from '../DocumentTitle'
@@ -62,6 +62,19 @@ const DenovoSection = styled.div`
   color:red;
 
 `
+const Table = styled(BaseTable)`
+  @media (max-width: 600px) {
+    td,
+    th {
+      padding-right: 10px;
+
+      /* Drop sparkline column */
+      &:nth-child(5) {
+        display: none;
+      }
+    }
+  }
+`
 
 const VariantType = ({ variantId }) => {
   const [chrom, pos, ref, alt] = variantId.split('-') // eslint-disable-line no-unused-vars
@@ -103,6 +116,80 @@ const renderGnomadVariantFlag = (variant) => {
   }
   return filters.map(filter => <QCFilter key={filter} filter={filter} />)
 }
+
+export const renderRoundedNumber = (
+  num,
+  precision = 1,
+  tooltipPrecision = 3,
+  highlightColor = null
+) => {
+  if (num === null) {
+    return '—'
+  }
+
+  const roundedNumber = Number(num.toFixed(precision)).toString()
+  return (
+    <TooltipAnchor tooltip={num.toFixed(tooltipPrecision)}>
+      {highlightColor ? (
+        <ConstraintHighlight highlightColor={highlightColor}>{roundedNumber}</ConstraintHighlight>
+      ) : (
+        <TooltipHint>{roundedNumber}</TooltipHint>
+      )}
+    </TooltipAnchor>
+  )
+}
+
+const Graph = ({ value, lower, upper, min, max, color }) => {
+  //const width = 60
+  // const xPadding = 13
+
+  const width = 140
+  const xPadding = 20
+
+  const interval = (width-xPadding*2)/(max - min)
+
+  //const x = n => Math.max(0, Math.min(xPadding + n * (width - xPadding * 2), width - xPadding))
+  const x = n => xPadding + (n - min)*interval
+
+
+  //const y = 18
+  const y = 23
+
+
+  return (
+    <svg height={30} width={width}>
+      <text x={0} y={26} fontSize="12px" textAnchor="start">
+        {min}
+      </text>
+      <line x1={xPadding} y1={30} x2={width - xPadding} y2={30} stroke="#333" />
+
+      <rect x={x(lower)} y={y - 7} height={14} width={x(upper) - x(lower)} fill="#aaa" />
+      <circle
+        cx={x(value)}
+        cy={y}
+        r={3}
+        strokeWidth={1}
+        stroke="#000"
+        fill={color || '#e2e2e2'}
+      />
+      <text x={width} y={26} fontSize="12px" textAnchor="end">
+        {max}
+      </text>
+    </svg>
+  )
+}
+
+Graph.propTypes = {
+  value: PropTypes.number.isRequired,
+  lower: PropTypes.number.isRequired,
+  upper: PropTypes.number.isRequired,
+  color: PropTypes.string,
+}
+
+Graph.defaultProps = {
+  color: undefined,
+}
+
 
 
 const PcgcVariantPage = ({ datasetId, variantId }) => (
@@ -197,12 +284,31 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
               {variant.func_annotation && (
                 <p>
                 <h3>Functional Annotation</h3>
-                <b>Classification:</b> {variant.func_annotation.Classification}<br />
-
+                <Table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Source</th>
+                      <th scope="col">Score</th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>MaveDB</td>
+                      <td>{renderRoundedNumber(variant.func_annotation.score,3,3)}</td>
+                      <td>
+                      <Graph lower={variant.func_annotation.score-0.1} 
+                              upper={variant.func_annotation.score+0.1} 
+                              value={variant.func_annotation.score} 
+                              min={-1.5} max={1.5} color={'#ff9300'} />
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
                 </p>
               )}
 
-
+              
               {/*variant.multiNucleotideVariants.length > 0 && (
                 <div>
                   <p>

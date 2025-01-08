@@ -74,7 +74,26 @@ const fetchDenovos = async (ctx, geneId) => {
 const fetchFunctionalData = async (ctx, geneId) => {
 
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
+    index: 'mavedb',
+    //type: 'variant',
+    size: 10000,
+    _source: [
+      'variant',
+      'score',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { gene_id: geneId } },
+          ],
+        },
+      },
+      sort: [{ pos: { order: 'asc' } }],
+    },
+  })
 
+    /*
     index: 'haas_pten',
     //type: 'variant',
     size: 10000,
@@ -93,7 +112,7 @@ const fetchFunctionalData = async (ctx, geneId) => {
       sort: [{ pos: { order: 'asc' } }],
     },
   })
-
+  */
   return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
 }
 
@@ -482,8 +501,8 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   const func_data = await fetchFunctionalData(ctx,geneId)
   annotateVariantsWithFuncFlag(combinedVariants,func_data)
 
-  // console.log("Functional data")
-  // console.log(func_data)
+  console.log("Functional data")
+  console.log(func_data)
 
 
 

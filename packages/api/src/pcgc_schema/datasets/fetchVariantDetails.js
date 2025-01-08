@@ -637,7 +637,7 @@ const fetchVariantDetails = async (ctx, variantId) => {
 
   console.log(dis_asdData)
 
-
+/*
   const pten_func = await ctx.database.elastic.search({
 
     index: 'haas_pten',
@@ -660,6 +660,31 @@ const fetchVariantDetails = async (ctx, variantId) => {
   const ptenData = pten_func.hits.hits[0] ? pten_func.hits.hits[0]._source : undefined
 
   console.log(ptenData)
+*/
+
+const mavedb_func = await ctx.database.elastic.search({
+
+  index: 'mavedb',
+  //type: 'variant',
+  _source: [
+    'score',
+  ],
+  body: {
+    query: {
+      bool: {
+        filter: [
+          { term: { variant: variantId } },
+        ],
+      },
+    },
+  },
+})
+
+console.log("MAVEDB func data")
+const mavedbData = mavedb_func.hits.hits[0] ? mavedb_func.hits.hits[0]._source : undefined
+
+console.log(mavedbData)
+
 
 
   /*
@@ -904,7 +929,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     clinvarAlleleID:  clinVarData ? clinVarData.allele_id : null,
     denovoHC: denovoData ? denovoData.high_confidence_dnm : null,
     dis_asd: dis_asdData ? dis_asdData : null,    
-    func_annotation: ptenData ? ptenData : null,    
+    //func_annotation: ptenData ? ptenData : null,    
+    func_annotation: mavedbData ? mavedbData : null,    
     sortedTranscriptConsequences: sharedData.sortedTranscriptConsequences || [],
     in_silico_predictors: exomeData ? exomeData.in_silico_predictors : null
   }
