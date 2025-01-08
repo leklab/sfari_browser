@@ -19,6 +19,11 @@ const flagProps = {
     level: 'info',
     tooltip: 'Functional data',
   },  
+  str: {
+    children: 'STR',
+    level: 'info',
+    tooltip: 'Overlapping Denovo STR',
+  },  
   filtered: {
     children: 'Filtered',
     level: 'info',

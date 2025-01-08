@@ -31,6 +31,20 @@ const annotateVariantsWithFuncFlag = (variants, func_data) => {
   return variants
 }
 
+const annotateVariantsWithStrFlag = (variants, str_data) => {
+  const strDataPos = new Set(str_data.reduce((acc, str_data) => acc.concat(str_data.pos), []))
+
+  variants.forEach(variant => {
+    strDataPos.forEach(str_pos => {
+      if (Math.abs(str_pos - variant.pos) <= 5) {
+        variant.flags.push('str')
+      }
+    })
+  })
+  return variants
+}
+
+
 const fetchDenovos = async (ctx, geneId) => {
   const hits = await fetchAllSearchResults(ctx.database.elastic, {
     index: 'autism_dnms',
@@ -76,6 +90,31 @@ const fetchFunctionalData = async (ctx, geneId) => {
 
   return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
 }
+
+const fetchStrData = async (ctx, geneId) => {
+  console.log(geneId)
+  const hits = await fetchAllSearchResults(ctx.database.elastic, {
+    index: 'denovo_str',
+    size: 10000,
+    _source: [
+      'pos',
+      'mut_size',
+    ],
+    body: {
+      query: {
+        bool: {
+          filter: [
+            { term: { gene_id: geneId } },
+          ],
+        },
+      },
+      sort: [{ pos: { order: 'asc' } }],
+    },
+  })
+
+  return hits.map(hit => hit._source) // eslint-disable-line no-underscore-dangle
+}
+
 
 const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) => {
   const geneExons = await lookupExonsByGeneId(ctx.database.gnomad, geneId)
@@ -294,12 +333,15 @@ const fetchVariantsByGene = async (ctx, geneId, canonicalTranscriptId, subset) =
   }).then(response => response.json())
 
   const combinedVariants = mergeSfariAndGnomadVariantSummaries(allVariants, gnomad_data.data.gene.variants)
-  const dnms = await fetchDenovos(ctx, geneId)
 
+  const dnms = await fetchDenovos(ctx, geneId)
   annotateVariantsWithDenovoFlag(combinedVariants, dnms)
 
   const func_data = await fetchFunctionalData(ctx, geneId)
   annotateVariantsWithFuncFlag(combinedVariants, func_data)
+
+  const str_data = await fetchStrData(ctx, geneId)
+  annotateVariantsWithStrFlag(combinedVariants, str_data)
 
   return combinedVariants
 }
