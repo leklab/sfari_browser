@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 import {
   GraphQLObjectType,
   GraphQLInt,
@@ -8,23 +7,11 @@ import {
   GraphQLFloat,
 } from 'graphql'
 
-
-/*
-import { datasetArgumentTypeForMethod } from '../datasets/datasetArgumentTypes'
-import datasetsConfig from '../datasets/datasetsConfig'
-import fetchGnomadStructuralVariantsByGene from '../datasets/gnomad_sv_r2/fetchGnomadStructuralVariantsByGene'
-*/
-
-import fetchGnomadStructuralVariantsByGene from '../datasets/fetchGnomadStructuralVariantsByGene'
-import { StructuralVariantSummaryType } from './structuralVariant'
-
 import {
   ClinvarVariantType,
   fetchClinvarVariantsInGene,
   fetchClinvarVariantsInTranscript,
 } from '../datasets/clinvar'
-// import { UserVisibleError } from '../errors'
-
 
 import transcriptType, {
   CompositeTranscriptType,
@@ -34,20 +21,7 @@ import transcriptType, {
 } from './transcript'
 
 import exonType, { lookupExonsByGeneId } from './exon'
-
-/*
-import constraintType, { lookUpConstraintByTranscriptId } from './constraint'
-
-import { PextRegionType, fetchPextRegionsByGene } from './pext'
-import {
-  RegionalMissenseConstraintRegionType,
-  fetchExacRegionalMissenseConstraintRegions,
-} from './regionalConstraint'
-
-*/
-
 import { MitoVariantSummaryType } from './mito_variant'
-
 import fetchMitoVariantsByGene from '../datasets/fetchMitoVariantsByGene'
 
 const mitoGeneType = new GraphQLObjectType({
@@ -84,11 +58,6 @@ const mitoGeneType = new GraphQLObjectType({
           : fetchClinvarVariantsInGene(obj.gene_id, ctx)
       },
     },
-    /*
-    pext: {
-      type: new GraphQLList(PextRegionType),
-      resolve: (obj, args, ctx) => fetchPextRegionsByGene(ctx, obj.gene_id),
-    },*/
     transcript: {
       type: transcriptType,
       resolve: (obj, args, ctx) =>
@@ -103,43 +72,12 @@ const mitoGeneType = new GraphQLObjectType({
       type: new GraphQLList(exonType),
       resolve: (obj, args, ctx) => lookupExonsByGeneId(ctx.database.gnomad, obj.gene_id),
     },
-    /*
-    exacv1_constraint: {
-      type: constraintType,
-      resolve: (obj, args, ctx) =>
-        lookUpConstraintByTranscriptId(ctx.database.gnomad, obj.canonical_transcript),
-    },
-    exac_regional_missense_constraint_regions: {
-      type: new GraphQLList(RegionalMissenseConstraintRegionType),
-      resolve: (obj, args, ctx) => fetchExacRegionalMissenseConstraintRegions(ctx, obj.gene_name),
-    },
-    */
-
-    /*
-    structural_variants: {
-      type: new GraphQLList(StructuralVariantSummaryType),
-      resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByGene(ctx, obj),
-    },
-    */
-
     variants: {
       type: new GraphQLList(MitoVariantSummaryType),
       args: {
-        //dataset: { type: datasetArgumentTypeForMethod('fetchVariantsByGene') },
         transcriptId: { type: GraphQLString },
       },
       resolve: (obj, args, ctx) => {
-
-        /*
-        if (args.transcriptId) {
-          const fetchVariantsByTranscript = datasetsConfig[args.dataset].fetchVariantsByTranscript
-          return fetchVariantsByTranscript(ctx, args.transcriptId, obj)
-        }
-        */
-
-        console.log(obj.gene_id)
-        console.log(obj.chrom)
-        //const fetchVariantsByGene = datasetsConfig[args.dataset].fetchVariantsByGene
         return fetchMitoVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
       },
     },
@@ -147,24 +85,3 @@ const mitoGeneType = new GraphQLObjectType({
 })
 
 export default mitoGeneType
-
-/*
-export const lookupGeneByGeneId = (db, gene_id) =>
-  db.collection('genes').findOne({ gene_id })
-
-export const lookupGeneByName = async (db, geneName) => {
-  const gene = await db.collection('genes').findOne({ gene_name_upper: geneName.toUpperCase() })
-  if (!gene) {
-    throw new UserVisibleError('Gene not found')
-  }
-  return gene
-}
-
-export const fetchGenesByInterval = (ctx, { xstart, xstop }) =>
-  ctx.database.gnomad
-    .collection('genes')
-    .find({ $and: [{ xstart: { $lte: xstop } }, { xstop: { $gte: xstart } }] })
-    .toArray()
-*/
-
-

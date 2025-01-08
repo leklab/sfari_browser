@@ -25,7 +25,6 @@ const VariantSequencingDataType = new GraphQLObjectType({
   name: 'VariantSequencingData',
   fields: {
     ac: { type: GraphQLInt },
-    //ac_hemi: { type: GraphQLInt },
     ac_hom: { type: GraphQLInt },
     an: { type: GraphQLInt },
     af: { type: GraphQLFloat },
@@ -42,7 +41,6 @@ const VariantSequencingDataType = new GraphQLObjectType({
             id: { type: new GraphQLNonNull(GraphQLString) },
             ac: { type: new GraphQLNonNull(GraphQLInt) },
             an: { type: new GraphQLNonNull(GraphQLInt) },
-            //ac_hemi: { type: new GraphQLNonNull(GraphQLInt) },
             ac_hom: { type: new GraphQLNonNull(GraphQLInt) },
           },
         })
@@ -65,19 +63,16 @@ export const VariantSummaryType = new GraphQLObjectType({
     consequence: { type: GraphQLString },
     consequence_in_canonical_transcript: { type: GraphQLBoolean },
     flags: { type: new GraphQLList(GraphQLString) },
-    // gnomad_filters: { type: new GraphQLList(GraphQLString) },
     hgvs: { type: GraphQLString },
     hgvsc: { type: GraphQLString },
     hgvsp: { type: GraphQLString },
     rsid: { type: GraphQLString },
 
     ac_gnomad: { type: GraphQLInt },
-    an_gnomad: { type: GraphQLInt },    
+    an_gnomad: { type: GraphQLInt },
 
-    // will keep with this name for future
     spark_exome: { type: VariantSequencingDataType },
     spark_genome: { type: VariantSequencingDataType },
     ssc_genome: { type: VariantSequencingDataType },
-    // genome: { type: VariantSequencingDataType },
   },
 })

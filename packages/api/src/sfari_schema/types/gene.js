@@ -9,13 +9,6 @@ import {
 } from 'graphql'
 
 import { withCache } from '../../utilities/redis'
-
-/*
-import { datasetArgumentTypeForMethod } from '../datasets/datasetArgumentTypes'
-import datasetsConfig from '../datasets/datasetsConfig'
-import fetchGnomadStructuralVariantsByGene from '../datasets/gnomad_sv_r2/fetchGnomadStructuralVariantsByGene'
-*/
-
 import fetchGnomadStructuralVariantsByGene from '../datasets/fetchGnomadStructuralVariantsByGene'
 import { StructuralVariantSummaryType } from './structuralVariant'
 
@@ -24,8 +17,6 @@ import {
   fetchClinvarVariantsInGene,
   fetchClinvarVariantsInTranscript,
 } from '../datasets/clinvar'
-// import { UserVisibleError } from '../errors'
-
 
 import transcriptType, {
   CompositeTranscriptType,
@@ -35,20 +26,7 @@ import transcriptType, {
 } from './transcript'
 
 import exonType, { lookupExonsByGeneId } from './exon'
-
-/*
-import constraintType, { lookUpConstraintByTranscriptId } from './constraint'
-
-import { PextRegionType, fetchPextRegionsByGene } from './pext'
-import {
-  RegionalMissenseConstraintRegionType,
-  fetchExacRegionalMissenseConstraintRegions,
-} from './regionalConstraint'
-
-*/
-
 import { VariantSummaryType } from './variant'
-
 import fetchVariantsByGene from '../datasets/fetchVariantsByGene'
 
 const geneType = new GraphQLObjectType({
@@ -73,7 +51,7 @@ const geneType = new GraphQLObjectType({
       type: CompositeTranscriptType,
       resolve: (obj, args, ctx) => fetchCompositeTranscriptByGene(ctx, obj),
     },
-    
+
     clinvar_variants: {
       type: new GraphQLList(ClinvarVariantType),
       args: {
@@ -85,11 +63,6 @@ const geneType = new GraphQLObjectType({
           : fetchClinvarVariantsInGene(obj.gene_id, ctx)
       },
     },
-    /*
-    pext: {
-      type: new GraphQLList(PextRegionType),
-      resolve: (obj, args, ctx) => fetchPextRegionsByGene(ctx, obj.gene_id),
-    },*/
     transcript: {
       type: transcriptType,
       resolve: (obj, args, ctx) =>
@@ -104,48 +77,20 @@ const geneType = new GraphQLObjectType({
       type: new GraphQLList(exonType),
       resolve: (obj, args, ctx) => lookupExonsByGeneId(ctx.database.gnomad, obj.gene_id),
     },
-    /*
-    exacv1_constraint: {
-      type: constraintType,
-      resolve: (obj, args, ctx) =>
-        lookUpConstraintByTranscriptId(ctx.database.gnomad, obj.canonical_transcript),
-    },
-    exac_regional_missense_constraint_regions: {
-      type: new GraphQLList(RegionalMissenseConstraintRegionType),
-      resolve: (obj, args, ctx) => fetchExacRegionalMissenseConstraintRegions(ctx, obj.gene_name),
-    },
-    */
     structural_variants: {
       type: new GraphQLList(StructuralVariantSummaryType),
       resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByGene(ctx, obj),
     },
-    
+
     variants: {
       type: new GraphQLList(VariantSummaryType),
       args: {
-        //dataset: { type: datasetArgumentTypeForMethod('fetchVariantsByGene') },
         transcriptId: { type: GraphQLString },
       },
       resolve: (obj, args, ctx) => {
-
-        /*
-        if (args.transcriptId) {
-          const fetchVariantsByTranscript = datasetsConfig[args.dataset].fetchVariantsByTranscript
-          return fetchVariantsByTranscript(ctx, args.transcriptId, obj)
-        }
-        */
-
-        console.log(obj.gene_id)
-        console.log(obj.chrom)
-        //const fetchVariantsByGene = datasetsConfig[args.dataset].fetchVariantsByGene
-
-        
         return withCache(ctx, `gene_cache:${obj.gene_id}`, async () => {
           return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
         })
-        
-
-        //return fetchVariantsByGene(ctx, obj.gene_id, obj.canonical_transcript)
       },
     },
   }),

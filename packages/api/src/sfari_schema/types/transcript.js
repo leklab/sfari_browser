@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 import {
   GraphQLObjectType,
   GraphQLInt,
@@ -8,23 +7,11 @@ import {
   GraphQLFloat,
 } from 'graphql'
 
-/*
-import { withCache } from '../../utilities/redis'
-*/
 import { mergeOverlappingRegions } from '../../utilities/region'
-
-
-/*
-import { AnyDatasetArgumentType } from '../datasets/datasetArgumentTypes'
-import datasetsConfig from '../datasets/datasetsConfig'
-import coverageType, { fetchCoverageByTranscript } from './coverage'
-*/
 import exonType, { lookupExonsByGeneId, lookupExonsByTranscriptId } from './exon'
 import { GtexTissueExpressionsType, fetchGtexTissueExpressionsByTranscript } from './gtex'
-
 import fetchGnomadConstraintByTranscript from '../datasets/fetchGnomadConstraintByTranscript'
 import GnomadConstraintType from '../datasets/GnomadConstraintType'
-
 
 const transcriptType = new GraphQLObjectType({
   name: 'Transcript',
@@ -42,58 +29,14 @@ const transcriptType = new GraphQLObjectType({
     exons: {
       type: new GraphQLList(exonType),
       resolve: (obj, args, ctx) =>
-       lookupExonsByTranscriptId(ctx.database.gnomad, obj.transcript_id),
+        lookupExonsByTranscriptId(ctx.database.gnomad, obj.transcript_id),
     },
 
-/*
-    exome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: async (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].exomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return withCache(ctx, `coverage:transcript:${index}:${obj.transcript_id}`, async () => {
-          const exons = await lookupExonsByTranscriptId(ctx.database.gnomad, obj.transcript_id)
-          return fetchCoverageByTranscript(ctx, {
-            index,
-            type,
-            chrom: obj.chrom,
-            exons,
-          })
-        })
-      },
-    },
-    genome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: async (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].genomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return withCache(ctx, `coverage:transcript:${index}:${obj.transcript_id}`, async () => {
-          const exons = await lookupExonsByTranscriptId(ctx.database.gnomad, obj.transcript_id)
-          return fetchCoverageByTranscript(ctx, {
-            index,
-            type,
-            chrom: obj.chrom,
-            exons,
-          })
-        })
-      },
-    },*/
-    
     gnomad_constraint: {
       type: GnomadConstraintType,
       resolve: (obj, args, ctx) => fetchGnomadConstraintByTranscript(ctx, obj.transcript_id),
     },
-    
+
     gtex_tissue_tpms_by_transcript: {
       type: GtexTissueExpressionsType,
       resolve: (obj, args, ctx) => fetchGtexTissueExpressionsByTranscript(ctx, obj.transcript_id),
@@ -112,53 +55,10 @@ export const lookupTranscriptsByTranscriptId = (db, transcript_id, gene_name) =>
 export const lookupAllTranscriptsByGeneId = (db, gene_id) =>
   db.collection('transcripts').find({ gene_id }).toArray()
 
-
 export const CompositeTranscriptType = new GraphQLObjectType({
   name: 'CompositeTranscript',
   fields: {
     exons: { type: new GraphQLList(exonType) },
-
-/*
-    exome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].exomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return withCache(ctx, `coverage:gene:${index}:${obj.gene_id}`, () =>
-          fetchCoverageByTranscript(ctx, {
-            index,
-            type,
-            chrom: obj.chrom,
-            exons: obj.exons,
-          })
-        )
-      },
-    },
-    genome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].genomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return withCache(ctx, `coverage:gene:${index}:${obj.gene_id}`, () =>
-          fetchCoverageByTranscript(ctx, {
-            index,
-            type,
-            chrom: obj.chrom,
-            exons: obj.exons,
-          })
-        )
-      },
-    },*/
   },
 })
 

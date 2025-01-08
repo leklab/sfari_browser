@@ -17,8 +17,6 @@ export async function fetchAllSearchResults(esClient, searchParams) {
   // Change between Elastic Search 7 and 6
   const rest_total_hits_as_int=true
 
-  //console.log(searchParams)
-
   responseQueue.push(
     await esClient.search({
       ...searchParams,
@@ -33,9 +31,6 @@ export async function fetchAllSearchResults(esClient, searchParams) {
     const response = responseQueue.shift()
     allResults = allResults.concat(response.hits.hits)
 
-    //console.log(response)
-
-    //if (allResults.length === response.hits.total) {
     if (allResults.length === response.hits.total.value) {
       // eslint-disable-next-line no-await-in-loop
       await esClient.clearScroll({

@@ -73,8 +73,7 @@ export const normalizeVariantId = variantId =>
     .replace(/^CHR/, '')
 
 export const resolveSearchResults = async (ctx, query) => {
-  
-  //console.log(query)
+
   if (isVariantId(query)) {
     const variantId = normalizeVariantId(query)
     return [

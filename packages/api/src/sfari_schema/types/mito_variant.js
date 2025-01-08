@@ -30,29 +30,8 @@ const MitoVariantSequencingDataType = new GraphQLObjectType({
     an: { type: GraphQLInt },
     af: { type: GraphQLFloat },
     max_heteroplasmy : { type: GraphQLFloat },
-    
-    //ac_proband: { type: GraphQLInt },
-    //an_proband: { type: GraphQLInt },
-    //af_proband: { type: GraphQLFloat },
-    
+        
     filters: { type: new GraphQLList(GraphQLString) },
-    /*
-    populations: {
-      type: new GraphQLList(
-        new GraphQLObjectType({
-          name: 'VariantPopulations',
-          fields: {
-            id: { type: new GraphQLNonNull(GraphQLString) },
-            ac: { type: new GraphQLNonNull(GraphQLInt) },
-            an: { type: new GraphQLNonNull(GraphQLInt) },
-            //ac_hemi: { type: new GraphQLNonNull(GraphQLInt) },
-            ac_hom: { type: new GraphQLNonNull(GraphQLInt) },
-          },
-        })
-      ),
-    },
-    */
-
   },
 })
 
@@ -74,16 +53,8 @@ export const MitoVariantSummaryType = new GraphQLObjectType({
     hgvs: { type: GraphQLString },
     hgvsc: { type: GraphQLString },
     hgvsp: { type: GraphQLString },
-    //rsid: { type: GraphQLString },
 
-    //ac_gnomad: { type: GraphQLInt },
-    //an_gnomad: { type: GraphQLInt },    
-
-    // will keep with this name for future
-    //spark_exome: { type: VariantSequencingDataType },
     spark_genome: { type: MitoVariantSequencingDataType },
     ssc_genome: { type: MitoVariantSequencingDataType },
-    //ssc_genome: { type: VariantSequencingDataType },
-    // genome: { type: VariantSequencingDataType },
   },
 })

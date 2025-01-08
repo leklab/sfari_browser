@@ -1,9 +1,4 @@
 import { GraphQLList, GraphQLInt, GraphQLObjectType, GraphQLString } from 'graphql'
-
-//import { datasetArgumentTypeForMethod, AnyDatasetArgumentType } from '../datasets/datasetArgumentTypes'
-//import datasetsConfig from '../datasets/datasetsConfig'
-//import coverageType, { fetchCoverageByRegion } from './coverage'
-
 import { UserVisibleError } from '../errors'
 import geneType, { fetchGenesByInterval } from './gene'
 import { VariantSummaryType } from './variant'
@@ -35,61 +30,15 @@ const regionType = new GraphQLObjectType({
           xstop: obj.xstop,
         }),
     },
-    
-    /*
-    exome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].exomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return fetchCoverageByRegion(ctx, {
-          index,
-          type,
-          region: obj,
-        })
-      },
-    },
-    genome_coverage: {
-      type: new GraphQLList(coverageType),
-      args: {
-        dataset: { type: AnyDatasetArgumentType },
-      },
-      resolve: (obj, args, ctx) => {
-        const { index, type } = datasetsConfig[args.dataset].genomeCoverageIndex
-        if (!index) {
-          return []
-        }
-        return fetchCoverageByRegion(ctx, {
-          index,
-          type,
-          region: obj,
-        })
-      },
-    },
-    */
+
     structural_variants: {
       type: new GraphQLList(StructuralVariantSummaryType),
       resolve: async (obj, args, ctx) => fetchGnomadStructuralVariantsByRegion(ctx, obj),
     },
-    
-    
-    
+
     variants: {
       type: new GraphQLList(VariantSummaryType),
-      /*
-      args: {
-        dataset: { type: datasetArgumentTypeForMethod('fetchVariantsByRegion') },
-      },
-      */
       resolve: async (obj, args, ctx) => {
-        //const countVariantsInRegion = datasetsConfig[args.dataset].countVariantsInRegion
-        //const fetchVariantsByRegion = datasetsConfig[args.dataset].fetchVariantsByRegion
-
         const numVariantsInRegion = await countVariantsInRegion(ctx, obj)
 
         if (numVariantsInRegion > FETCH_INDIVIDUAL_VARIANTS_LIMIT) {
@@ -100,7 +49,7 @@ const regionType = new GraphQLObjectType({
         return fetchVariantsByRegion(ctx, obj)
       },
     },
-    
+
   }),
 })
 
