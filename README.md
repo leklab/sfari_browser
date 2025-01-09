@@ -1,7 +1,7 @@
 # SFARI Browser
+<div align="justify">
 The [SFARI Browser web portal](https://genomes.sfari.org) uses the successful [gnomAD framework and codebase](https://github.com/broadinstitute/gnomad-browser) to represent the summary variant data from exomes and genomes from the SSC and SPARK cohorts. The gene page includes allele counts (total and affected), Variant Effect Predictor (VEP) annotation and gnomAD allele frequency of each variant discovered in the SPARK/SSC data sets. The variant page includes the allele counts of variant across the cohort data sets, population ancestry and sex along with VEP annotation and pathogenicity predictions. Users can assess the quality of the variant by visualizing representative read data evidence from heterozygous and homozygous calls along with depth, genotype quality and allele balance metrics. In addition, de novo variants that were discovered are represented on the gene and variant pages. Lastly, the familiar features and navigation in common with the gnomAD browser makes this resource easy
-to use.
-
+to use.</div>
 ## Requirements
 
 * [Node.js](https://nodejs.org)
