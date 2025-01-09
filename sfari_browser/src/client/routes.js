@@ -9,7 +9,6 @@ import { normalizeRegionId } from '@broad/utilities'
 
 import AboutPage from './AboutPage'
 import ContactPage from './ContactPage'
-// import DownloadsPage from './DownloadsPage'
 import ErrorBoundary from './ErrorBoundary'
 import FAQPage from './FAQPage'
 import GenePage from './GenePage/GenePage'

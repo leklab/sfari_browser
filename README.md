@@ -1,11 +1,6 @@
 # SFARI Browser
-
-JavaScript tools for exploring genomic data.  
-
-Forked from https://github.com/leklab/pcgc_browser  
-
-which was forked from the original gnomAD browser  
-https://github.com/broadinstitute/gnomad-browser
+The [SFARI Browser web portal](https://genomes.sfari.org) uses the successful [gnomAD framework and codebase](https://github.com/broadinstitute/gnomad-browser) to represent the summary variant data from exomes and genomes from the SSC and SPARK cohorts. The gene page includes allele counts (total and affected), Variant Effect Predictor (VEP) annotation and gnomAD allele frequency of each variant discovered in the SPARK/SSC data sets. The variant page includes the allele counts of variant across the cohort data sets, population ancestry and sex along with VEP annotation and pathogenicity predictions. Users can assess the quality of the variant by visualizing representative read data evidence from heterozygous and homozygous calls along with depth, genotype quality and allele balance metrics. In addition, de novo variants that were discovered are represented on the gene and variant pages. Lastly, the familiar features and navigation in common with the gnomAD browser makes this resource easy
+to use.
 
 ## Requirements
 
@@ -19,8 +14,23 @@ https://github.com/broadinstitute/gnomad-browser
 ## Installation
 
 ```
-# Elastic search downloaded from
-wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.0.tar.gz
+# Elastic Search
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D27D666CD88E42B4
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-7.x.list
+
+sudo apt update
+sudo apt install elasticsearch
+
+# node (using nvm)
+sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash 
+nvm install 18.18.0
+
+# yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update
+sudo apt remove cmdtest
+sudo apt install yarn
 
 # redis
 sudo apt-get install redis
@@ -41,63 +51,77 @@ yarn
 
 
 ## Configuration
-
-Yarn
-```
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt update
-sudo apt remove cmdtest
-sudo apt install yarn
-```
-
-Elastic search
-```
-edit /etc/sysctl.conf
-to include the configuration line
-vm.max_map_count=262144
-
-then restart
-sysctl -p
-
-Example script on starting elastic search
-https://github.com/leklab/sfari_browser/blob/master/misc/start_elasticsearch.sh
-```
-
 nginx
 ```
-Example site configuration
-https://github.com/leklab/sfari_browser/blob/master/misc/sfari-browser
+The directory needs to point to where the bundled js was created. [Example site configuration](https://github.com/leklab/sfari_browser/blob/master/misc/sfari-browser)
 
 ```
-
-
 ## Data sets
-
-* GTEx data set
-* Constraint data
-* ClinVar (GRCh38) data
+* General
+  * GTEx data set
+  * Constraint data
+  * ClinVar (GRCh38) data
+* Genotypes (via SFARI base)
+  * iWES
+  * SSC genomes
+  * SPARK genomes
+* Supporting Autism datasets (via SFARI base)
+  * Metadata master file with details on sex and affected status of each individual
+  * PCA for determining populations
+  * De novo variants
+  * Short tandem repeats (STR) de novo variants
+  * Structural variants
+* Other supporting Autism datasets
+  * DNA/RNA disease impact score from Human Base ASD Browser
+  * Functional scores from deep mutation scanning (via MaveDB)
 
 ## Populating data sets
+The python scripts was developed and tested using hail version 0.2.109
 
+### General data sets
 ```
 #GTEx
-python submit.py --run-locally hail_scripts/populate_gtex_table.py \
---spark-home /home/ubuntu/bin/spark-2.4.3-bin-hadoop2.7 \
---cpu-limit 4 --driver-memory 16G --executor-memory 8G
+python populate_gtex_table.py
 
 #Constraint
-python submit.py --run-locally hail_scripts/populate_gnomad_constraint.py \
---spark-home /home/ubuntu/bin/spark-2.4.3-bin-hadoop2.7 \
---cpu-limit 4 --driver-memory 16G --executor-memory 8G
+python populate_gnomad_constraint.py
 
 #Clinvar data
-python submit.py --run-locally hail_scripts/populate_clinvar.py \
---spark-home /home/ubuntu/bin/spark-2.4.3-bin-hadoop2.7 \
---cpu-limit 4 --driver-memory 16G --executor-memory 8G
+python populate_clinvar.py
+```
+For populating gene models in mongo refer to [here](https://github.com/leklab/exac_browser/blob/master/gnomad_browser.md)
+
+### Genotypes
+Input data is prepared from VCF file using the [SFARI hail annotation pipeline](https://github.com/leklab/sfari_hail)
+
+```
+#exome data
+populate_data.py -i input_file.ht
+
+#wgs data
+populate_wgs_data.py -i input_file.ht
+
+```
+### Supporting Autism datasets (via SFARI base)
+```
+#SFARI de novo data
+python populate_dnms.py
+
+#STR data
+python populate_str.py
+
+#Structural variant data
+python populate_sv_data.py
 ```
 
-For populating gene models in mongo refer to <a href="https://github.com/leklab/exac_browser/blob/master/gnomad_browser.md">here</a>
+### Other supporting Autism datasets
+```
+#MAVEdb data
+python populate_mavedb.py
+```
+
+## Populating read data
+The read data is stored as aggregated mini-bams and a sqlite3 file database that is generated by the SFARI readviz pipeline. This data is to be stored in `/readviz` directory on the server. This can then be accessed by the Reads API.
 
 ## Server configuration
 GraphQL API
@@ -115,42 +139,35 @@ export REDIS_HOST=${REDIS_HOST:-$DEFAULT_REDIS_HOST}
 
 SFARI Browser
 ```
-#sfari_browser/projects/gnomad/build.sh
+#sfari_browser/sfari_browser/build.sh
 
 #contains location of API server
-export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://18.212.207.114:8007"}
+export GNOMAD_API_URL=${GNOMAD_API_URL:-"http://genomes.sfari.org/api"}
 
 #contains google analytics tracking id
 export GA_TRACKING_ID="UA-149585832-1"
 
-#build code is in 
-sfari_browser/projects/gnomad/dist/public
+#build code is in below. Make sure nginx configuration point to this.
+sfari_browser/sfari_browser/dist/public
 ```
 
 ## Build and Start
 
-GraphQL API Server
+[GraphQL API Server](https://genomes.sfari.org/api)
 ```shell
 cd sfari_browser/packages/api
 ./build.sh
 ./start.sh
 ```
 
-SFARI Browser
+[Reads API Server](https://genomes.sfari.org/reads)
 ```shell
-cd sfari_browser/packages/api
-./build.sh
+cd sfari_browser/reads
+./start.sh
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
+[SFARI Browser](https://genomes.sfari.org) (i.e. landing page)
+```shell
+cd sfari_browser/sfari_browser
+./build.sh
+```
