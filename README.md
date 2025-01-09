@@ -4,16 +4,14 @@ The <a href="https://genomes.sfari.org">SFARI Browser web portal</a> uses the su
 to use.</div>
 
 ## Requirements
-
 * [Node.js](https://nodejs.org)
 * [yarn](https://yarnpkg.com)
-* Elastic search
-* redis
-* mongo
-* nginx
+* [Elastic search] (https://www.elastic.co)
+* [redis] (https://redis.io)
+* [mongoDB] (https://www.mongodb.com)
+* [nginx] (https://nginx.org)
 
 ## Installation
-
 ```
 # Elastic Search
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D27D666CD88E42B4
