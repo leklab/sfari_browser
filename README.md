@@ -49,13 +49,6 @@ cd sfari_browser
 yarn
 ```
 
-
-## Configuration
-nginx
-```
-The directory needs to point to where the bundled js was created. [Example site configuration](https://github.com/leklab/sfari_browser/blob/master/misc/sfari-browser)
-
-```
 ## Data sets
 * General
   * GTEx data set
@@ -151,6 +144,14 @@ export GA_TRACKING_ID="UA-149585832-1"
 sfari_browser/sfari_browser/dist/public
 ```
 
+nginx
+[Example site configuration](https://github.com/leklab/sfari_browser/blob/master/misc/sfari-browser)
+
+```
+The directory needs to point to where the bundled js was created. 
+
+```
+
 ## Build and Start
 
 [GraphQL API Server](https://genomes.sfari.org/api)
@@ -160,7 +161,7 @@ cd sfari_browser/packages/api
 ./start.sh
 ```
 
-[Reads API Server](https://genomes.sfari.org/reads)
+[Reads API Server](https://genomes.sfari.org/myreads)
 ```shell
 cd sfari_browser/reads
 ./start.sh
