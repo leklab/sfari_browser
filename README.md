@@ -64,8 +64,8 @@ yarn
   * Short tandem repeats (STR) de novo variants
   * Structural variants
 * Other supporting Autism datasets
-  * DNA/RNA disease impact score from Human Base ASD Browser
-  * Functional scores from deep mutation scanning (via MaveDB)
+  * DNA/RNA disease impact score from Human Base [ASD Browser](https://hb.flatironinstitute.org/asdbrowser)
+  * Functional scores from deep mutation scanning (via [MaveDB](https://mavedb.org))
 
 ## Populating data sets
 The python scripts contained the `hail_scripts` directory was developed and tested using hail version 0.2.109

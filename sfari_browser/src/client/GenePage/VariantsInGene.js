@@ -256,89 +256,6 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
   const clinvarTranscriptArg = transcriptId ? `(transcriptId: "${transcriptId}")` : ''
   const transcriptArg = transcriptId ? `, transcriptId: "${transcriptId}"` : ''
 
-  /*
-  const query = `{
-    gene(gene_id: "${gene.gene_id}") {
-      clinvar_variants${clinvarTranscriptArg} {
-        alleleId
-        clinicalSignificance
-        goldStars
-        majorConsequence
-        pos
-        variantId
-      }
-      variants(dataset: ${datasetId}${transcriptArg}) {
-        consequence
-        ${transcriptId ? '' : 'isCanon: consequence_in_canonical_transcript'}
-        flags
-        hgvs
-        hgvsc
-        hgvsp
-        pos
-        rsid
-        variant_id: variantId
-        xpos
-        exome {
-          ac
-          ac_hemi
-          ac_hom
-          an
-          af
-          filters
-          populations {
-            id
-            ac
-            an
-            ac_hemi
-            ac_hom
-          }
-        }
-        genome {
-          ac
-          ac_hemi
-          ac_hom
-          an
-          af
-          filters
-          populations {
-            id
-            ac
-            an
-            ac_hemi
-            ac_hom
-          }
-        }
-      }
-    }
-  }`
-  */
-
-// GnomAD API
-/*  
-  const query = `{
-    gene(gene_id: "${gene.gene_id}") {
-      variants(dataset: ${datasetId}${transcriptArg}) {
-        consequence
-        ${transcriptId ? '' : 'isCanon: consequence_in_canonical_transcript'}
-        pos
-        variant_id: variantId
-        xpos
-        exome {
-          ac
-          an
-          af
-        }
-        genome {
-          ac
-          an
-          af
-        }
-      }
-    }
-  }`
-*/
-
-// PCGC API  
   const query = `{
     gene(gene_id: "${gene.gene_id}") {
       clinvar_variants${clinvarTranscriptArg} {
@@ -429,20 +346,6 @@ const ConnectedVariantsInGene = ({ datasetId, gene, transcriptId, width }) => {
     </Query>
   )
 }
-
-
-/*
-        return (
-          <VariantsInGene
-            clinVarVariants={data.gene.clinvar_variants}
-            datasetId={datasetId}
-            gene={gene}
-            transcriptId={transcriptId}
-            variants={data.gene.variants}
-            width={width}
-          />
-        )
-*/
 
 ConnectedVariantsInGene.propTypes = {
   datasetId: PropTypes.string.isRequired,

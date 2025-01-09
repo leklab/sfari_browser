@@ -53,12 +53,11 @@ export const fetchClinvarVariantsInGene = async (geneId, ctx) => {
   const geneExons = await lookupExonsByGeneId(ctx.database.gnomad, geneId)
   const filteredExons = geneExons.filter(exon => exon.feature_type === 'CDS')
   const rangeQueries = rangeQueriesForRegions(filteredExons)
-
+  
   const results = await fetchAllSearchResults(
     ctx.database.elastic,
     {
       index: 'clinvar_grch38',
-      type: 'variant',
       body: {
         query: {
           bool: {
