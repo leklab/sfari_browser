@@ -353,6 +353,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     index: 'mavedb',
     _source: [
       'score',
+      'sigma',
+      'accession'
     ],
     body: {
       query: {

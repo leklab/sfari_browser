@@ -6,10 +6,10 @@ to use.</div>
 ## Requirements
 * [Node.js](https://nodejs.org)
 * [yarn](https://yarnpkg.com)
-* [Elastic search] (https://www.elastic.co)
-* [redis] (https://redis.io)
-* [mongoDB] (https://www.mongodb.com)
-* [nginx] (https://nginx.org)
+* [Elastic search](https://www.elastic.co)
+* [redis](https://redis.io)
+* [mongoDB](https://www.mongodb.com)
+* [nginx](https://nginx.org)
 
 ## Installation
 ```

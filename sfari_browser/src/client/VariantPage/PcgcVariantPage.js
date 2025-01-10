@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { Page } from '@broad/ui'
-import { Badge, TooltipAnchor, TooltipHint, BaseTable } from '@broad/ui'
+import { Badge, TooltipAnchor, TooltipHint, BaseTable, ExternalLink } from '@broad/ui'
 import QCFilter from '../QCFilter'
 
 import DocumentTitle from '../DocumentTitle'
@@ -14,22 +14,13 @@ import { ReferenceList } from './ReferenceList'
 
 // import ReadData from '../ReadData/ReadData'
 import MitoReadData from '../ReadData/MitoReadData'
-
 import { PcgcPopulationsTable } from './PcgcPopulationsTable'
 
-/*
-import GnomadAgeDistribution from './GnomadAgeDistribution'
-import MNVSummaryList from './MultiNucleotideVariant/MNVSummaryList'
-import { GnomadGenotypeQualityMetrics } from './qualityMetrics/GnomadGenotypeQualityMetrics'
-import { GnomadSiteQualityMetrics } from './qualityMetrics/GnomadSiteQualityMetrics'
-import { GnomadReadData } from './reads/GnomadReadData'
-*/
 
 import { GnomadGenotypeQualityMetrics } from './qualityMetrics/GnomadGenotypeQualityMetrics'
 
 import { TranscriptConsequenceList } from './TranscriptConsequenceList'
 import { VariantDetailsQuery } from './VariantDetailsQuery'
-import VariantFeedback from './VariantFeedback'
 import VariantNotFound from './VariantNotFound'
 import { GnomadVariantOccurrenceTable } from './VariantOccurrenceTable'
 
@@ -288,17 +279,23 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                   <thead>
                     <tr>
                       <th scope="col">Source</th>
+                      <th scope="col">Accession</th>
                       <th scope="col">Score</th>
+                      <th scope="col">Sigma</th>
                       <th />
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td>MaveDB</td>
+                      <td><ExternalLink href={`https://mavedb.org/score-sets/${variant.func_annotation.accession}`}>
+                        {variant.func_annotation.accession}
+                        </ExternalLink></td>
                       <td>{renderRoundedNumber(variant.func_annotation.score,3,3)}</td>
+                      <td>{renderRoundedNumber(variant.func_annotation.sigma,3,3)}</td>
                       <td>
-                      <Graph lower={variant.func_annotation.score-0.1} 
-                              upper={variant.func_annotation.score+0.1} 
+                      <Graph lower={variant.func_annotation.score-variant.func_annotation.sigma} 
+                              upper={variant.func_annotation.score+variant.func_annotation.sigma} 
                               value={variant.func_annotation.score} 
                               min={-1.5} max={1.5} color={'#ff9300'} />
                       </td>
