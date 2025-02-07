@@ -354,6 +354,8 @@ const fetchVariantDetails = async (ctx, variantId) => {
     _source: [
       'score',
       'sigma',
+      'max',
+      'min',
       'accession'
     ],
     body: {

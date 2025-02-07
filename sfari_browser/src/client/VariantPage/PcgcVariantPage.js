@@ -297,7 +297,8 @@ const PcgcVariantPage = ({ datasetId, variantId }) => (
                       <Graph lower={variant.func_annotation.score-variant.func_annotation.sigma} 
                               upper={variant.func_annotation.score+variant.func_annotation.sigma} 
                               value={variant.func_annotation.score} 
-                              min={-1.5} max={1.5} color={'#ff9300'} />
+                              min={Number(variant.func_annotation.min.toFixed(2))} 
+                              max={Number(variant.func_annotation.max.toFixed(2))} color={'#ff9300'} />
                       </td>
                     </tr>
                   </tbody>

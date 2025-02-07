@@ -55,6 +55,8 @@ const func_annoType = new GraphQLObjectType({
     accession: { type: GraphQLString },
     score: { type: GraphQLFloat },
     sigma: { type: GraphQLFloat },
+    max: { type: GraphQLFloat },
+    min: { type: GraphQLFloat },
   }
 })
 

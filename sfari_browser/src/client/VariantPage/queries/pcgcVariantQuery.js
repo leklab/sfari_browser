@@ -141,6 +141,8 @@ query PcgcVariant($variantId: String!) {
         accession
         score
         sigma
+        max
+        min
       }
     }
   }
