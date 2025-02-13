@@ -5,15 +5,15 @@ import { applyMiddleware, combineReducers, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 
-import { createHelpReducer } from '@broad/help'
+// import { createHelpReducer } from '@broad/help'
 import { createGeneReducer } from '@broad/redux-genes'
 import { actions as userInterfaceActions, createUserInterfaceReducer } from '@broad/ui'
 
 // eslint-disable-next-line import/no-webpack-loader-syntax,import/no-unresolved
-import helpTopics from '@broad/help/src/loader!./helpConfig'
+// import helpTopics from '@broad/help/src/loader!./helpConfig'
 
 import App from './routes'
-import toc from '../../sfari-docs/toc.json'
+// import toc from '../../sfari-docs/toc.json'
 
 const appSettings = {
   variantDatasets: {
@@ -28,10 +28,12 @@ const appSettings = {
 
 const rootReducer = combineReducers({
   genes: createGeneReducer(appSettings),
+  /*
   help: createHelpReducer({
     topics: helpTopics,
     toc: toc.toc,
   }),
+  */
   ui: createUserInterfaceReducer(),
 })
 

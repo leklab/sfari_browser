@@ -130,8 +130,6 @@ const App = () => (
         </Switch>
       </ErrorBoundary>
     </MainPanel>
-    <HelpModal />
-    <HelpButton />
   </div>
 )
 
